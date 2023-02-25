@@ -1,12 +1,13 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 import { useEffect, useState } from "react";
 import Card from "../../Components/Card";
+import SignUpImage from "../../Assets/SignUp.png";
 
 export const SignUpScreen = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.topCardView}>
-        <Card data={<Text>CARD ONE</Text>} />
+      <View>
+        <Image source={SignUpImage} style={styles.signUpImage} />
       </View>
     </View>
   );
@@ -21,6 +22,11 @@ const styles = StyleSheet.create({
     marginTop: 200,
     marginLeft: 30,
     marginRight: 30,
+  },
+  signUpImage: {
+    width: 100,
+    height: 100,
+    marginTop: 20,
   },
 });
 

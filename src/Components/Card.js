@@ -7,7 +7,7 @@ export const Card = ({ data }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.cardText}>{data}</Text>
-      <Button title="demo" onPress={handlePress()}></Button>
+      <Button title="demo" onPress={handlePress}></Button>
     </View>
   );
 };
