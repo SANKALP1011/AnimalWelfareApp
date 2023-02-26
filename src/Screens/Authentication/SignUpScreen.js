@@ -5,11 +5,9 @@ import {
   TextInput,
   Button,
   Alert,
-  SafeAreaView,
-  KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
-  Platform,
+  TouchableOpacity,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import ImageHolder from "../../Components/ImageHolder";
@@ -34,25 +32,36 @@ export const SignUpScreen = () => {
   };
 
   const signUpUser = async () => {
-    try {
-      await fetch(
-        "https://animal-welfare-api.herokuapp.com/SignUp",
-        postConfig
-      ).then((res) => {
-        res.json().then((data) => {
-          Alert.alert("Signed up");
+    if (name != null || email != null || password != null || address != null) {
+      Alert.alert("Please enter the details before signing up !");
+    } else {
+      try {
+        await fetch(
+          "https://animal-welfare-api.herokuapp.com/SignUp",
+          postConfig
+        ).then((res) => {
+          res
+            .json()
+            .then((data) => {
+              Alert.alert("Signed up");
+            })
+            .catch((e) => {
+              Alert.alert("EMPTYYYYY");
+            });
         });
-      });
-    } catch (e) {
-      Alert.alert(e);
+      } catch (e) {
+        Alert.alert(e);
+      }
     }
   };
 
-  const getData = () => {};
   return (
     <View style={styles.container}>
       <View style={styles.ImageContainer}>
         <ImageHolder imgSource={SignUpImage} />
+      </View>
+      <View style={styles.textContainer}>
+        <Text style={styles.textStyle}>Sign Up</Text>
       </View>
       <KeyboardAwareScrollView>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -62,7 +71,6 @@ export const SignUpScreen = () => {
                 style={styles.inputField}
                 placeholder="Username"
                 onChangeText={(name) => setName(name)}
-                defaultValue={name}
               />
             </View>
 
@@ -71,7 +79,6 @@ export const SignUpScreen = () => {
                 style={styles.inputField}
                 placeholder="Email"
                 onChangeText={(mail) => setEmail(mail)}
-                defaultValue={email}
               />
             </View>
 
@@ -80,7 +87,6 @@ export const SignUpScreen = () => {
                 style={styles.inputField}
                 placeholder="Password"
                 onChangeText={(pass) => setPassword(pass)}
-                defaultValue={password}
               />
             </View>
 
@@ -89,14 +95,15 @@ export const SignUpScreen = () => {
                 style={styles.inputField}
                 placeholder="Address"
                 onChangeText={(addr) => setAddress(addr)}
-                defaultValue={address}
               />
             </View>
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAwareScrollView>
-      <View>
-        <Button title="Sign Up" onPress={signUpUser} />
+      <View style={styles.bView}>
+        <TouchableOpacity style={styles.buttonView}>
+          <Button title="Sign Up" onPress={signUpUser} />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -122,6 +129,14 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     elevation: 12,
   },
+  textContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  textStyle: {
+    fontWeight: "bold",
+    fontSize: 30,
+  },
   inputContainer: {
     paddingTop: 40,
     justifyContent: "center",
@@ -133,16 +148,23 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
   },
+  bView: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 80,
+  },
   buttonView: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
+    width: 130,
+    height: 50,
     borderRadius: 15,
-    elevation: 12,
+    fontWeight: "bolder",
+    paddingTop: 5,
+    backgroundColor: "#FFFFFF",
+    shadowColor: "rgba(0, 0, 0, 0.1)",
+    shadowOpacity: 1,
+    elevation: 10,
+    shadowRadius: 20,
+    shadowOffset: { width: 1, height: 13 },
   },
 });
 
