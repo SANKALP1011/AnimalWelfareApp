@@ -1,13 +1,18 @@
-import { StyleSheet, View, Text, Image } from "react-native";
-import { useEffect, useState } from "react";
-import Card from "../../Components/Card";
+import { StyleSheet, View, Text, TextInput } from "react-native";
+import ImageHolder from "../../Components/ImageHolder";
 import SignUpImage from "../../Assets/SignUp.png";
 
 export const SignUpScreen = () => {
   return (
     <View style={styles.container}>
-      <View>
-        <Image source={SignUpImage} style={styles.signUpImage} />
+      <View style={styles.ImageContainer}>
+        <ImageHolder imgSource={SignUpImage} />
+      </View>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.inputField}
+          placeholder="your mail goes here.."
+        />
       </View>
     </View>
   );
@@ -16,17 +21,34 @@ export const SignUpScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "white",
   },
-  topCardView: {
-    marginTop: 200,
-    marginLeft: 30,
-    marginRight: 30,
+  ImageContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 100,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    borderRadius: 15,
+    elevation: 12,
   },
-  signUpImage: {
-    width: 100,
-    height: 100,
-    marginTop: 20,
+  inputContainer: {
+    width: "90%",
+    paddingTop: 60,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 10,
+  },
+  inputField: {
+    width: "90%",
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
   },
 });
 
