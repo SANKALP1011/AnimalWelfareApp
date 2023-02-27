@@ -9,56 +9,46 @@ import {
   Keyboard,
   TouchableOpacity,
 } from "react-native";
+import { Link } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import ImageHolder from "../../Components/ImageHolder";
 import SignUpImage from "../../Assets/SignUp.png";
 import { useState } from "react";
 
-export const SignUpScreen = () => {
-  const [name, setName] = useState("");
+export const LogInScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [address, setAddress] = useState("");
 
   const postConfig = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      UserName: name,
       Email: email,
       Password: password,
-      Address: address,
     }),
   };
 
-  const signUpUser = async () => {
-    if (!name.trim() || !email.trim() || !password.trim() || !address.trim()) {
-      Alert.alert("Please enter the details before signing up !");
+  const logInUser = async () => {
+    if (!email.trim() || !password.trim()) {
+      Alert.alert("Please enter your email and password!");
     } else {
       try {
         await fetch(
-          "https://animal-welfare-api.herokuapp.com/SignUp",
+          "https://animal-welfare-api.herokuapp.com/LogIn",
           postConfig
         ).then((res) => {
           if (!res.ok) {
-            console.log(res.body);
             Alert.alert(
-              "Please check that you are entering the credentials in right format before signing up"
+              "Sorry , This user does not exist in our database. Please check that you are writing correct mail and password before logging in."
             );
           } else {
-            res
-              .json()
-              .then((data) => {
-                console.log(data);
-                Alert.alert("You are signed up successfully");
-              })
-              .catch((e) => {
-                Alert.alert(e);
-              });
+            res.json().then((data) => {
+              Alert.alert("You are successfully logged in !");
+            });
           }
         });
-      } catch (e) {
-        Alert.alert(e);
+      } catch (err) {
+        console.log(err);
       }
     }
   };
@@ -69,28 +59,18 @@ export const SignUpScreen = () => {
         <ImageHolder imgSource={SignUpImage} />
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.textStyle}>Sign Up</Text>
+        <Text style={styles.textStyle}>Log In</Text>
       </View>
-      <View style={styles.signUpPaper}>
+      <View style={styles.loginPaperContainer}>
         <KeyboardAwareScrollView>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View>
               <View style={styles.inputContainer}>
                 <TextInput
                   style={styles.inputField}
-                  placeholder="Username"
-                  onChangeText={(name) => setName(name)}
-                  defaultValue={name}
-                />
-              </View>
-
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.inputField}
                   placeholder="Email"
                   onChangeText={(mail) => setEmail(mail)}
                   defaultValue={email}
-                  keyboardType="email-address"
                 />
               </View>
 
@@ -102,29 +82,20 @@ export const SignUpScreen = () => {
                   defaultValue={password}
                 />
               </View>
-
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.inputField}
-                  placeholder="Address"
-                  onChangeText={(addr) => setAddress(addr)}
-                  defaultValue={address}
-                />
-              </View>
             </View>
           </TouchableWithoutFeedback>
         </KeyboardAwareScrollView>
         <View style={styles.bView}>
           <TouchableOpacity style={styles.buttonView}>
-            <Button title="Sign Up" onPress={signUpUser} />
+            <Button title="Log In" onPress={logInUser} />
           </TouchableOpacity>
         </View>
         <View style={styles.footerContainer}>
           <Text style={styles.footerText}>
-            Already have an account?
+            Don't have an account?
             <Button
-              title="Log In"
-              onPress={() => navigation.navigate("LogIn")}
+              title="SignUp"
+              onPress={() => navigation.navigate("SignUp")}
             />
           </Text>
         </View>
@@ -159,7 +130,8 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontWeight: "bold",
-    fontSize: 30,
+    fontSize: 40,
+    color: "#3A1078",
   },
   inputContainer: {
     paddingTop: 40,
@@ -170,12 +142,12 @@ const styles = StyleSheet.create({
     width: "90%",
     borderRadius: 10,
     padding: 10,
-    borderBottomWidth: 1,
+    borderBottomWidth: 2,
   },
   bView: {
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: "1%",
+    marginBottom: "10%",
   },
   buttonView: {
     width: 130,
@@ -190,11 +162,11 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     shadowOffset: { width: 1, height: 13 },
   },
-  signUpPaper: {
+  loginPaperContainer: {
     width: "100%",
     height: "100%",
     marginTop: 20,
-    backgroundColor: "#B9F3FC",
+    backgroundColor: "#FFE5F1",
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
     shadowColor: "rgba(0, 0, 0, 0.1)",
@@ -205,7 +177,7 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     color: "black",
-    marginBottom: "105%",
+    marginBottom: "120%",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -217,4 +189,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUpScreen;
+export default LogInScreen;
