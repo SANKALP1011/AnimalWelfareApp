@@ -4,9 +4,24 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SignUpScreen from "./src/Screens/Authentication/SignUpScreen";
 import LogInScreen from "./src/Screens/Authentication/LogInScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect } from "react";
 
 const Stack = createNativeStackNavigator();
 export default function App() {
+  const checkS = async () => {
+    const user = await AsyncStorage.getItem("user");
+    const u = JSON.parse(user);
+    console.log(u.UserName);
+    if (user) {
+      console.log("logged in");
+    } else {
+      console.log("loggeed out");
+    }
+  };
+  useEffect(() => {
+    checkS();
+  });
   return (
     <NavigationContainer>
       <Stack.Navigator

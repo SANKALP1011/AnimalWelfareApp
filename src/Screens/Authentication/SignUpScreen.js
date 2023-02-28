@@ -9,62 +9,93 @@ import {
   Keyboard,
   TouchableOpacity,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import ImageHolder from "../../Components/ImageHolder";
 import SignUpImage from "../../Assets/SignUp.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { signUpUser } from "../../Service/User.service";
+import axios from "axios";
 
-export const SignUpScreen = () => {
+export const SignUpScreen = ({ navigation }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
+  const [data, setData] = useState([]);
 
   const postConfig = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      UserName: name,
-      Email: email,
-      Password: password,
-      Address: address,
-    }),
+    UserName: name,
+    Email: email,
+    Password: password,
+    Address: address,
   };
 
-  const signUpUser = async () => {
+  const signUp = async () => {
     if (!name.trim() || !email.trim() || !password.trim() || !address.trim()) {
       Alert.alert("Please enter the details before signing up !");
     } else {
       try {
-        await fetch(
-          "https://animal-welfare-api.herokuapp.com/SignUp",
-          postConfig
-        ).then((res) => {
-          if (!res.ok) {
-            console.log(res.body);
-            Alert.alert(
-              "Please check that you are entering the credentials in right format before signing up"
-            );
-          } else {
-            res
-              .json()
-              .then((data) => {
-                console.log(data);
-                Alert.alert("You are signed up successfully");
-              })
-              .catch((e) => {
-                Alert.alert(e);
-              });
-          }
-        });
+        await axios
+          .post("https://animal-welfare-api.herokuapp.com/SignUp", postConfig)
+          .then((response) => {
+            setData(response.data);
+            AsyncStorage.setItem("user", JSON.stringify(response.data));
+          })
+          .catch((err) => {
+            console.log(err.response);
+          });
+
+        // await signUpUser(name, email, password, address)
+        //   .then((res) => {
+        //     console.log(res.data);
+        //     var d = JSON.stringify(res.data);
+        //     console.log(d);
+        //   })
+        //   .catch((e) => {});
+        // await fetch(
+        //   "https://animal-welfare-api.herokuapp.com/SignUp",
+        //   postConfig
+        // ).then((res) => {
+        //   if (!res.ok) {
+        //     console.log(res.body);
+        //     Alert.alert(
+        //       "Please check that you are entering the credentials in right format before signing up"
+        //     );
+        //   } else {
+        //     res
+        //       .json()
+        //       .then((data) => {
+        //         console.log(data);
+        //         Alert.alert("You are signed up successfully");
+        //       })
+        //       .catch((e) => {
+        //         Alert.alert(e);
+        //       });
+        //   }
+        // });
+        const d = await AsyncStorage.getItem("user");
+        console.log(d);
       } catch (e) {
         Alert.alert(e);
       }
     }
+    // useEffect(async () => {
+    //   const v = await AsyncStorage.getItem("user");
+    //   console.log(v);
+    // }, []);
   };
 
   return (
     <View style={styles.container}>
+      {/* {data ? (
+        Object.keys(data).map((key) => {
+          return <Text>{data[key].UserName}</Text>;
+        })
+      ) : (
+        <Text style={styles.textStyle}>Sign Up</Text>
+      )} */}
+
       <View style={styles.ImageContainer}>
         <ImageHolder imgSource={SignUpImage} />
       </View>
@@ -116,7 +147,7 @@ export const SignUpScreen = () => {
         </KeyboardAwareScrollView>
         <View style={styles.bView}>
           <TouchableOpacity style={styles.buttonView}>
-            <Button title="Sign Up" onPress={signUpUser} />
+            <Button title="Sign Up" onPress={signUp} />
           </TouchableOpacity>
         </View>
         <View style={styles.footerContainer}>
@@ -194,7 +225,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     marginTop: 20,
-    backgroundColor: "#B9F3FC",
+    backgroundColor: "#D9D7F1",
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
     shadowColor: "rgba(0, 0, 0, 0.1)",
