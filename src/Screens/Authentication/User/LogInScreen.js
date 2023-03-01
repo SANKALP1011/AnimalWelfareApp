@@ -8,16 +8,17 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
-import { Link } from "@react-navigation/native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import ImageHolder from "../../Components/ImageHolder";
-import SignUpImage from "../../Assets/SignUp.png";
+import ImageHolder from "../../../Components/ImageHolder";
+import SignUpImage from "../../../Assets/SignUp.png";
 import { useState } from "react";
 
 export const LogInScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loader, showLoader] = useState(false);
 
   const postConfig = {
     method: "POST",
@@ -32,24 +33,29 @@ export const LogInScreen = ({ navigation }) => {
     if (!email.trim() || !password.trim()) {
       Alert.alert("Please enter your email and password!");
     } else {
-      try {
-        await fetch(
-          "https://animal-welfare-api.herokuapp.com/LogIn",
-          postConfig
-        ).then((res) => {
-          if (!res.ok) {
-            Alert.alert(
-              "Sorry , This user does not exist in our database. Please check that you are writing correct mail and password before logging in."
-            );
-          } else {
-            res.json().then((data) => {
-              Alert.alert("You are successfully logged in !");
-            });
-          }
-        });
-      } catch (err) {
-        console.log(err);
-      }
+      showLoader(true);
+      setTimeout(async () => {
+        try {
+          await fetch(
+            "https://animal-welfare-api.herokuapp.com/LogIn",
+            postConfig
+          ).then((res) => {
+            if (!res.ok) {
+              showLoader(false);
+              Alert.alert(
+                "Sorry , This user does not exist in our database. Please check that you are writing correct mail and password before logging in."
+              );
+            } else {
+              res.json().then((data) => {
+                showLoader(false);
+                Alert.alert("You are successfully logged in !");
+              });
+            }
+          });
+        } catch (err) {
+          console.log(err);
+        }
+      }, 3000);
     }
   };
 
@@ -58,6 +64,7 @@ export const LogInScreen = ({ navigation }) => {
       <View style={styles.ImageContainer}>
         <ImageHolder imgSource={SignUpImage} />
       </View>
+      <ActivityIndicator size="large" color="red" animating={loader} />
       <View style={styles.textContainer}>
         <Text style={styles.textStyle}>Log In</Text>
       </View>
@@ -73,7 +80,6 @@ export const LogInScreen = ({ navigation }) => {
                   defaultValue={email}
                 />
               </View>
-
               <View style={styles.inputContainer}>
                 <TextInput
                   style={styles.inputField}

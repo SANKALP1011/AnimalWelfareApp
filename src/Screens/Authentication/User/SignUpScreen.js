@@ -11,10 +11,10 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import ImageHolder from "../../Components/ImageHolder";
-import SignUpImage from "../../Assets/SignUp.png";
+import ImageHolder from "../../../Components/ImageHolder";
+import SignUpImage from "../../../Assets/SignUp.png";
 import { useEffect, useState } from "react";
-import { signUpUser } from "../../Service/User.service";
+import { signUpUser } from "../../../Service/User.service";
 import axios from "axios";
 
 export const SignUpScreen = ({ navigation }) => {
@@ -22,7 +22,6 @@ export const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
-  const [data, setData] = useState([]);
 
   const postConfig = {
     UserName: name,
@@ -36,14 +35,23 @@ export const SignUpScreen = ({ navigation }) => {
       Alert.alert("Please enter the details before signing up !");
     } else {
       try {
-        await axios
-          .post("https://animal-welfare-api.herokuapp.com/SignUp", postConfig)
+        // await axios
+        //   .post("https://animal-welfare-api.herokuapp.com/SignUp", postConfig)
+        //   .then((response) => {
+        //     AsyncStorage.setItem("user", JSON.stringify(response.data));
+        //     Alert.alert("You are signed up");
+        //   })
+        //   .catch((err) => {
+        //     Alert.alert(err);
+        //   });
+
+        await signUpUser(name, email, password, address)
           .then((response) => {
-            setData(response.data);
-            AsyncStorage.setItem("user", JSON.stringify(response.data));
+            AsyncStorage.setItem("user", JSON.stringify(response));
+            Alert.alert("Sign Up done");
           })
           .catch((err) => {
-            console.log(err.response);
+            Alert.alert(err);
           });
 
         // await signUpUser(name, email, password, address)

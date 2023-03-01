@@ -11,8 +11,8 @@ export async function signUpUser(name, email, password, address) {
     postConfig
   );
   if (!response.ok) {
-    console.log(response);
+    return response.data;
   } else {
-    return response;
+    return response.data;
   }
 }
