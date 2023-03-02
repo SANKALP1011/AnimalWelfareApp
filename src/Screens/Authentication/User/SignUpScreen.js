@@ -35,16 +35,6 @@ export const SignUpScreen = ({ navigation }) => {
       Alert.alert("Please enter the details before signing up !");
     } else {
       try {
-        // await axios
-        //   .post("https://animal-welfare-api.herokuapp.com/SignUp", postConfig)
-        //   .then((response) => {
-        //     AsyncStorage.setItem("user", JSON.stringify(response.data));
-        //     Alert.alert("You are signed up");
-        //   })
-        //   .catch((err) => {
-        //     Alert.alert(err);
-        //   });
-
         await signUpUser(name, email, password, address)
           .then((response) => {
             AsyncStorage.setItem("user", JSON.stringify(response));
@@ -53,57 +43,15 @@ export const SignUpScreen = ({ navigation }) => {
           .catch((err) => {
             Alert.alert(err);
           });
-
-        // await signUpUser(name, email, password, address)
-        //   .then((res) => {
-        //     console.log(res.data);
-        //     var d = JSON.stringify(res.data);
-        //     console.log(d);
-        //   })
-        //   .catch((e) => {});
-        // await fetch(
-        //   "https://animal-welfare-api.herokuapp.com/SignUp",
-        //   postConfig
-        // ).then((res) => {
-        //   if (!res.ok) {
-        //     console.log(res.body);
-        //     Alert.alert(
-        //       "Please check that you are entering the credentials in right format before signing up"
-        //     );
-        //   } else {
-        //     res
-        //       .json()
-        //       .then((data) => {
-        //         console.log(data);
-        //         Alert.alert("You are signed up successfully");
-        //       })
-        //       .catch((e) => {
-        //         Alert.alert(e);
-        //       });
-        //   }
-        // });
-        const d = await AsyncStorage.getItem("user");
         console.log(d);
       } catch (e) {
         Alert.alert(e);
       }
     }
-    // useEffect(async () => {
-    //   const v = await AsyncStorage.getItem("user");
-    //   console.log(v);
-    // }, []);
   };
 
   return (
     <View style={styles.container}>
-      {/* {data ? (
-        Object.keys(data).map((key) => {
-          return <Text>{data[key].UserName}</Text>;
-        })
-      ) : (
-        <Text style={styles.textStyle}>Sign Up</Text>
-      )} */}
-
       <View style={styles.ImageContainer}>
         <ImageHolder imgSource={SignUpImage} />
       </View>
