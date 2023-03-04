@@ -15,20 +15,12 @@ import ImageHolder from "../../../Components/ImageHolder";
 import SignUpImage from "../../../Assets/SignUp.png";
 import { useEffect, useState } from "react";
 import { signUpUser } from "../../../Service/User.service";
-import axios from "axios";
 
 export const SignUpScreen = ({ navigation }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
-
-  const postConfig = {
-    UserName: name,
-    Email: email,
-    Password: password,
-    Address: address,
-  };
 
   const signUp = async () => {
     if (!name.trim() || !email.trim() || !password.trim() || !address.trim()) {

@@ -6,20 +6,17 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { AppAuthContext } from "../../Context/AuthProvider";
+import Dog from "../../Assets/Dog.png";
 
-export const UserHomeScreen = () => {
-  const data = useContext(AppAuthContext);
+export const UserHomeScreen = ({ navigation }) => {
+  const { user, updateUser } = useContext(AppAuthContext);
 
-  // const getUser = () => {
-  //   const data = AsyncStorage.getItem("user");
-  //   const parseData = JSON.parse(data);
-  //   setUser(parseData);
-  // };
   useEffect(() => {
-    console.log(data.UserName);
-    console.log(data._id);
+    updateUser();
+    console.log(user);
   }, []);
   return (
     <View style={styles.container}>
@@ -28,16 +25,24 @@ export const UserHomeScreen = () => {
           <TouchableOpacity
             style={styles.homeCardContainer}
             onPress={() => {
-              console.log("card clicked");
+              navigation.navigate("InjuredAnimal");
             }}
-          ></TouchableOpacity>
+          >
+            <View>
+              <Text>Report an injured animal</Text>
+            </View>
+          </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.homeCardContainer}
             onPress={() => {
               console.log("card clicked");
             }}
-          ></TouchableOpacity>
+          >
+            <View>
+              <Text>Nearby Animal</Text>
+            </View>
+          </TouchableOpacity>
         </View>
         <View style={styles.cardContainer}>
           <TouchableOpacity
@@ -45,23 +50,56 @@ export const UserHomeScreen = () => {
             onPress={() => {
               console.log("card clicked");
             }}
-          ></TouchableOpacity>
+          >
+            <View>
+              <Text>Donate</Text>
+            </View>
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.bottamCardContainer}
             onPress={() => {
               console.log("card clicked");
             }}
-          ></TouchableOpacity>
+          >
+            <Text>Add Pet</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.cardContainer}>
+          <TouchableOpacity
+            style={styles.lastCardContainer}
+            onPress={() => {
+              console.log("card clicked");
+            }}
+          >
+            <View>
+              <Text>Donate</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.lastCardContainer}
+            onPress={() => {
+              console.log("card clicked");
+            }}
+          >
+            <Text>Add Pet</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
 
-      <View>
-        <View style={styles.userDetailsContainer}>
-          <Text>{data.UserName}</Text>
-          <Text>{data._id}</Text>
-          <Text>{data.location.formattedAddress}</Text>
-          <Text>{data.Email}</Text>
-        </View>
+      <View style={styles.userDetailsContainer}>
+        {user ? (
+          <View>
+            <Text>{user.UserName}</Text>
+            <Text>{user.Email}</Text>
+          </View>
+        ) : (
+          <View>
+            <ActivityIndicator
+              size="large"
+              animating={true}
+            ></ActivityIndicator>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -103,6 +141,21 @@ const styles = StyleSheet.create({
     shadowRadius: 7.49,
     borderRadius: 15,
   },
+  lastCardContainer: {
+    width: 180,
+    height: 150,
+    marginTop: "8%",
+    marginLeft: "2%",
+    backgroundColor: "#E90064",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    borderRadius: 15,
+  },
   userDetailsContainer: {
     width: 350,
     height: 300,
@@ -119,6 +172,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.37,
     shadowRadius: 7.49,
     borderRadius: 15,
+  },
+  img: {
+    width: 10,
+    height: 10,
   },
 });
 export default UserHomeScreen;
