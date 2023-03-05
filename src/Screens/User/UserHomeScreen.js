@@ -20,8 +20,35 @@ export const UserHomeScreen = ({ navigation }) => {
   }, []);
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <View style={styles.cardContainer}>
+      <View style={styles.userDetailsContainer}>
+        {user ? (
+          <View>
+            <View style={styles.userProfile}>
+              <Text style={styles.textStyle}>
+                Welcome back, {user.UserName}
+              </Text>
+              {user.hasReportedAnimal ? (
+                <View>
+                  <Text> ✅ </Text>
+                </View>
+              ) : (
+                <View>
+                  <Text>Animal Reported : ❌</Text>
+                </View>
+              )}
+            </View>
+          </View>
+        ) : (
+          <View>
+            <ActivityIndicator
+              size="large"
+              animating={true}
+            ></ActivityIndicator>
+          </View>
+        )}
+      </View>
+      <ScrollView style={{ flex: 1 }} horizontal={true}>
+        <View style={styles.horizontalScrollBox}>
           <TouchableOpacity
             style={styles.homeCardContainer}
             onPress={() => {
@@ -43,10 +70,9 @@ export const UserHomeScreen = ({ navigation }) => {
               <Text>Nearby Animal</Text>
             </View>
           </TouchableOpacity>
-        </View>
-        <View style={styles.cardContainer}>
+
           <TouchableOpacity
-            style={styles.bottamCardContainer}
+            style={styles.homeCardContainer}
             onPress={() => {
               console.log("card clicked");
             }}
@@ -56,17 +82,16 @@ export const UserHomeScreen = ({ navigation }) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.bottamCardContainer}
+            style={styles.homeCardContainer}
             onPress={() => {
               console.log("card clicked");
             }}
           >
             <Text>Add Pet</Text>
           </TouchableOpacity>
-        </View>
-        <View style={styles.cardContainer}>
+
           <TouchableOpacity
-            style={styles.lastCardContainer}
+            style={styles.homeCardContainer}
             onPress={() => {
               console.log("card clicked");
             }}
@@ -76,7 +101,7 @@ export const UserHomeScreen = ({ navigation }) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.lastCardContainer}
+            style={styles.homeCardContainer}
             onPress={() => {
               console.log("card clicked");
             }}
@@ -85,68 +110,48 @@ export const UserHomeScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-
-      <View style={styles.userDetailsContainer}>
-        {user ? (
-          <View>
-            <Text>{user.UserName}</Text>
-            <Text>{user.Email}</Text>
-          </View>
-        ) : (
-          <View>
-            <ActivityIndicator
-              size="large"
-              animating={true}
-            ></ActivityIndicator>
-          </View>
-        )}
-      </View>
+      <ScrollView style={{ flex: 1, width: "100%", height: "100%" }}>
+        <View style={styles.verticalScrolView}>
+          <Text>This is demo</Text>
+        </View>
+        <View style={styles.verticalScrolView}>
+          <Text>This is demo</Text>
+        </View>
+        <View style={styles.verticalScrolView}>
+          <Text>This is demo</Text>
+        </View>
+      </ScrollView>
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: "column",
   },
+  horizontalScrollBox: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  // homeCardContainer: {
+  //   width: 100,
+  //   height: 100,
+  //   backgroundColor: "#f0f0f0",
+  //   margin: 10,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // },
   cardContainer: {
     flexDirection: "row",
+  },
+  horizontalScrollView: {
+    marginTop: "7%",
   },
   homeCardContainer: {
     width: 180,
     height: 150,
-    marginTop: "20%",
-    marginLeft: "2%",
+    margin: 10,
     backgroundColor: "#865DFF",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
-    borderRadius: 15,
-  },
-  bottamCardContainer: {
-    width: 180,
-    height: 150,
-    marginTop: "8%",
-    marginLeft: "2%",
-    backgroundColor: "#FFFF00",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
-    borderRadius: 15,
-  },
-  lastCardContainer: {
-    width: 180,
-    height: 150,
-    marginTop: "8%",
-    marginLeft: "2%",
-    backgroundColor: "#E90064",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -158,10 +163,9 @@ const styles = StyleSheet.create({
   },
   userDetailsContainer: {
     width: 350,
-    height: 300,
-    marginTop: "1%",
-    marginBottom: "15%",
-    marginLeft: "4%",
+    height: 150,
+    marginTop: "20%",
+    marginLeft: "5%",
     marginRight: "4%",
     backgroundColor: "#C1EFFF",
     shadowColor: "#000",
@@ -173,9 +177,136 @@ const styles = StyleSheet.create({
     shadowRadius: 7.49,
     borderRadius: 15,
   },
-  img: {
-    width: 10,
-    height: 10,
+  userProfile: {
+    marginTop: "2%",
+    marginBottom: "2%",
+    marginLeft: "2%",
+  },
+  textStyle: {
+    fontSize: 25,
+    fontWeight: "bold",
+  },
+  verticalScrolView: {
+    marginTop: "2%",
+    height: "70%",
+    marginBottom: "5%",
+    width: "90%",
+    marginLeft: "5%",
+    marginRight: "10%",
+    backgroundColor: "#C1EFFF",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    borderRadius: 15,
+    flexDirection: "row",
   },
 });
 export default UserHomeScreen;
+
+{
+  /* <View style={styles.container}>
+  <ScrollView style={{ flex: 1 }}>
+    <View style={styles.horizontalScrollBox}>
+      <TouchableOpacity
+        style={styles.homeCardContainer}
+        onPress={() => {
+          navigation.navigate("InjuredAnimal");
+        }}
+      >
+        <View>
+          <Text>Report an injured animal</Text>
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.homeCardContainer}
+        onPress={() => {
+          console.log("card clicked");
+        }}
+      >
+        <View>
+          <Text>Nearby Animal</Text>
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.homeCardContainer}
+        onPress={() => {
+          console.log("card clicked");
+        }}
+      >
+        <View>
+          <Text>Donate</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.homeCardContainer}
+        onPress={() => {
+          console.log("card clicked");
+        }}
+      >
+        <Text>Add Pet</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.homeCardContainer}
+        onPress={() => {
+          console.log("card clicked");
+        }}
+      >
+        <View>
+          <Text>Donate</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.homeCardContainer}
+        onPress={() => {
+          console.log("card clicked");
+        }}
+      >
+        <Text>Add Pet</Text>
+      </TouchableOpacity>
+    </View>
+  </ScrollView>
+  <ScrollView style={{ flex: 0, width: 200 }}>
+    <View style={styles.horizontalScrollBox}>
+      <Text>This is demo</Text>
+    </View>
+    <View style={styles.horizontalScrollBox}>
+      <Text>This is demo</Text>
+    </View>
+    <View style={styles.horizontalScrollBox}>
+      <Text>This is demo</Text>
+    </View>
+    <View style={styles.horizontalScrollBox}>
+      <Text>This is demo</Text>
+    </View>
+    <View style={styles.horizontalScrollBox}>
+      <Text>This is demo</Text>
+    </View>
+  </ScrollView>
+</View>
+
+const styles = {
+  container: {
+    flex: 1,
+    flexDirection: "column",
+  },
+  horizontalScrollBox: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  homeCardContainer: {
+    width: 100,
+    height: 100,
+    backgroundColor: "#f0f0f0",
+    margin: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+}; */
+}

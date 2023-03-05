@@ -101,7 +101,7 @@ export const LogInScreen = ({ navigation }) => {
             Don't have an account?
             <Button
               title="SignUp"
-              onPress={() => navigation.navigate("SignUp")}
+              onPress={() => navigation.navigate("UserHome")}
             />
           </Text>
         </View>

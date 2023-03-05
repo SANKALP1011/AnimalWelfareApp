@@ -9,6 +9,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthProvider, AppAuthContext } from "./src/Context/AuthProvider";
 
 const Stack = createNativeStackNavigator();
+
 export default function App() {
   return (
     <AuthProvider>
@@ -21,7 +22,6 @@ function AppWrapper() {
 
   useEffect(() => {
     updateUser();
-    console.log(user);
   }, []);
 
   return (
