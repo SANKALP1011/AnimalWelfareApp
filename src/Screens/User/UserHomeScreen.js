@@ -110,11 +110,23 @@ export const UserHomeScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <ScrollView style={{ flex: 1, width: "100%", height: "100%" }}>
-        <View style={styles.verticalScrolView}>
+      <ScrollView style={{ flex: 0, height: "50" }}>
+        <View
+          style={[styles.verticalScrolView, { backgroundColor: "#FFA3FD" }]}
+        >
           <Text>This is demo</Text>
         </View>
-        <View style={styles.verticalScrolView}>
+        <View
+          style={[styles.verticalScrolView, { backgroundColor: "#DFFFD8" }]}
+        >
+          <Text>This is demo</Text>
+        </View>
+        <View
+          style={[styles.verticalScrolView, { backgroundColor: "#FFB84C" }]}
+        >
+          <Text>This is demo</Text>
+        </View>
+        <View style={[styles.verticalScrolView, { backgroundColor: "black" }]}>
           <Text>This is demo</Text>
         </View>
         <View style={styles.verticalScrolView}>
@@ -167,7 +179,7 @@ const styles = StyleSheet.create({
     marginTop: "20%",
     marginLeft: "5%",
     marginRight: "4%",
-    backgroundColor: "#C1EFFF",
+    backgroundColor: "#E3DFFD",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -187,13 +199,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   verticalScrolView: {
-    marginTop: "2%",
-    height: "70%",
-    marginBottom: "5%",
+    marginTop: "7%",
+    height: "50%",
     width: "90%",
     marginLeft: "5%",
-    marginRight: "10%",
-    backgroundColor: "#C1EFFF",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
