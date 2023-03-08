@@ -5,6 +5,7 @@ import SignUpScreen from "./src/Screens/Authentication/User/SignUpScreen";
 import LogInScreen from "./src/Screens/Authentication/User/LogInScreen";
 import UserHomeScreen from "./src/Screens/User/UserHomeScreen";
 import InjuredAnimal from "./src/Screens/Animal/InjuredAnimal.screen";
+import UserDetailScreen from "./src/Screens/User/UserDetailScreen";
 import { useContext, useEffect, useState } from "react";
 import { AuthProvider, AppAuthContext } from "./src/Context/AuthProvider";
 
@@ -37,6 +38,7 @@ function AppWrapper() {
           <>
             <Stack.Screen name="UserHome" component={UserHomeScreen} />
             <Stack.Screen name="InjuredAnimal" component={InjuredAnimal} />
+            <Stack.Screen name="UserDetails" component={UserDetailScreen} />
           </>
         )}
       </Stack.Navigator>

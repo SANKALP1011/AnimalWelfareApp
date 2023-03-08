@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useContext, useEffect, useState } from "react";
 import {
   View,
@@ -7,10 +6,13 @@ import {
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
+  Button,
+  Pressable,
+  Dimensions,
 } from "react-native";
 import { AppAuthContext } from "../../Context/AuthProvider";
 import Dog from "../../Assets/Dog.png";
-
+const appWidth = Dimensions.get("screen").width;
 export const UserHomeScreen = ({ navigation }) => {
   const { user, updateUser } = useContext(AppAuthContext);
 
@@ -27,15 +29,14 @@ export const UserHomeScreen = ({ navigation }) => {
               <Text style={styles.textStyle}>
                 Welcome back, {user.UserName}
               </Text>
-              {user.hasReportedAnimal ? (
-                <View>
-                  <Text> ✅ </Text>
-                </View>
-              ) : (
-                <View>
-                  <Text>Animal Reported : ❌</Text>
-                </View>
-              )}
+              <Pressable
+                style={styles.button}
+                onPress={() => {
+                  navigation.navigate("UserDetails");
+                }}
+              >
+                <Text style={styles.text}>Details</Text>
+              </Pressable>
             </View>
           </View>
         ) : (
@@ -50,7 +51,7 @@ export const UserHomeScreen = ({ navigation }) => {
       <ScrollView style={{ flex: 1 }} horizontal={true}>
         <View style={styles.horizontalScrollBox}>
           <TouchableOpacity
-            style={styles.homeCardContainer}
+            style={[styles.homeCardContainer, { backgroundColor: "#FFEFEF" }]}
             onPress={() => {
               navigation.navigate("InjuredAnimal");
             }}
@@ -61,7 +62,7 @@ export const UserHomeScreen = ({ navigation }) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={styles.homeCardContainer}
+            style={[styles.homeCardContainer, { backgroundColor: "#DAE5D0" }]}
             onPress={() => {
               console.log("card clicked");
             }}
@@ -72,7 +73,7 @@ export const UserHomeScreen = ({ navigation }) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={styles.homeCardContainer}
+            style={[styles.homeCardContainer, { backgroundColor: "#FFCEFE" }]}
             onPress={() => {
               console.log("card clicked");
             }}
@@ -82,7 +83,7 @@ export const UserHomeScreen = ({ navigation }) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.homeCardContainer}
+            style={[styles.homeCardContainer, { backgroundColor: "#B8E8FC" }]}
             onPress={() => {
               console.log("card clicked");
             }}
@@ -91,7 +92,7 @@ export const UserHomeScreen = ({ navigation }) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={styles.homeCardContainer}
+            style={[styles.homeCardContainer, { backgroundColor: "#D2DAFF" }]}
             onPress={() => {
               console.log("card clicked");
             }}
@@ -101,7 +102,7 @@ export const UserHomeScreen = ({ navigation }) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.homeCardContainer}
+            style={[styles.homeCardContainer, { backgroundColor: "#FEFBE7" }]}
             onPress={() => {
               console.log("card clicked");
             }}
@@ -110,26 +111,20 @@ export const UserHomeScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <ScrollView style={{ flex: 0, height: "50" }}>
+      <ScrollView style={{ width: "100%", flexGrow: 1 }}>
         <View
-          style={[styles.verticalScrolView, { backgroundColor: "#FFA3FD" }]}
+          style={[styles.verticalScrolView, { backgroundColor: "#EDDBC7" }]}
         >
           <Text>This is demo</Text>
         </View>
         <View
-          style={[styles.verticalScrolView, { backgroundColor: "#DFFFD8" }]}
+          style={[styles.verticalScrolView, { backgroundColor: "#F8EAD8" }]}
         >
           <Text>This is demo</Text>
         </View>
         <View
-          style={[styles.verticalScrolView, { backgroundColor: "#FFB84C" }]}
+          style={[styles.verticalScrolView, { backgroundColor: "#F9F5E7" }]}
         >
-          <Text>This is demo</Text>
-        </View>
-        <View style={[styles.verticalScrolView, { backgroundColor: "black" }]}>
-          <Text>This is demo</Text>
-        </View>
-        <View style={styles.verticalScrolView}>
           <Text>This is demo</Text>
         </View>
       </ScrollView>
@@ -145,14 +140,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  // homeCardContainer: {
-  //   width: 100,
-  //   height: 100,
-  //   backgroundColor: "#f0f0f0",
-  //   margin: 10,
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  // },
   cardContainer: {
     flexDirection: "row",
   },
@@ -163,7 +150,6 @@ const styles = StyleSheet.create({
     width: 180,
     height: 150,
     margin: 10,
-    backgroundColor: "#865DFF",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -174,12 +160,11 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   userDetailsContainer: {
-    width: 350,
+    width: appWidth - 40,
     height: 150,
     marginTop: "20%",
-    marginLeft: "5%",
-    marginRight: "4%",
-    backgroundColor: "#E3DFFD",
+    marginHorizontal: "5%",
+    backgroundColor: "#BCCEF8",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -190,17 +175,20 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   userProfile: {
+    marginTop: "4%",
+    marginBottom: "10%%",
+    marginLeft: "3%",
+  },
+  profileSubText: {
     marginTop: "2%",
-    marginBottom: "2%",
-    marginLeft: "2%",
   },
   textStyle: {
     fontSize: 25,
     fontWeight: "bold",
   },
   verticalScrolView: {
-    marginTop: "7%",
-    height: "50%",
+    height: "60%",
+    marginBottom: "10%",
     width: "90%",
     marginLeft: "5%",
     shadowColor: "#000",
@@ -211,111 +199,24 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.37,
     shadowRadius: 7.49,
     borderRadius: 15,
-    flexDirection: "row",
+    flexDirection: "column",
+  },
+  button: {
+    width: 100,
+    height: 40,
+    marginTop: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 4,
+    backgroundColor: "black",
+    borderRadius: 15,
+  },
+  text: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "white",
   },
 });
 export default UserHomeScreen;
-
-{
-  /* <View style={styles.container}>
-  <ScrollView style={{ flex: 1 }}>
-    <View style={styles.horizontalScrollBox}>
-      <TouchableOpacity
-        style={styles.homeCardContainer}
-        onPress={() => {
-          navigation.navigate("InjuredAnimal");
-        }}
-      >
-        <View>
-          <Text>Report an injured animal</Text>
-        </View>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.homeCardContainer}
-        onPress={() => {
-          console.log("card clicked");
-        }}
-      >
-        <View>
-          <Text>Nearby Animal</Text>
-        </View>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.homeCardContainer}
-        onPress={() => {
-          console.log("card clicked");
-        }}
-      >
-        <View>
-          <Text>Donate</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.homeCardContainer}
-        onPress={() => {
-          console.log("card clicked");
-        }}
-      >
-        <Text>Add Pet</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.homeCardContainer}
-        onPress={() => {
-          console.log("card clicked");
-        }}
-      >
-        <View>
-          <Text>Donate</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.homeCardContainer}
-        onPress={() => {
-          console.log("card clicked");
-        }}
-      >
-        <Text>Add Pet</Text>
-      </TouchableOpacity>
-    </View>
-  </ScrollView>
-  <ScrollView style={{ flex: 0, width: 200 }}>
-    <View style={styles.horizontalScrollBox}>
-      <Text>This is demo</Text>
-    </View>
-    <View style={styles.horizontalScrollBox}>
-      <Text>This is demo</Text>
-    </View>
-    <View style={styles.horizontalScrollBox}>
-      <Text>This is demo</Text>
-    </View>
-    <View style={styles.horizontalScrollBox}>
-      <Text>This is demo</Text>
-    </View>
-    <View style={styles.horizontalScrollBox}>
-      <Text>This is demo</Text>
-    </View>
-  </ScrollView>
-</View>
-
-const styles = {
-  container: {
-    flex: 1,
-    flexDirection: "column",
-  },
-  horizontalScrollBox: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  homeCardContainer: {
-    width: 100,
-    height: 100,
-    backgroundColor: "#f0f0f0",
-    margin: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-}; */
-}
