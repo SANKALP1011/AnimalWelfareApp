@@ -9,9 +9,17 @@ import {
   Button,
   Pressable,
   Dimensions,
+  Image,
 } from "react-native";
 import { AppAuthContext } from "../../Context/AuthProvider";
 import Dog from "../../Assets/Dog.png";
+import Money from "../../Assets/Money.png";
+import Cat from "../../Assets/Cat.png";
+import Pet from "../../Assets/Dog2.png";
+import Vet from "../../Assets/Vet.png";
+import Adopt from "../../Assets/adopt.png";
+import MiniCard from "../../Components/Minicard";
+
 const appWidth = Dimensions.get("screen").width;
 export const UserHomeScreen = ({ navigation }) => {
   const { user, updateUser } = useContext(AppAuthContext);
@@ -50,65 +58,55 @@ export const UserHomeScreen = ({ navigation }) => {
       </View>
       <ScrollView style={{ flex: 1 }} horizontal={true}>
         <View style={styles.horizontalScrollBox}>
-          <TouchableOpacity
-            style={[styles.homeCardContainer, { backgroundColor: "#FFEFEF" }]}
-            onPress={() => {
-              navigation.navigate("InjuredAnimal");
-            }}
-          >
-            <View>
-              <Text>Report an injured animal</Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.homeCardContainer, { backgroundColor: "#DAE5D0" }]}
-            onPress={() => {
-              console.log("card clicked");
-            }}
-          >
-            <View>
-              <Text>Nearby Animal</Text>
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.homeCardContainer, { backgroundColor: "#FFCEFE" }]}
-            onPress={() => {
-              console.log("card clicked");
-            }}
-          >
-            <View>
-              <Text>Donate</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.homeCardContainer, { backgroundColor: "#B8E8FC" }]}
-            onPress={() => {
-              console.log("card clicked");
-            }}
-          >
-            <Text>Add Pet</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.homeCardContainer, { backgroundColor: "#D2DAFF" }]}
-            onPress={() => {
-              console.log("card clicked");
-            }}
-          >
-            <View>
-              <Text>Donate</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.homeCardContainer, { backgroundColor: "#FEFBE7" }]}
-            onPress={() => {
-              console.log("card clicked");
-            }}
-          >
-            <Text>Add Pet</Text>
-          </TouchableOpacity>
+          <MiniCard
+            text={"Report an injured animal"}
+            image={Dog}
+            navigation={navigation}
+            location="InjuredAnimal"
+            color={"#DAE5D0"}
+          />
+          <MiniCard
+            text={"Donate to ngo"}
+            image={Money}
+            navigation={navigation}
+            location="InjuredAnimal"
+            color="#D5B4B4"
+          />
+          <MiniCard
+            text={"Nearby Animal"}
+            image={Cat}
+            navigation={navigation}
+            location="InjuredAnimal"
+            color="#97DEFF"
+          />
+          <MiniCard
+            text={"Pet Details"}
+            image={Pet}
+            navigation={navigation}
+            location="InjuredAnimal"
+            color="#655DBB"
+          />
+          <MiniCard
+            text={"Chose Pet doctor"}
+            image={Vet}
+            navigation={navigation}
+            location="InjuredAnimal"
+            color="#E90064"
+          />
+          <MiniCard
+            text={"Adopt Animal"}
+            image={Pet}
+            navigation={navigation}
+            location="InjuredAnimal"
+            color="#E5D1FA"
+          />
+          <MiniCard
+            text={"Adopted Animal Details"}
+            image={Adopt}
+            navigation={navigation}
+            location="InjuredAnimal"
+            color="#CDE990"
+          />
         </View>
       </ScrollView>
       <ScrollView style={{ width: "100%", flexGrow: 1 }}>
@@ -217,6 +215,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "white",
+  },
+  imageContainer: {
+    width: 120,
+    height: 60,
+    marginTop: "20%",
+    marginLeft: "30%",
+  },
+  cardText: {
+    fontWeight: "bold",
+    fontSize: "17px",
+    marginTop: "5%",
+    marginLeft: "6%",
   },
 });
 export default UserHomeScreen;
