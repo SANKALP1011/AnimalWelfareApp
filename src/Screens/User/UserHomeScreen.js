@@ -19,6 +19,7 @@ import Pet from "../../Assets/Dog2.png";
 import Vet from "../../Assets/Vet.png";
 import Adopt from "../../Assets/adopt.png";
 import MiniCard from "../../Components/Minicard";
+import { BigCard } from "../../Components/BigCard";
 
 const appWidth = Dimensions.get("screen").width;
 export const UserHomeScreen = ({ navigation }) => {
@@ -109,22 +110,25 @@ export const UserHomeScreen = ({ navigation }) => {
           />
         </View>
       </ScrollView>
-      <ScrollView style={{ width: "100%", flexGrow: 1 }}>
-        <View
-          style={[styles.verticalScrolView, { backgroundColor: "#EDDBC7" }]}
-        >
-          <Text>This is demo</Text>
-        </View>
-        <View
-          style={[styles.verticalScrolView, { backgroundColor: "#F8EAD8" }]}
-        >
-          <Text>This is demo</Text>
-        </View>
-        <View
-          style={[styles.verticalScrolView, { backgroundColor: "#F9F5E7" }]}
-        >
-          <Text>This is demo</Text>
-        </View>
+      <ScrollView>
+        <BigCard
+          text={"Demo"}
+          navigation={navigation}
+          location="InjuredAnimal"
+          color="#FDEBED"
+        />
+        <BigCard
+          text={"Demo"}
+          navigation={navigation}
+          location="InjuredAnimal"
+          color="#DFD3C3"
+        />
+        <BigCard
+          text={"Demo"}
+          navigation={navigation}
+          location="InjuredAnimal"
+          color="#DEBACE"
+        />
       </ScrollView>
     </View>
   );
@@ -143,19 +147,6 @@ const styles = StyleSheet.create({
   },
   horizontalScrollView: {
     marginTop: "7%",
-  },
-  homeCardContainer: {
-    width: 180,
-    height: 150,
-    margin: 10,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
-    borderRadius: 15,
   },
   userDetailsContainer: {
     width: appWidth - 40,
@@ -184,21 +175,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
   },
-  verticalScrolView: {
-    height: "60%",
-    marginBottom: "10%",
-    width: "90%",
-    marginLeft: "5%",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
-    borderRadius: 15,
-    flexDirection: "column",
-  },
+
   button: {
     width: 100,
     height: 40,
