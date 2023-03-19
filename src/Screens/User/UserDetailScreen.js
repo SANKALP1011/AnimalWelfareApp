@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { View, StyleSheet, Text, Dimensions } from "react-native";
 import { AppAuthContext } from "../../Context/AuthProvider";
 import { useContext } from "react";
+import Profile from "../../Assets/Profile.png";
+import ProfilePic from "../../Components/ProfilePic";
 const appWidth = Dimensions.get("screen").width;
 export const UserDetailScreen = ({ navigator }) => {
   const { user, updateUser } = useContext(AppAuthContext);
@@ -12,17 +14,16 @@ export const UserDetailScreen = ({ navigator }) => {
     <View>
       <View style={styles.profileContainer}>
         {user ? (
-          <View>
-            <Text>{user.UserName}</Text>
+          <View style={styles.userTopDetailsConrainer}>
+            <ProfilePic source={Profile} />
+            <Text style={styles.profileText}>{user.UserName}</Text>
             <Text>{user.Email}</Text>
           </View>
         ) : (
           <View></View>
         )}
       </View>
-      <View>
-        <Text>This is details text</Text>
-      </View>
+      <View></View>
     </View>
   );
 };
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
   profileContainer: {
     width: "100%",
     height: "60%",
-    backgroundColor: "#BCCEF8",
+    backgroundColor: "#9F73AB",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -43,6 +44,16 @@ const styles = StyleSheet.create({
     shadowRadius: 7.49,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
+  },
+  userTopDetailsConrainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "20%",
+  },
+  profileText: {
+    fontSize: "20px",
+    fontWeight: "bold",
+    marginBottom: "2%",
   },
 });
 export default UserDetailScreen;
