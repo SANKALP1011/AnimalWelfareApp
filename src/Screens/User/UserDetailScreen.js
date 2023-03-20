@@ -6,6 +6,7 @@ import Profile from "../../Assets/Profile.png";
 import ProfilePic from "../../Components/ProfilePic";
 const appWidth = Dimensions.get("screen").width;
 export const UserDetailScreen = ({ navigator }) => {
+  //kjhkhkhjkhkjhjkhkjhkjhkjhk
   const { user, updateUser } = useContext(AppAuthContext);
   useEffect(() => {
     updateUser();
