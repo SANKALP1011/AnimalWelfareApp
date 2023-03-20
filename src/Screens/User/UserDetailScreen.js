@@ -4,26 +4,34 @@ import { AppAuthContext } from "../../Context/AuthProvider";
 import { useContext } from "react";
 import Profile from "../../Assets/Profile.png";
 import ProfilePic from "../../Components/ProfilePic";
+import Tag from "../../Components/Tag";
 const appWidth = Dimensions.get("screen").width;
 export const UserDetailScreen = ({ navigator }) => {
-  //kjhkhkhjkhkjhjkhkjhkjhkjhk
   const { user, updateUser } = useContext(AppAuthContext);
   useEffect(() => {
     updateUser();
   }, []);
   return (
     <View>
-      <View style={styles.profileContainer}>
-        {user ? (
-          <View style={styles.userTopDetailsConrainer}>
+      {user ? (
+        <View>
+          <View
+            style={[styles.userTopDetailsConrainer, styles.profileContainer]}
+          >
             <ProfilePic source={Profile} />
             <Text style={styles.profileText}>{user.UserName}</Text>
             <Text>{user.Email}</Text>
           </View>
-        ) : (
-          <View></View>
-        )}
-      </View>
+          <View style={styles.tagCloud}>
+            <Tag text={user.location.formattedAddress} />
+            <Tag text={user.location.formattedAddress} />
+            <Tag text={user.location.formattedAddress} />
+          </View>
+        </View>
+      ) : (
+        <View></View>
+      )}
+
       <View></View>
     </View>
   );
@@ -34,7 +42,7 @@ const styles = StyleSheet.create({
   },
   profileContainer: {
     width: "100%",
-    height: "60%",
+    height: "70%",
     backgroundColor: "#9F73AB",
     shadowColor: "#000",
     shadowOffset: {
@@ -43,18 +51,20 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.37,
     shadowRadius: 7.49,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
   },
   userTopDetailsConrainer: {
     justifyContent: "center",
     alignItems: "center",
-    marginTop: "20%",
   },
   profileText: {
-    fontSize: "20px",
+    fontSize: 20,
     fontWeight: "bold",
     marginBottom: "2%",
+  },
+  tagCloud: {
+    flexDirection: "row",
   },
 });
 export default UserDetailScreen;
