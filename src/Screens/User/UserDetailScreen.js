@@ -4,7 +4,9 @@ import { AppAuthContext } from "../../Context/AuthProvider";
 import { useContext } from "react";
 import Profile from "../../Assets/Profile.png";
 import ProfilePic from "../../Components/ProfilePic";
-import Tag from "../../Components/Tag";
+import { BigCard } from "../../Components/BigCard";
+import { FontAwesome5, Foundation } from "@expo/vector-icons";
+
 const appWidth = Dimensions.get("screen").width;
 export const UserDetailScreen = ({ navigator }) => {
   const { user, updateUser } = useContext(AppAuthContext);
@@ -22,10 +24,16 @@ export const UserDetailScreen = ({ navigator }) => {
             <Text style={styles.profileText}>{user.UserName}</Text>
             <Text>{user.Email}</Text>
           </View>
-          <View style={styles.tagCloud}>
-            <Tag text={user.location.formattedAddress} />
-            <Tag text={user.location.formattedAddress} />
-            <Tag text={user.location.formattedAddress} />
+          <View style={styles.UserPartionContainer}>
+            <View style={[styles.partionChildContainer, styles.firstChild]}>
+              <FontAwesome5 name="dog" size={30} color="#3A1078" />
+            </View>
+            <View style={[styles.partionChildContainer]}>
+              <FontAwesome5 name="user-check" size={30} color="#3A1078" />
+            </View>
+            <View style={[styles.partionChildContainer, styles.lastChild]}>
+              <Foundation name="sheriff-badge" size={30} color="#3A1078" />
+            </View>
           </View>
         </View>
       ) : (
@@ -42,7 +50,7 @@ const styles = StyleSheet.create({
   },
   profileContainer: {
     width: "100%",
-    height: "70%",
+    height: 350,
     backgroundColor: "#9F73AB",
     shadowColor: "#000",
     shadowOffset: {
@@ -63,8 +71,29 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: "2%",
   },
-  tagCloud: {
+  UserPartionContainer: {
     flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 10,
+    marginVertical: 20,
+  },
+  partionChildContainer: {
+    flex: 1,
+    height: 50,
+    paddingHorizontal: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  firstChild: {
+    borderRightWidth: 3,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
+  },
+  lastChild: {
+    borderLeftWidth: 3,
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
   },
 });
 export default UserDetailScreen;

@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     shadowRadius: 7.49,
     justifyContent: "center",
     alignItems: "center",
-    margin: 5,
+    margin: 20,
   },
 });
 export default Tag;
