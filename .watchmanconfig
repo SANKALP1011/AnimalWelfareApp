@@ -1,0 +1,10 @@
+{
+  "watch": "ANIMALWELFAREAPP",
+  "sourceDir": "ANIMALWELFAREAPP",
+  "expression": [
+    "allof",
+    ["git", "anything"],
+    ["not", ["match", "node_modules/**"]]
+  ],
+  "fields": ["name", "exists", "mode", "size"]
+}

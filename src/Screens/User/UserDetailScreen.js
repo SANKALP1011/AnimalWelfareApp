@@ -10,9 +10,12 @@ import { FontAwesome5, Foundation } from "@expo/vector-icons";
 const appWidth = Dimensions.get("screen").width;
 export const UserDetailScreen = ({ navigator }) => {
   const { user, updateUser } = useContext(AppAuthContext);
+  var animalReportedData = [];
+  animalReportedData.push(user.animalReported);
   useEffect(() => {
     updateUser();
   }, []);
+
   return (
     <View>
       {user ? (
@@ -27,17 +30,29 @@ export const UserDetailScreen = ({ navigator }) => {
           <View style={styles.UserPartionContainer}>
             <View style={[styles.partionChildContainer, styles.firstChild]}>
               <FontAwesome5 name="dog" size={30} color="#3A1078" />
+              {Boolean(user.animalReported.length) ? (
+                <Text style={styles.iconText}>
+                  {user.animalReported.length}
+                </Text>
+              ) : (
+                <Text>0</Text>
+              )}
             </View>
             <View style={[styles.partionChildContainer]}>
               <FontAwesome5 name="user-check" size={30} color="#3A1078" />
+              <Text style={styles.iconText}>User</Text>
             </View>
             <View style={[styles.partionChildContainer, styles.lastChild]}>
               <Foundation name="sheriff-badge" size={30} color="#3A1078" />
+              <Text style={styles.iconText}>0</Text>
             </View>
           </View>
+          <View></View>
         </View>
       ) : (
-        <View></View>
+        <View>
+          <Text>...loadig</Text>
+        </View>
       )}
 
       <View></View>
@@ -94,6 +109,10 @@ const styles = StyleSheet.create({
     borderLeftWidth: 3,
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
+  },
+  iconText: {
+    fontWeight: "bold",
+    marginTop: 5,
   },
 });
 export default UserDetailScreen;
