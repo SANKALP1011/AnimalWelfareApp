@@ -16,3 +16,23 @@ export async function signUpUser(name, email, password, address) {
     return response.data;
   }
 }
+
+export async function reportInjuredAnimal(
+  AnimalType,
+  AnimalCondition,
+  AnimalAddress,
+  UserNamewhoReported
+) {
+  const data = {
+    AnimalType: AnimalType,
+    AnimalCondition: AnimalCondition,
+    AnimalAddress: AnimalAddress,
+    UserNamewhoReported: UserNamewhoReported,
+  };
+  const response = await axios.post("", data);
+  if (!response.ok) {
+    return response.data;
+  } else {
+    return response.data;
+  }
+}
