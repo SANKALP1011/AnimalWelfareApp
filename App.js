@@ -23,7 +23,6 @@ function AppWrapper() {
 
   useEffect(() => {
     updateUser();
-    console.log(user);
   }, []);
 
   return (
