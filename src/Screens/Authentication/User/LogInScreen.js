@@ -14,6 +14,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import ImageHolder from "../../../Components/ImageHolder";
 import SignUpImage from "../../../Assets/SignUp.png";
 import { useState } from "react";
+import { logInUser } from "../../../Service/User.service";
 
 export const LogInScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -36,24 +37,15 @@ export const LogInScreen = ({ navigation }) => {
       showLoader(true);
       setTimeout(async () => {
         try {
-          await fetch(
-            "https://animal-welfare-api.herokuapp.com/LogIn",
-            postConfig
-          ).then((res) => {
-            if (!res.ok) {
-              showLoader(false);
-              Alert.alert(
-                "Sorry , This user does not exist in our database. Please check that you are writing correct mail and password before logging in."
-              );
-            } else {
-              res.json().then((data) => {
-                showLoader(false);
-                Alert.alert("You are successfully logged in !");
-              });
-            }
-          });
-        } catch (err) {
-          console.log(err);
+          const response = await logInUser(email, password);
+          showLoader(false);
+          Alert.alert("You are successfully logged in !");
+        } catch (error) {
+          showLoader(false);
+          Alert.alert(
+            "Sorry, This user does not exist in our database. Please check that you are writing correct mail and password before logging in."
+          );
+          console.error(error);
         }
       }, 3000);
     }

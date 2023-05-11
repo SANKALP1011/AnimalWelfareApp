@@ -7,17 +7,30 @@ module.exports = {
       Password: password,
       Address: address,
     };
-    const response = await axios.post(
-      "https://animal-welfare-api.herokuapp.com/SignUp",
-      postConfig
-    );
-    if (!response.ok) {
+    try {
+      const response = await axios.post(
+        "https://animal-welfare-api.herokuapp.com/SignUp",
+        postConfig
+      );
       return response.data;
-    } else {
-      return response.data;
+    } catch (error) {
+      console.error(error);
     }
   },
-  logInUser: async (email, password) => {},
+
+  logInUser: async (email, password) => {
+    const data = { Email: email, Password: password };
+    try {
+      const response = await axios.post(
+        "https://animal-welfare-api.herokuapp.com/LogIn",
+        data
+      );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
   reportInjuredAnimal: async (
     AnimalType,
     AnimalCondition,
