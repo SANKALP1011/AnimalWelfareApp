@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SignUpScreen from "./src/Screens/Authentication/User/SignUpScreen";
 import LogInScreen from "./src/Screens/Authentication/User/LogInScreen";
 import UserHomeScreen from "./src/Screens/User/UserHomeScreen";
-import InjuredAnimal from "./src/Screens/Animal/InjuredAnimal.screen";
+import InjuredAnimal from "./src/Screens/Animal/UserSide/InjuredAnimal.screen";
 import UserDetailScreen from "./src/Screens/User/UserDetailScreen";
 import { useContext, useEffect, useState } from "react";
 import { AuthProvider, AppAuthContext } from "./src/Context/AuthProvider";

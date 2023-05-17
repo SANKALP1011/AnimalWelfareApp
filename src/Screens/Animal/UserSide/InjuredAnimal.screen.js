@@ -11,15 +11,13 @@ import {
   Alert,
 } from "react-native";
 import { useState, useEffect, useContext } from "react";
-import { AppAuthContext } from "../../Context/AuthProvider";
-import { reportInjuredAnimal } from "../../Service/User.service";
-import Animal from "../../Assets/InjuredScreen.png";
-import ImageHolder from "../../Components/ImageHolder";
+import { AppAuthContext } from "../../../Context/AuthProvider";
+import { reportInjuredAnimal } from "../../../Service/User.service";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import AnimalJSON from "../../Animated Assets/Animal.json";
-import AnimatedAsset from "../../Components/AnimatedAsset";
-import Loader from "../../Components/Loader";
-import loaderAnimation from "../../Animated Assets/Loader.json";
+import AnimalJSON from "../../../Animated Assets/Animal.json";
+import AnimatedAsset from "../../../Components/AnimatedAsset";
+import Loader from "../../../Components/Loader";
+import loaderAnimation from "../../../Animated Assets/Loader.json";
 
 export const InjuredAnimal = ({ navigation }) => {
   const [type, setType] = useState("");
