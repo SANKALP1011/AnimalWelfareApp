@@ -16,6 +16,10 @@ import { reportInjuredAnimal } from "../../Service/User.service";
 import Animal from "../../Assets/InjuredScreen.png";
 import ImageHolder from "../../Components/ImageHolder";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import AnimalJSON from "../../Animated Assets/Animal.json";
+import AnimatedAsset from "../../Components/AnimatedAsset";
+import Loader from "../../Components/Loader";
+import loaderAnimation from "../../Animated Assets/Loader.json";
 
 export const InjuredAnimal = ({ navigation }) => {
   const [type, setType] = useState("");
@@ -40,7 +44,7 @@ export const InjuredAnimal = ({ navigation }) => {
           setType("");
           setCondition("");
           setAddress("");
-        }, 3000);
+        }, 2000);
       } catch (error) {
         setLoader(false);
         Alert.alert("There was issue while reporting the animal");
@@ -51,12 +55,15 @@ export const InjuredAnimal = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      {loader && <Loader source={loaderAnimation} />}
       <View style={styles.upperContainer}>
-        <ImageHolder imgSource={Animal} />
+        <View style={styles.animatedContainer}>
+          <AnimatedAsset source={AnimalJSON} style={styles.animatedAsset} />
+        </View>
+
         <Text style={styles.headerText}>Report Injured Animal</Text>
       </View>
       <View style={styles.lowerContainer}>
-        <ActivityIndicator size="large" color="red" animating={loader} />
         <KeyboardAwareScrollView>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View>
@@ -93,12 +100,12 @@ export const InjuredAnimal = ({ navigation }) => {
           </TouchableWithoutFeedback>
         </KeyboardAwareScrollView>
 
-        <Button
+        {/* <Button
           onPress={() => {
             navigation.navigate("UserHome");
           }}
           title="Back"
-        />
+        /> */}
       </View>
     </View>
   );
@@ -122,9 +129,9 @@ const styles = StyleSheet.create({
     marginTop: 80,
   },
   lowerContainer: {
-    marginTop: 80,
+    marginTop: 50,
     height: "100%",
-    backgroundColor: "#DBDFEA",
+    backgroundColor: "#FFEBEB",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     shadowColor: "#000",
@@ -136,7 +143,7 @@ const styles = StyleSheet.create({
     shadowRadius: 7.49,
   },
   headerText: {
-    fontSize: 25,
+    fontSize: 27,
     fontWeight: "bold",
   },
   inputContainer: {
@@ -168,6 +175,17 @@ const styles = StyleSheet.create({
     elevation: 10,
     shadowRadius: 20,
     shadowOffset: { width: 1, height: 13 },
+  },
+  animatedContainer: {
+    borderRadius: 30,
+    overflow: "hidden",
+    marginBottom: 30,
+    backgroundColor: `transparent`,
+  },
+  animatedAsset: {
+    width: 200,
+    height: 200,
+    borderRadius: 20,
   },
 });
 
