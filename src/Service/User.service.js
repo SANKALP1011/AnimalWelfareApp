@@ -9,11 +9,10 @@ module.exports = {
       Password: password,
       Address: address,
     };
+    const endPoint = "/SignUp";
+    const apiLink = `${API_BASE_URL}${endPoint}`;
     try {
-      const response = await axios.post(
-        "https://animal-welfare-api.herokuapp.com/SignUp",
-        postConfig
-      );
+      const response = await axios.post(apiLink, postConfig);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -22,11 +21,10 @@ module.exports = {
 
   logInUser: async (email, password) => {
     const data = { Email: email, Password: password };
+    const endPoint = "/LogIn";
+    const apiLink = `${API_BASE_URL}${endPoint}`;
     try {
-      const response = await axios.post(
-        "https://animal-welfare-api.herokuapp.com/LogIn",
-        data
-      );
+      const response = await axios.post(apiLink, data);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -56,20 +54,3 @@ module.exports = {
     }
   },
 };
-// export async function signUpUser(name, email, password, address) {
-//   const postConfig = {
-//     UserName: name,
-//     Email: email,
-//     Password: password,
-//     Address: address,
-//   };
-//   const response = await axios.post(
-//     "https://animal-welfare-api.herokuapp.com/SignUp",
-//     postConfig
-//   );
-//   if (!response.ok) {
-//     return response.data;
-//   } else {
-//     return response.data;
-//   }
-// }
