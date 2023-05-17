@@ -1,6 +1,27 @@
 import { Text, View, StyleSheet, Button, TextInput } from "react-native";
+import { useState, useEffect, useContext } from "react";
+import { AppAuthContext } from "../../Context/AuthProvider";
+import { reportInjuredAnimal } from "../../Service/User.service";
 
 export const InjuredAnimal = ({ navigation }) => {
+  const [type, setType] = useState("");
+  const [condition, setCondition] = useState("");
+  const [address, setAddress] = useState("");
+
+  const { user, updateUser } = useContext(AppAuthContext);
+
+  useEffect(() => {
+    console.log(user);
+  }, "");
+
+  const reportAnimal = async () => {
+    try {
+      await reportInjuredAnimal(user._id, type, condition, address);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text>This is the injured animal reporting screen</Text>
@@ -8,25 +29,34 @@ export const InjuredAnimal = ({ navigation }) => {
         onPress={() => {
           navigation.navigate("UserHome");
         }}
-        title="back"
+        title="Back"
       />
       <View>
-        <TextInput />
+        <TextInput
+          placeholder="Animal Type"
+          value={type}
+          onChangeText={setType}
+        />
       </View>
       <View>
-        <TextInput />
+        <TextInput
+          placeholder="Animal Condition"
+          value={condition}
+          onChangeText={setCondition}
+        />
       </View>
       <View>
-        <TextInput />
+        <TextInput
+          placeholder="Animal Address"
+          value={address}
+          onChangeText={setAddress}
+        />
       </View>
-      <View>
-        <TextInput />
-      </View>
+      <Button onPress={reportAnimal} title="Report" />
     </View>
-    // add all the fields of the animal to be reported
-    // work with the wireframe
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

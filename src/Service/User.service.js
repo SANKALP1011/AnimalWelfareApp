@@ -1,4 +1,6 @@
 import axios from "axios";
+import { API_BASE_URL } from "../Api/api.utils";
+
 module.exports = {
   signUpUser: async (name, email, password, address) => {
     const postConfig = {
@@ -32,11 +34,27 @@ module.exports = {
   },
 
   reportInjuredAnimal: async (
+    userId,
     AnimalType,
     AnimalCondition,
-    AnimalAddress,
-    UserNamewhoReported
-  ) => {},
+    AnimalAddress
+  ) => {
+    const data = {
+      userId: userId,
+      AnimalType: AnimalType,
+      AnimalCondition: AnimalCondition,
+      AnimalAddress: AnimalAddress,
+    };
+    const endPoint = "/reportInjuredAnimal";
+    const apiLink = `${API_BASE_URL}${endPoint}?userId=${userId}`;
+    try {
+      const response = await axios.post(apiLink, data);
+      console.log("successsss");
+      return response.data;
+    } catch (e) {
+      console.log(e);
+    }
+  },
 };
 // export async function signUpUser(name, email, password, address) {
 //   const postConfig = {
@@ -55,24 +73,3 @@ module.exports = {
 //     return response.data;
 //   }
 // }
-export async function logInUser(Email, Password) {}
-
-export async function reportInjuredAnimal(
-  AnimalType,
-  AnimalCondition,
-  AnimalAddress,
-  UserNamewhoReported
-) {
-  const data = {
-    AnimalType: AnimalType,
-    AnimalCondition: AnimalCondition,
-    AnimalAddress: AnimalAddress,
-    UserNamewhoReported: UserNamewhoReported,
-  };
-  const response = await axios.post("", data);
-  if (!response.ok) {
-    return response.data;
-  } else {
-    return response.data;
-  }
-}
