@@ -13,9 +13,10 @@ module.exports = {
     const apiLink = `${API_BASE_URL}${endPoint}`;
     try {
       const response = await axios.post(apiLink, postConfig);
+      AsyncStorage.setItem("user", JSON.stringify(response.data));
       return response.data;
     } catch (error) {
-      console.error(error);
+      return error;
     }
   },
 

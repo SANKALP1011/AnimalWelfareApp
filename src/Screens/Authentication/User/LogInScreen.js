@@ -15,22 +15,15 @@ import ImageHolder from "../../../Components/ImageHolder";
 import SignUpImage from "../../../Assets/SignUp.png";
 import { useState } from "react";
 import { logInUser } from "../../../Service/User.service";
+import Loader from "../../../Components/Loader";
+import loaderAnimation from "../../../Animated Assets/Loader.json";
 
 export const LogInScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loader, showLoader] = useState(false);
 
-  const postConfig = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      Email: email,
-      Password: password,
-    }),
-  };
-
-  const logInUser = async () => {
+  const logUser = async () => {
     if (!email.trim() || !password.trim()) {
       Alert.alert("Please enter your email and password!");
     } else {
@@ -53,10 +46,10 @@ export const LogInScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      {loader && <Loader source={loaderAnimation} />}
       <View style={styles.ImageContainer}>
         <ImageHolder imgSource={SignUpImage} />
       </View>
-      <ActivityIndicator size="large" color="red" animating={loader} />
       <View style={styles.textContainer}>
         <Text style={styles.textStyle}>Log In</Text>
       </View>
@@ -85,7 +78,7 @@ export const LogInScreen = ({ navigation }) => {
         </KeyboardAwareScrollView>
         <View style={styles.bView}>
           <TouchableOpacity style={styles.buttonView}>
-            <Button title="Log In" onPress={logInUser} />
+            <Button title="Log In" onPress={logUser} />
           </TouchableOpacity>
         </View>
         <View style={styles.footerContainer}>

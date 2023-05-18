@@ -15,27 +15,27 @@ import ImageHolder from "../../../Components/ImageHolder";
 import SignUpImage from "../../../Assets/SignUp.png";
 import { useEffect, useState } from "react";
 import { signUpUser } from "../../../Service/User.service";
+import Loader from "../../../Components/Loader";
+import loaderAnimation from "../../../Animated Assets/Loader.json";
 
 export const SignUpScreen = ({ navigation }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
+  const [loader, showLoader] = useState(false);
 
   const signUp = async () => {
     if (!name.trim() || !email.trim() || !password.trim() || !address.trim()) {
       Alert.alert("Please enter the details before signing up !");
     } else {
+      showLoader(true);
       try {
-        await signUpUser(name, email, password, address)
-          .then((response) => {
-            AsyncStorage.setItem("user", JSON.stringify(response));
-            Alert.alert("Sign Up done");
-          })
-          .catch((err) => {
-            Alert.alert(err);
-          });
-        console.log(d);
+        setTimeout(async () => {
+          await signUpUser(name, email, password, address);
+          showLoader(false);
+          Alert.alert("You are signed in successfully");
+        }, 2000);
       } catch (e) {
         Alert.alert(e);
       }
@@ -44,6 +44,7 @@ export const SignUpScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      {loader && <Loader source={loaderAnimation} />}
       <View style={styles.ImageContainer}>
         <ImageHolder imgSource={SignUpImage} />
       </View>
