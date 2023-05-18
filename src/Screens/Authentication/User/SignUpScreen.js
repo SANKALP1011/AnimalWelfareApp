@@ -13,10 +13,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import ImageHolder from "../../../Components/ImageHolder";
 import SignUpImage from "../../../Assets/SignUp.png";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { signUpUser } from "../../../Service/User.service";
 import Loader from "../../../Components/Loader";
 import loaderAnimation from "../../../Animated Assets/Loader.json";
+import { AppAuthContext } from "../../../Context/AuthProvider";
 
 export const SignUpScreen = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -25,17 +26,25 @@ export const SignUpScreen = ({ navigation }) => {
   const [address, setAddress] = useState("");
   const [loader, showLoader] = useState(false);
 
+  const { user, signup } = useContext(AppAuthContext);
+  useEffect(() => {
+    if (user) {
+      navigation.navigate("UserHome"); // Navigate to the home screen if user exists
+    }
+  }, [user, navigation]);
+
   const signUp = async () => {
     if (!name.trim() || !email.trim() || !password.trim() || !address.trim()) {
       Alert.alert("Please enter the details before signing up !");
     } else {
-      showLoader(true);
       try {
+        showLoader(true);
         setTimeout(async () => {
-          await signUpUser(name, email, password, address);
+          const response = await signUpUser(name, email, password, address);
+          signup(response);
           showLoader(false);
           Alert.alert("You are signed in successfully");
-        }, 2000);
+        }, 2500);
       } catch (e) {
         Alert.alert(e);
       }

@@ -10,13 +10,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 const appWidth = Dimensions.get("screen").width;
 export const UserDetailScreen = ({ navigation }) => {
-  const { user, updateUser } = useContext(AppAuthContext);
-  var animalReportedData = [];
-  animalReportedData.push(user.animalReported);
-  useEffect(() => {
-    updateUser();
-  }, []);
-
+  const { user } = useContext(AppAuthContext);
   return (
     <View>
       {user ? (
@@ -31,7 +25,7 @@ export const UserDetailScreen = ({ navigation }) => {
           <View style={styles.UserPartionContainer}>
             <View style={[styles.partionChildContainer, styles.firstChild]}>
               <FontAwesome5 name="dog" size={30} color="#3A1078" />
-              {Boolean(user.animalReported.length) ? (
+              {user.animalReported.length ? (
                 <Text style={styles.iconText}>
                   {user.animalReported.length}
                 </Text>

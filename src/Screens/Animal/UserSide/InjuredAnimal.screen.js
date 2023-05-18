@@ -25,7 +25,7 @@ export const InjuredAnimal = ({ navigation }) => {
   const [address, setAddress] = useState("");
   const [loader, setLoader] = useState(false);
 
-  const { user, updateUser } = useContext(AppAuthContext);
+  const { user } = useContext(AppAuthContext);
 
   const reportAnimal = async () => {
     if (!type.trim() || !condition.trim() || !address.trim()) {

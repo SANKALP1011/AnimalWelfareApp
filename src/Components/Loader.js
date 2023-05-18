@@ -1,16 +1,24 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import LottieView from "lottie-react-native";
 
 const Loader = ({ source }) => {
+  const lottieRef = useRef(null);
+  useEffect(() => {
+    lottieRef.current?.reset();
+    setTimeout(() => {
+      lottieRef.current?.play();
+    }, 0);
+  }, []);
   return (
     <View style={styles.loaderContainer}>
       <View style={styles.loaderBackground} />
       <LottieView
         source={source}
-        autoPlay={true}
-        loop={true}
+        autoPlay="true"
+        loop="true"
         style={styles.loaderAnimation}
+        ref={lottieRef}
       />
     </View>
   );
