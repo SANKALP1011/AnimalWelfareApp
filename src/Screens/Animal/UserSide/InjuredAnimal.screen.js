@@ -7,14 +7,13 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
-  ActivityIndicator,
   Alert,
 } from "react-native";
 import { useState, useEffect, useContext } from "react";
 import { AppAuthContext } from "../../../Context/AuthProvider";
 import { reportInjuredAnimal } from "../../../Service/User.service";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import AnimalJSON from "../../../Animated Assets/Animal.json";
+import animalJSON from "../../../Animated Assets/Animal.json";
 import AnimatedAsset from "../../../Components/AnimatedAsset";
 import Loader from "../../../Components/Loader";
 import loaderAnimation from "../../../Animated Assets/Loader.json";
@@ -25,7 +24,7 @@ export const InjuredAnimal = ({ navigation }) => {
   const [address, setAddress] = useState("");
   const [loader, setLoader] = useState(false);
 
-  const { user, updateUser } = useContext(AppAuthContext);
+  const { user } = useContext(AppAuthContext);
 
   const reportAnimal = async () => {
     if (!type.trim() || !condition.trim() || !address.trim()) {
@@ -56,7 +55,7 @@ export const InjuredAnimal = ({ navigation }) => {
       {loader && <Loader source={loaderAnimation} />}
       <View style={styles.upperContainer}>
         <View style={styles.animatedContainer}>
-          <AnimatedAsset source={AnimalJSON} style={styles.animatedAsset} />
+          <AnimatedAsset source={animalJSON} style={styles.animatedAsset} />
         </View>
 
         <Text style={styles.headerText}>Report Injured Animal</Text>

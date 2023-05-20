@@ -1,34 +1,86 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { useState, useEffect, useContext, createContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getUserDetails } from "../Service/User.service";
 
 export const AppAuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState([]);
-  const [dataChanged, setDataChanged] = useState(false);
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  async function fetchUser() {
+  const signup = async (userData) => {
+    setUser(userData);
     try {
-      const retrievedData = await AsyncStorage.getItem("user");
-      setUser(JSON.parse(retrievedData));
+      await AsyncStorage.setItem("user", JSON.stringify(userData));
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+
+  const logout = async () => {
+    setUser(null);
+    try {
+      await AsyncStorage.removeItem("user");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchUser = async () => {
+    const init = async () => {
+      try {
+        const retrievedData = await AsyncStorage.getItem("user");
+        const parsedData = JSON.parse(retrievedData);
+
+        if (parsedData && typeof parsedData === "object") {
+          setUser(parsedData);
+        } else {
+          console.log("Invalid user data or not signed in");
+        }
+      } catch (error) {
+        console.log("Error fetching user data:", error);
+      }
+    };
+
+    const fetchData = async () => {
+      await init();
+      setIsLoading(false);
+    };
+
+    fetchData();
+  };
+
+  // const updateUserDetailsAuth = async () => {
+  //   try {
+  //     if (user) {
+  //       const userId = user._id;
+  //       const updatedUser = await getUserDetails(userId);
+  //       setUser(updatedUser);
+  //       console.log("Updating the user");
+  //     } else {
+  //       console.log("You are not signed in");
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const intervalId = setInterval(updateUserDetailsAuth, 20000);
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
   useEffect(() => {
     fetchUser();
-  }, [dataChanged]);
+  }, [user]);
 
-  const updateUser = () => {
-    setDataChanged(!dataChanged);
-  };
+  if (isLoading) {
+    return null; // or render a loading spinner
+  }
 
   return (
-    <AppAuthContext.Provider value={{ user, updateUser }}>
+    <AppAuthContext.Provider value={{ user, signup, logout, fetchUser }}>
       {children}
     </AppAuthContext.Provider>
   );
 };
-
-export default AuthProvider;

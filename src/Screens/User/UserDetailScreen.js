@@ -1,43 +1,73 @@
-import { useEffect } from "react";
-import { View, StyleSheet, Text, Dimensions, Pressable } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, Text, Pressable } from "react-native";
 import { AppAuthContext } from "../../Context/AuthProvider";
 import { useContext } from "react";
 import Profile from "../../Assets/Profile.png";
 import ProfilePic from "../../Components/ProfilePic";
-import { BigCard } from "../../Components/BigCard";
 import { FontAwesome5, Foundation, FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import { getUserDetails } from "../../Service/User.service";
+import Loader from "../../Components/Loader";
+import loaderAnimation from "../../Animated Assets/Loader.json";
 
-const appWidth = Dimensions.get("screen").width;
 export const UserDetailScreen = ({ navigation }) => {
-  const { user, updateUser } = useContext(AppAuthContext);
-  var animalReportedData = [];
-  animalReportedData.push(user.animalReported);
+  const { user } = useContext(AppAuthContext);
+  const [userData, setUserData] = useState(null);
+  const [loader, showLoader] = useState(true);
+  const [cacheData, setCacheData] = useState({});
+
+  const CACHE_EXPIRATION_TIME = 10000;
+
+  const getUpdatedUser = async () => {
+    try {
+      const cacheKey = user._id;
+      const cachedData = cacheData[cacheKey];
+
+      if (
+        cachedData &&
+        Date.now() - cachedData.timestamp < CACHE_EXPIRATION_TIME
+      ) {
+        // Use cached data if it exists and time is not expired
+        setUserData(cachedData.data);
+        showLoader(false);
+      } else {
+        const response = await getUserDetails(user._id);
+        setUserData(response);
+        showLoader(false);
+        // Cache the fetched data with a new timestapn if the data is updatd fro  the user side
+        setCacheData((prevCacheData) => ({
+          ...prevCacheData,
+          [cacheKey]: { data: response, timestamp: Date.now() },
+        }));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
-    updateUser();
-  }, []);
+    getUpdatedUser();
+  }, [user]);
 
   return (
-    <View>
-      {user ? (
+    <View style={styles.container}>
+      {loader ? (
+        <Loader source={loaderAnimation} />
+      ) : (
         <View>
           <View
             style={[styles.userTopDetailsConrainer, styles.profileContainer]}
           >
             <ProfilePic source={Profile} />
-            <Text style={styles.profileText}>{user.UserName}</Text>
-            <Text>{user.Email}</Text>
+            <Text style={styles.profileText}>{userData?.UserName}</Text>
+            <Text>{userData?.Email}</Text>
           </View>
           <View style={styles.UserPartionContainer}>
             <View style={[styles.partionChildContainer, styles.firstChild]}>
               <FontAwesome5 name="dog" size={30} color="#3A1078" />
-              {Boolean(user.animalReported.length) ? (
-                <Text style={styles.iconText}>
-                  {user.animalReported.length}
-                </Text>
-              ) : (
-                <Text>0</Text>
-              )}
+              <Text style={styles.iconText}>
+                {userData?.animalReported.length || 0}
+              </Text>
             </View>
             <View style={[styles.partionChildContainer]}>
               <FontAwesome5 name="user-check" size={30} color="#3A1078" />
@@ -51,21 +81,15 @@ export const UserDetailScreen = ({ navigation }) => {
           <View style={styles.detailsBox}>
             <View style={styles.detailsContainer}>
               <FontAwesome name="phone" size={40} color="black" />
-              {user.Number ? (
-                <Text style={styles.detailsText}>{user.Number}</Text>
-              ) : (
-                <Text style={styles.detailsText}>No Number is there...</Text>
-              )}
+              <Text style={styles.detailsText}>
+                {userData?.Number || "No Number is there..."}
+              </Text>
             </View>
             <View style={styles.detailsContainer}>
               <MaterialIcons name="pets" size={40} color="black" />
-              {user.PetDetails && user.PetDetails.Petname ? (
-                <Text style={styles.detailsText}>
-                  {user.PetDetails.Petname}
-                </Text>
-              ) : (
-                <Text style={styles.detailsText}>No pet exists</Text>
-              )}
+              <Text style={styles.detailsText}>
+                {userData?.PetDetails?.Petname || "No pet exists"}
+              </Text>
             </View>
             <Pressable
               style={styles.button}
@@ -77,16 +101,11 @@ export const UserDetailScreen = ({ navigation }) => {
             </Pressable>
           </View>
         </View>
-      ) : (
-        <View>
-          <Text>...loadig</Text>
-        </View>
       )}
-
-      <View></View>
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_BASE_URL } from "../Api/api.utils";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 module.exports = {
   signUpUser: async (name, email, password, address) => {
@@ -13,7 +14,6 @@ module.exports = {
     const apiLink = `${API_BASE_URL}${endPoint}`;
     try {
       const response = await axios.post(apiLink, postConfig);
-      AsyncStorage.setItem("user", JSON.stringify(response.data));
       return response.data;
     } catch (error) {
       return error;
@@ -52,6 +52,17 @@ module.exports = {
       return response.data;
     } catch (e) {
       console.log(e);
+    }
+  },
+  getUserDetails: async (userId) => {
+    const endPoint = "/getUserDetails";
+    const apiLink = `${API_BASE_URL}${endPoint}?userId=${userId}`;
+
+    try {
+      const response = await axios.get(apiLink);
+      return response.data;
+    } catch (error) {
+      console.log("isssuueeee");
     }
   },
 };
