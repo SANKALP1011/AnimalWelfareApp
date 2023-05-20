@@ -65,4 +65,14 @@ module.exports = {
       console.log("isssuueeee");
     }
   },
+  getNearbyAnimal: async (userId) => {
+    const endPoint = "/getNearbyAnimal";
+    const apiLink = `${API_BASE_URL}${endPoint}?userId=${userId}`;
+    try {
+      const response = await axios.get(apiLink);
+      return response.data;
+    } catch (err) {
+      return err;
+    }
+  },
 };
