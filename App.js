@@ -20,10 +20,7 @@ export default function App() {
 }
 
 function AppWrapper() {
-  const { user, fetchUser } = useContext(AppAuthContext);
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  const { user } = useContext(AppAuthContext);
 
   if (user === null) {
     return (

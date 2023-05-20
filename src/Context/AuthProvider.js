@@ -6,6 +6,7 @@ export const AppAuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const signup = async (userData) => {
     setUser(userData);
@@ -26,49 +27,59 @@ export const AuthProvider = ({ children }) => {
   };
 
   const fetchUser = async () => {
-    useEffect(() => {
-      // Delay the execution of the fetchUser function until after AsyncStorage has finished loading
-      setTimeout(async () => {
-        try {
-          const retrievedData = await AsyncStorage.getItem("user");
-          const parsedData = JSON.parse(retrievedData);
+    const init = async () => {
+      try {
+        const retrievedData = await AsyncStorage.getItem("user");
+        const parsedData = JSON.parse(retrievedData);
 
-          if (parsedData && typeof parsedData === "object") {
-            setUser(parsedData);
-            console.log(parsedData);
-          } else {
-            console.log("Invalid user data or not signed in");
-          }
-        } catch (error) {
-          console.log("Error fetching user data:", error);
+        if (parsedData && typeof parsedData === "object") {
+          setUser(parsedData);
+        } else {
+          console.log("Invalid user data or not signed in");
         }
-      }, 1000);
-    }, []);
+      } catch (error) {
+        console.log("Error fetching user data:", error);
+      }
+    };
+
+    const fetchData = async () => {
+      await init();
+      setIsLoading(false);
+    };
+
+    fetchData();
   };
 
-  const updateUserDetailsAuth = async () => {
-    try {
-      if (user) {
-        const userId = user._id;
-        const updatedUser = await getUserDetails(userId);
-        setUser(updatedUser);
-        console.log("Updating the user");
-      } else {
-        console.log("You are not signed in");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const updateUserDetailsAuth = async () => {
+  //   try {
+  //     if (user) {
+  //       const userId = user._id;
+  //       const updatedUser = await getUserDetails(userId);
+  //       setUser(updatedUser);
+  //       console.log("Updating the user");
+  //     } else {
+  //       console.log("You are not signed in");
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const intervalId = setInterval(updateUserDetailsAuth, 20000);
+  //   return () => clearInterval(intervalId);
+  // }, []);
+
   useEffect(() => {
-    const intervalId = setInterval(updateUserDetailsAuth, 20000);
-    return () => clearInterval(intervalId);
-  }, []);
+    fetchUser();
+  }, [user]);
+
+  if (isLoading) {
+    return null; // or render a loading spinner
+  }
 
   return (
-    <AppAuthContext.Provider
-      value={{ user, signup, logout, fetchUser, updateUserDetailsAuth }}
-    >
+    <AppAuthContext.Provider value={{ user, signup, logout, fetchUser }}>
       {children}
     </AppAuthContext.Provider>
   );
