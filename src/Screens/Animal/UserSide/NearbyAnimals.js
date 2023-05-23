@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, ScrollView, Touchable } from "react-native";
+import { View, StyleSheet, Text, ScrollView, Image } from "react-native";
 import { getNearbyAnimal } from "../../../Service/User.service";
 import React, { useEffect, useState, useContext } from "react";
 import Loader from "../../../Components/Loader";
@@ -7,6 +7,10 @@ import { AppAuthContext } from "../../../Context/AuthProvider";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import DetailModal from "../../../Components/DetailModal";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Dog from "../../../Assets/Dog.png";
+import Cat from "../../../Assets/Cat.png";
+import { AntDesign } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 
 export const NearbyAnimals = ({ navigation }) => {
   const { user } = useContext(AppAuthContext);
@@ -17,7 +21,6 @@ export const NearbyAnimals = ({ navigation }) => {
     try {
       const response = await getNearbyAnimal(user._id);
       setAnimal(response);
-      console.log(response);
       showLoader(false);
     } catch (err) {
       return err;
@@ -32,7 +35,8 @@ export const NearbyAnimals = ({ navigation }) => {
   const closeModal = () => {
     setAnimalSelected(null);
   };
-  const colour = ["#CFA5B4", "#C98BB9", "#846B8A"];
+  const colour = ["#FFFBEB", "#DAF5FF"];
+  const image = [Dog, Cat];
   return (
     <View style={styles.container}>
       {loader ? (
@@ -52,6 +56,7 @@ export const NearbyAnimals = ({ navigation }) => {
             <View>
               {animal?.map((value, index) => {
                 const colourPicker = colour[index % colour.length];
+                const imagePicker = image[index % image.length];
                 return (
                   <TouchableOpacity onPress={() => showModal(value)}>
                     <View
@@ -61,23 +66,63 @@ export const NearbyAnimals = ({ navigation }) => {
                         { backgroundColor: colourPicker },
                       ]}
                     >
-                      <Text>{value.UserNamewhoReported}</Text>
-                      <Text>{value.AnimalCondition}</Text>
-                      <Text>{value.AnimalType}</Text>
-                      {value.isAnimalSaved ? (
-                        <Text>SAVEDDD</Text>
-                      ) : (
-                        <Text>nit svaedddd</Text>
-                      )}
-                      <View>
-                        <Text>ss</Text>
+                      <View style={styles.picContainer}>
+                        <Image style={styles.picStyle} source={imagePicker} />
+                        <Text style={styles.headerCardText}>
+                          {value.UserNamewhoReported}
+                        </Text>
+                        <Text numberOfLines={1} style={styles.headerCardText}>
+                          {value.AnimalLocation.formattedAddress}
+                        </Text>
+                      </View>
+                      <View style={styles.tablularcontainer}>
+                        <View style={styles.row}>
+                          <Text style={styles.header}>Condition</Text>
+                          <Text style={styles.header}>Doctor</Text>
+                          <Text style={styles.header}>Saved</Text>
+                        </View>
+                      </View>
+                      <View style={styles.row}>
+                        <Text style={[styles.cell, { fontSize: 15 }]}>
+                          {value.AnimalCondition}
+                        </Text>
+                        {value.hasDocterArrived ? (
+                          <AntDesign
+                            name="checkcircle"
+                            size={30}
+                            color="Green"
+                            style={styles.cell}
+                          />
+                        ) : (
+                          <Entypo
+                            name="circle-with-cross"
+                            size={30}
+                            color="#FB2576"
+                            style={styles.cell}
+                          />
+                        )}
+                        {value.isAnimalSaved ? (
+                          <AntDesign
+                            name="checkcircle"
+                            size={30}
+                            color="Green"
+                            style={styles.cell}
+                          />
+                        ) : (
+                          <Entypo
+                            name="circle-with-cross"
+                            size={30}
+                            color="#ED2B2A"
+                            style={styles.cell}
+                          />
+                        )}
                       </View>
                     </View>
                   </TouchableOpacity>
                 );
               })}
               <DetailModal
-                key={animalSelected?.key}
+                key={animalSelected?._id}
                 data={animalSelected}
                 visible={animalSelected !== null}
                 close={closeModal}
@@ -118,7 +163,7 @@ const styles = StyleSheet.create({
   },
   dataCard: {
     width: 350,
-    height: 150,
+    height: 300,
     marginLeft: 15,
     marginBottom: 20,
     padding: 10,
@@ -130,6 +175,42 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.37,
     shadowRadius: 7.49,
     borderRadius: 15,
+  },
+  picContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  picStyle: {
+    width: 70,
+    height: 75,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  headerCardText: {
+    fontSize: 17,
+    fontWeight: "bold",
+    padding: 6,
+    color: "#610094",
+  },
+  tablularcontainer: {
+    padding: 16,
+    marginTop: 15,
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  header: {
+    flex: 1,
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 15,
+  },
+  cell: {
+    flex: 1,
+    textAlign: "center",
+    textAlign: "center",
   },
 });
 export default NearbyAnimals;
