@@ -8,6 +8,7 @@ import InjuredAnimal from "./src/Screens/Animal/UserSide/InjuredAnimal.screen";
 import UserDetailScreen from "./src/Screens/User/UserDetailScreen";
 import { useContext, useEffect } from "react";
 import { AuthProvider, AppAuthContext } from "./src/Context/AuthProvider";
+import NearbyAnimals from "./src/Screens/Animal/UserSide/NearbyAnimals";
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +47,7 @@ function AppWrapper() {
         <Stack.Screen name="UserHome" component={UserHomeScreen} />
         <Stack.Screen name="InjuredAnimal" component={InjuredAnimal} />
         <Stack.Screen name="UserDetails" component={UserDetailScreen} />
+        <Stack.Screen name="NearByAnimals" component={NearbyAnimals} />
       </Stack.Navigator>
     </NavigationContainer>
   );

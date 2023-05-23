@@ -63,19 +63,20 @@ export const UserHomeScreen = ({ navigation }) => {
             color={"#DAE5D0"}
           />
           <MiniCard
+            text={"Nearby Animal"}
+            image={Cat}
+            navigation={navigation}
+            location="NearByAnimals"
+            color="#97DEFF"
+          />
+          <MiniCard
             text={"Donate to ngo"}
             image={Money}
             navigation={navigation}
             location="InjuredAnimal"
             color="#D5B4B4"
           />
-          <MiniCard
-            text={"Nearby Animal"}
-            image={Cat}
-            navigation={navigation}
-            location="InjuredAnimal"
-            color="#97DEFF"
-          />
+
           <MiniCard
             text={"Pet Details"}
             image={Pet}
