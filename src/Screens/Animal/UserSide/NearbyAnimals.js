@@ -69,14 +69,21 @@ export const NearbyAnimals = ({ navigation }) => {
                       ) : (
                         <Text>nit svaedddd</Text>
                       )}
+                      <View>
+                        <Text>ss</Text>
+                      </View>
                     </View>
                   </TouchableOpacity>
                 );
               })}
               <DetailModal
+                key={animalSelected?.key}
                 data={animalSelected}
                 visible={animalSelected !== null}
                 close={closeModal}
+                handleClose={() => {
+                  closeModal();
+                }}
               />
             </View>
           </ScrollView>
