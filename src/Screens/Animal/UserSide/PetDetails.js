@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
 import { getUserDetails } from "../../../Service/User.service";
 import react, { useState, useEffect, useContext } from "react";
 import { AppAuthContext } from "../../../Context/AuthProvider";
@@ -6,8 +6,10 @@ import Loader from "../../../Components/Loader";
 import loaderAnimation from "../../../Animated Assets/Loader.json";
 import petAnimation from "../../../Animated Assets/Pet.json";
 import AnimatedAsset from "../../../Components/AnimatedAsset";
+import { AntDesign } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
-export const PetDetails = ({ naviagation }) => {
+export const PetDetails = ({ navigation }) => {
   const { user } = useContext(AppAuthContext);
   const [updatedUser, setUpdatedUser] = useState(null);
   const [loader, showLoader] = useState(false);
@@ -39,8 +41,19 @@ export const PetDetails = ({ naviagation }) => {
             </View>
             <Text style={styles.headerText}>Pet Details</Text>
           </View>
-          <View>
-            <Text>No pet here</Text>
+          <View style={styles.bottomContainer}>
+            <AntDesign name="frowno" size={60} color="#4C0033" />
+            <Text style={styles.bottomText}>You don't have any pet</Text>
+            <TouchableOpacity
+              style={styles.addButtonContainer}
+              onPress={() => {
+                navigation.navigate("AddPet");
+              }}
+            >
+              <View>
+                <Ionicons name="add-circle" size={30} color="#F8E8EE" />
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
       ) : (
@@ -56,7 +69,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     width: "100%",
-    height: "60%",
+    height: "50%",
     backgroundColor: "#6d597a",
     justifyContent: "center",
     alignItems: "center",
@@ -90,6 +103,33 @@ const styles = StyleSheet.create({
     marginTop: "50%",
     fontSize: 30,
     fontWeight: "bold",
+  },
+  bottomContainer: {
+    marginTop: 110,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  bottomText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "grey",
+    marginTop: 20,
+  },
+  addButtonContainer: {
+    width: 100,
+    height: 50,
+    marginTop: 50,
+    backgroundColor: "#6d597a",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 15,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
   },
 });
 

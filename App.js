@@ -10,6 +10,7 @@ import { useContext, useEffect } from "react";
 import { AuthProvider, AppAuthContext } from "./src/Context/AuthProvider";
 import NearbyAnimals from "./src/Screens/Animal/UserSide/NearbyAnimals";
 import PetDetails from "./src/Screens/Animal/UserSide/PetDetails";
+import AddPet from "./src/Screens/Animal/UserSide/AddPet.screen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -39,6 +40,7 @@ function AppWrapper() {
             <Stack.Screen name="UserDetails" component={UserDetailScreen} />
             <Stack.Screen name="NearByAnimals" component={NearbyAnimals} />
             <Stack.Screen name="PetDetails" component={PetDetails} />
+            <Stack.Screen name="AddPet" component={AddPet} />
           </>
         )}
       </Stack.Navigator>
