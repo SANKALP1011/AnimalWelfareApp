@@ -81,7 +81,7 @@ export const UserHomeScreen = ({ navigation }) => {
             text={"Pet Details"}
             image={Pet}
             navigation={navigation}
-            location="InjuredAnimal"
+            location="PetDetails"
             color="#655DBB"
           />
           <MiniCard

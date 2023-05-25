@@ -9,7 +9,7 @@ import UserDetailScreen from "./src/Screens/User/UserDetailScreen";
 import { useContext, useEffect } from "react";
 import { AuthProvider, AppAuthContext } from "./src/Context/AuthProvider";
 import NearbyAnimals from "./src/Screens/Animal/UserSide/NearbyAnimals";
-
+import PetDetails from "./src/Screens/Animal/UserSide/PetDetails";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -23,20 +23,6 @@ export default function App() {
 function AppWrapper() {
   const { user } = useContext(AppAuthContext);
 
-  if (user === null) {
-    return (
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="SignUp" component={SignUpScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    );
-  }
-
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -44,10 +30,17 @@ function AppWrapper() {
           headerShown: false,
         }}
       >
-        <Stack.Screen name="UserHome" component={UserHomeScreen} />
-        <Stack.Screen name="InjuredAnimal" component={InjuredAnimal} />
-        <Stack.Screen name="UserDetails" component={UserDetailScreen} />
-        <Stack.Screen name="NearByAnimals" component={NearbyAnimals} />
+        {user === null ? (
+          <Stack.Screen name="SignUp" component={SignUpScreen} />
+        ) : (
+          <>
+            <Stack.Screen name="UserHome" component={UserHomeScreen} />
+            <Stack.Screen name="InjuredAnimal" component={InjuredAnimal} />
+            <Stack.Screen name="UserDetails" component={UserDetailScreen} />
+            <Stack.Screen name="NearByAnimals" component={NearbyAnimals} />
+            <Stack.Screen name="PetDetails" component={PetDetails} />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

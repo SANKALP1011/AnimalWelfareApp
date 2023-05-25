@@ -6,7 +6,6 @@ export const AppAuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   const signup = async (userData) => {
     setUser(userData);
@@ -44,7 +43,6 @@ export const AuthProvider = ({ children }) => {
 
     const fetchData = async () => {
       await init();
-      setIsLoading(false);
     };
 
     fetchData();
@@ -73,10 +71,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     fetchUser();
   }, [user]);
-
-  if (isLoading) {
-    return null; // or render a loading spinner
-  }
 
   return (
     <AppAuthContext.Provider value={{ user, signup, logout, fetchUser }}>
