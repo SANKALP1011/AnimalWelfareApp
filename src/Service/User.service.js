@@ -60,6 +60,7 @@ module.exports = {
 
     try {
       const response = await axios.get(apiLink);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.log("isssuueeee");
@@ -70,6 +71,21 @@ module.exports = {
     const apiLink = `${API_BASE_URL}${endPoint}?userId=${userId}`;
     try {
       const response = await axios.get(apiLink);
+      return response.data;
+    } catch (err) {
+      return err;
+    }
+  },
+  addPet: async (userId, Petname, Pettype, Petage) => {
+    const endPoint = "/addPet";
+    const apiLink = `${API_BASE_URL}${endPoint}?${userId}`;
+    const data = {
+      Petname: Petname,
+      Pettype: Pettype,
+      Petage: Petage,
+    };
+    try {
+      const response = await axios.post(apiLink, data);
       return response.data;
     } catch (err) {
       return err;

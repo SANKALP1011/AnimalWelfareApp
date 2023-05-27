@@ -35,7 +35,7 @@ export const NearbyAnimals = ({ navigation }) => {
   const closeModal = () => {
     setAnimalSelected(null);
   };
-  const colour = ["#FFFBEB", "#DAF5FF"];
+  const colour = ["#cdb4db", "#ffc8dd"];
   const image = [Dog, Cat];
   return (
     <View style={styles.container}>
@@ -52,76 +52,71 @@ export const NearbyAnimals = ({ navigation }) => {
               style={styles.headerPetIcon}
             />
           </View>
-          <ScrollView>
+          <ScrollView style={styles.scrollViewContainer}>
             <View>
               {animal?.map((value, index) => {
                 const colourPicker = colour[index % colour.length];
                 const imagePicker = image[index % image.length];
                 return (
-                  <TouchableOpacity onPress={() => showModal(value)}>
-                    <View
-                      key={value._id}
-                      style={[
-                        styles.dataCard,
-                        { backgroundColor: colourPicker },
-                      ]}
-                    >
-                      <View style={styles.picContainer}>
-                        <Image style={styles.picStyle} source={imagePicker} />
-                        <Text style={styles.headerCardText}>
-                          {value.UserNamewhoReported}
-                        </Text>
-                        <Text numberOfLines={1} style={styles.headerCardText}>
-                          {value.AnimalLocation.formattedAddress}
-                        </Text>
-                      </View>
-                      <View style={styles.tablularcontainer}>
-                        <View style={styles.row}>
-                          <Text style={styles.header}>Condition</Text>
-                          <Text style={styles.header}>Doctor</Text>
-                          <Text style={styles.header}>Saved</Text>
-                        </View>
-                      </View>
+                  <View
+                    key={value._id}
+                    style={[styles.dataCard, { backgroundColor: colourPicker }]}
+                  >
+                    <View style={styles.picContainer}>
+                      <Image style={styles.picStyle} source={imagePicker} />
+                      <Text style={styles.headerCardText}>
+                        {value.UserNamewhoReported.toUpperCase()}
+                      </Text>
+                      <Text numberOfLines={1} style={styles.locationText}>
+                        {value.AnimalLocation.formattedAddress}
+                      </Text>
+                    </View>
+                    <View style={styles.tablularcontainer}>
                       <View style={styles.row}>
-                        <Text style={[styles.cell, { fontSize: 15 }]}>
-                          {value.AnimalCondition}
-                        </Text>
-                        {value.hasDocterArrived ? (
-                          <AntDesign
-                            name="checkcircle"
-                            size={30}
-                            color="Green"
-                            style={styles.cell}
-                          />
-                        ) : (
-                          <Entypo
-                            name="circle-with-cross"
-                            size={30}
-                            color="#FB2576"
-                            style={styles.cell}
-                          />
-                        )}
-                        {value.isAnimalSaved ? (
-                          <AntDesign
-                            name="checkcircle"
-                            size={30}
-                            color="Green"
-                            style={styles.cell}
-                          />
-                        ) : (
-                          <Entypo
-                            name="circle-with-cross"
-                            size={30}
-                            color="#ED2B2A"
-                            style={styles.cell}
-                          />
-                        )}
+                        <Text style={styles.header}>Condition</Text>
+                        <Text style={styles.header}>Doctor</Text>
+                        <Text style={styles.header}>Saved</Text>
                       </View>
                     </View>
-                  </TouchableOpacity>
+                    <View style={styles.row}>
+                      <Text style={[styles.cell, { fontSize: 15 }]}>
+                        {value.AnimalCondition}
+                      </Text>
+                      {value.hasDocterArrived ? (
+                        <AntDesign
+                          name="checkcircle"
+                          size={30}
+                          color="Green"
+                          style={styles.cell}
+                        />
+                      ) : (
+                        <Entypo
+                          name="circle-with-cross"
+                          size={30}
+                          color="#FB2576"
+                          style={styles.cell}
+                        />
+                      )}
+                      {value.isAnimalSaved ? (
+                        <AntDesign
+                          name="checkcircle"
+                          size={30}
+                          color="Green"
+                          style={styles.cell}
+                        />
+                      ) : (
+                        <Entypo
+                          name="circle-with-cross"
+                          size={30}
+                          color="#FB2576"
+                          style={styles.cell}
+                        />
+                      )}
+                    </View>
+                  </View>
                 );
               })}
-              <DetailModal
+              {/* <DetailModal
                 key={animalSelected?._id}
                 data={animalSelected}
                 visible={animalSelected !== null}
@@ -129,7 +124,7 @@ export const NearbyAnimals = ({ navigation }) => {
                 handleClose={() => {
                   closeModal();
                 }}
-              />
+              /> */}
             </View>
           </ScrollView>
         </View>
@@ -161,9 +156,13 @@ const styles = StyleSheet.create({
   headerPetIcon: {
     marginBottom: 10,
   },
+  scrollViewContainer: {
+    flexGrow: 1,
+    paddingBottom: 200,
+  },
   dataCard: {
     width: 350,
-    height: 300,
+
     marginLeft: 15,
     marginBottom: 20,
     padding: 10,
@@ -187,10 +186,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerCardText: {
-    fontSize: 17,
+    fontSize: 20,
     fontWeight: "bold",
     padding: 6,
     color: "#610094",
+    marginBottom: 5,
+    textTransform: "uppercase",
+  },
+  locationText: {
+    fontSize: 14,
+    fontWeight: "bold",
+    opacity: 0.5,
+    color: "black",
   },
   tablularcontainer: {
     padding: 16,
