@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+} from "react-native";
 import RadioButton from "../../../Components/RadioButton";
+import { addPet } from "../../../Service/User.service";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export const AddPet = ({ navigation }) => {
+  const [name, setName] = useState("");
   const [value, selectedValue] = useState("");
+  const [breed, setBreed] = useState("");
+  const [age, setAge] = useState("");
 
   const data = ["Dog", "Cat", "Other"];
   const handleChoice = (value) => {
@@ -12,30 +23,106 @@ export const AddPet = ({ navigation }) => {
   };
   return (
     <View style={styles.container}>
-      <View style={styles.radioButton}>
-        <RadioButton
-          data={data}
-          styles={styles.radioButtonContainer}
-          onSelect={handleChoice}
+      <View style={styles.nearbyHeaderContainer}>
+        <Text style={styles.headreText}>Pet Buddy Details</Text>
+        <MaterialIcons
+          name="pets"
+          size={50}
+          color="#545B77"
+          style={styles.headerPetIcon}
         />
       </View>
+      <View style={styles.dataContainer}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Your Pet Name.."
+            value={name}
+            onChangeText={setName}
+            style={styles.inputField}
+          />
+        </View>
+        <View>
+          <View style={styles.radioButton}></View>
+        </View>
+
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Your Pet Breed.."
+            value={breed}
+            onChangeText={setBreed}
+            style={styles.inputField}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Your Pet age.."
+            value={age}
+            onChangeText={setAge}
+            style={styles.inputField}
+          />
+        </View>
+      </View>
+
+      <View></View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  nearbyHeaderContainer: {
+    marginTop: 75,
+    borderBottomWidth: 5,
+    borderBottomColor: "#867070",
+    width: "100%",
+    marginBottom: 10,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  headreText: {
+    fontSize: 30,
+    fontWeight: "bold",
+    marginLeft: 15,
+    marginBottom: 10,
+    color: "#750550",
+    marginRight: 20,
+  },
+  headerPetIcon: {
+    marginBottom: 10,
+  },
+  radioButton: {},
+  radioButtonContainer: {
+    width: 100,
+    height: 40,
+    backgroundColor: "#E5E0FF",
+    marginRight: 20,
+    borderRadius: 15,
+    padding: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
     justifyContent: "center",
     alignItems: "center",
   },
-  radioButton: {
-    flexDirection: "row",
+  dataContainer: {
+    marginTop: 0,
   },
-  radioButtonContainer: {
-    width: 100,
-    height: 50,
-    backgroundColor: "blue",
-    marginBottom: 20,
+  inputContainer: {
+    paddingTop: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  inputField: {
+    width: "90%",
+    borderRadius: 10,
+    padding: 15,
+    borderBottomWidth: 2,
   },
 });
 
