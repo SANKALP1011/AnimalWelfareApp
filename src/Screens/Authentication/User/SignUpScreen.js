@@ -27,11 +27,11 @@ export const SignUpScreen = ({ navigation }) => {
   const [loader, showLoader] = useState(false);
 
   const { user, signup } = useContext(AppAuthContext);
-  useEffect(() => {
-    if (user) {
-      navigation.navigate("UserHome"); // Navigate to the home screen if user exists
-    }
-  }, [user, navigation]);
+  // useEffect(() => {
+  //   if (user) {
+  //     navigation.navigate("UserHome"); // Navigate to the home screen if user exists
+  //   }
+  // }, [user, navigation]);
 
   const signUp = async () => {
     if (!name.trim() || !email.trim() || !password.trim() || !address.trim()) {

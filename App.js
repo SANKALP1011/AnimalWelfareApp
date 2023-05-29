@@ -11,6 +11,8 @@ import { AuthProvider, AppAuthContext } from "./src/Context/AuthProvider";
 import NearbyAnimals from "./src/Screens/Animal/UserSide/NearbyAnimals";
 import PetDetails from "./src/Screens/Animal/UserSide/PetDetails";
 import AddPet from "./src/Screens/Animal/UserSide/AddPet.screen";
+import loadFonts from "./src/Fonts/FontLoader";
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -24,6 +26,9 @@ export default function App() {
 function AppWrapper() {
   const { user } = useContext(AppAuthContext);
 
+  useEffect(() => {
+    loadFonts();
+  });
   return (
     <NavigationContainer>
       <Stack.Navigator

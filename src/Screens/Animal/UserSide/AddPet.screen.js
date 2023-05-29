@@ -41,8 +41,15 @@ export const AddPet = ({ navigation }) => {
             style={styles.inputField}
           />
         </View>
-        <View>
-          <View style={styles.radioButton}></View>
+        <View style={styles.radioContainer}>
+          <Text style={styles.radioHeaderText}>Pet Type</Text>
+          <View style={styles.radioButton}>
+            <RadioButton
+              data={data}
+              onSelect={handleChoice}
+              customStyles={styles.radioButtonContainer}
+            />
+          </View>
         </View>
 
         <View style={styles.inputContainer}>
@@ -92,10 +99,20 @@ const styles = StyleSheet.create({
   headerPetIcon: {
     marginBottom: 10,
   },
-  radioButton: {},
+  radioContainer: {
+    marginTop: 70,
+    marginBottom: 70,
+
+    marginLeft: 25,
+  },
+  radioHeaderText: {
+    fontSize: 25,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
   radioButtonContainer: {
     width: 100,
-    height: 40,
+    height: 50,
     backgroundColor: "#E5E0FF",
     marginRight: 20,
     borderRadius: 15,
