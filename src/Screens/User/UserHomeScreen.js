@@ -171,6 +171,7 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: 25,
     fontWeight: "bold",
+    fontFamily: "font-name=firaBold-Type",
   },
 
   button: {
@@ -189,6 +190,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "white",
+    fontFamily: "font-name=firaBold-Type",
   },
   imageContainer: {
     width: 120,
