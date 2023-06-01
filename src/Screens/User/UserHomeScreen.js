@@ -25,6 +25,10 @@ const appWidth = Dimensions.get("screen").width;
 export const UserHomeScreen = ({ navigation }) => {
   const { user } = useContext(AppAuthContext);
 
+  useEffect(() => {
+    console.log(user);
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.userDetailsContainer}>

@@ -30,7 +30,7 @@ export const PetDetails = ({ navigation }) => {
     <View style={styles.container}>
       {loader ? (
         <Loader source={loaderAnimation} />
-      ) : updatedUser?.PetDetails !== null ? (
+      ) : updatedUser?.PetDetails.length != 0 ? (
         <View>
           <View style={styles.headerContainer}>
             <View style={styles.animatedContainer}>
@@ -43,7 +43,7 @@ export const PetDetails = ({ navigation }) => {
           </View>
           <View style={styles.bottomContainer}>
             <AntDesign name="frowno" size={60} color="#4C0033" />
-            <Text style={styles.bottomText}>You don't have any pet</Text>
+            <Text style={styles.bottomText}>You have a pet</Text>
             <TouchableOpacity
               style={styles.addButtonContainer}
               onPress={() => {
@@ -57,7 +57,33 @@ export const PetDetails = ({ navigation }) => {
           </View>
         </View>
       ) : (
-        <Text>pet is there</Text>
+        <View>
+          <View style={styles.headerContainer}>
+            <View style={styles.animatedContainer}>
+              <AnimatedAsset
+                source={petAnimation}
+                style={styles.animatedAsset}
+              />
+            </View>
+            <Text style={styles.headerText}>Pet Details</Text>
+          </View>
+          <View style={styles.bottomContainer}>
+            <AntDesign name="frowno" size={60} color="#4C0033" />
+            <Text style={styles.bottomText}>
+              You don't have any pet as of now
+            </Text>
+            <TouchableOpacity
+              style={styles.addButtonContainer}
+              onPress={() => {
+                navigation.navigate("AddPet");
+              }}
+            >
+              <View>
+                <Ionicons name="add-circle" size={30} color="#F8E8EE" />
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
       )}
     </View>
   );

@@ -76,12 +76,13 @@ module.exports = {
       return err;
     }
   },
-  addPet: async (userId, Petname, Pettype, Petage) => {
+  addPet: async (id, Petname, Pettype, PetBreed, Petage) => {
     const endPoint = "/addPet";
-    const apiLink = `${API_BASE_URL}${endPoint}?${userId}`;
+    const apiLink = `${API_BASE_URL}${endPoint}?$id=${id}`;
     const data = {
       Petname: Petname,
       Pettype: Pettype,
+      PetBreed: PetBreed,
       Petage: Petage,
     };
     try {
