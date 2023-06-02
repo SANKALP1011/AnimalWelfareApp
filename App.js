@@ -12,6 +12,7 @@ import NearbyAnimals from "./src/Screens/Animal/UserSide/NearbyAnimals";
 import PetDetails from "./src/Screens/Animal/UserSide/PetDetails";
 import AddPet from "./src/Screens/Animal/UserSide/AddPet.screen";
 import loadFonts from "./src/Fonts/FontLoader";
+import DoctorList from "./src/Screens/Animal/UserSide/DoctorList.screen";
 
 const Stack = createNativeStackNavigator();
 
@@ -57,6 +58,7 @@ function AppWrapper() {
             <Stack.Screen name="NearByAnimals" component={NearbyAnimals} />
             <Stack.Screen name="PetDetails" component={PetDetails} />
             <Stack.Screen name="AddPet" component={AddPet} />
+            <Stack.Screen name="DoctorList" component={DoctorList} />
           </>
         )}
       </Stack.Navigator>
