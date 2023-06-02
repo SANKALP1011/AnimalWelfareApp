@@ -63,7 +63,7 @@ module.exports = {
       console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log("isssuueeee");
+      console.log(error);
     }
   },
   getNearbyAnimal: async (userId) => {
