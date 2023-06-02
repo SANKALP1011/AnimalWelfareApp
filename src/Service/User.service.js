@@ -102,4 +102,14 @@ module.exports = {
       return e;
     }
   },
+  getDoctorList: async () => {
+    const endPoint = "/getAllDoctors";
+    const apiLink = `${API_BASE_URL}${endPoint}`;
+    try {
+      const response = await axios.get(apiLink);
+      return response.data;
+    } catch (err) {
+      return err;
+    }
+  },
 };

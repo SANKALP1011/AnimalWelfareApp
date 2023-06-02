@@ -121,7 +121,7 @@ export const PetDetails = ({ navigation }) => {
                   text={"Chose Doctor"}
                   image={Report}
                   navigation={navigation}
-                  location="InjuredAnimal"
+                  location="DoctorList"
                   color="#F1D4E5"
                 />
                 <MiniCard
