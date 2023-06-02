@@ -19,16 +19,17 @@ export const MiniCard = ({ text, navigation, location, image, color }) => {
 };
 const styles = StyleSheet.create({
   homeCardContainer: {
-    width: 180,
+    width: 170,
     height: 150,
     margin: 10,
-    shadowColor: "#000",
+    shadowColor: "#000000",
     shadowOffset: {
-      width: 0,
-      height: 6,
+      width: 2,
+      height: 2,
     },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 4,
     borderRadius: 15,
   },
   imageContainer: {
@@ -42,6 +43,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     marginTop: "5%",
     marginLeft: "6%",
+    fontFamily: "font-name=firaBold-Type",
   },
 });
 

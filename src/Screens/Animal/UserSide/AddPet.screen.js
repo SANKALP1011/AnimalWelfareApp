@@ -29,9 +29,6 @@ export const AddPet = ({ navigation }) => {
     selectedValue(value);
     console.log(value);
   };
-  useEffect(() => {
-    console.log(user._id);
-  }, []);
 
   const addUserPet = async () => {
     showLoader(true);

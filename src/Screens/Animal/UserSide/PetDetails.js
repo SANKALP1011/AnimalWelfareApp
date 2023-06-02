@@ -8,7 +8,7 @@ import {
   Dimensions,
   Image,
 } from "react-native";
-import { getUserDetails } from "../../../Service/User.service";
+import { getUserDetails, getPetDetails } from "../../../Service/User.service";
 import react, { useState, useEffect, useContext } from "react";
 import { AppAuthContext } from "../../../Context/AuthProvider";
 import Loader from "../../../Components/Loader";
@@ -19,21 +19,26 @@ import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import Pet3d from "../../../Assets/PET3D.png";
 import MiniCard from "../../../Components/Minicard";
+import Report from "../../../Assets/Report.png";
+import Health3d from "../../../Assets/Health3d.png";
 
 export const PetDetails = ({ navigation }) => {
   const { user } = useContext(AppAuthContext);
-  const [updatedUser, setUpdatedUser] = useState(null);
   const [loader, showLoader] = useState(false);
   const [selectedText, setSelectedText] = useState(false);
   const [showPetData, setShowPetData] = useState(false);
-  const getUpdatedUser = async () => {
+  const [petDetails, setPetDetails] = useState([]);
+  const [error, setError] = useState("");
+
+  const getPetData = async () => {
     try {
       showLoader(true);
-      const response = await getUserDetails(user._id);
-      setUpdatedUser(response);
+      const response = await getPetDetails(user._id);
+      setPetDetails(response);
+      console.log(response);
       showLoader(false);
-    } catch (err) {
-      return err;
+    } catch (error) {
+      setError(error);
     }
   };
 
@@ -42,13 +47,13 @@ export const PetDetails = ({ navigation }) => {
     setShowPetData(!showPetData);
   };
   useEffect(() => {
-    getUpdatedUser();
+    getPetData();
   }, []);
   return (
     <View style={styles.container}>
       {loader ? (
         <Loader source={loaderAnimation} />
-      ) : updatedUser?.PetDetails.length != 0 ? (
+      ) : petDetails[0]?.length != 0 ? (
         <View>
           <View style={[styles.headerContainer]}>
             <View style={styles.animatedContainer}>
@@ -59,38 +64,86 @@ export const PetDetails = ({ navigation }) => {
             </View>
           </View>
           <View style={styles.petDataContainer}>
-            <Pressable
-              onPress={handleSelectedText}
-              style={styles.petDataNameConatiner}
-            >
-              <Text
-                style={[
-                  styles.petNameText,
-                  selectedText && styles.selectedTextStyle,
-                ]}
+            {petDetails.map((value, index) => (
+              <Pressable
+                key={index}
+                onPress={handleSelectedText}
+                style={styles.petDataNameConatiner}
               >
-                {updatedUser?.PetDetails[0].Petname}
-              </Text>
-              <Text style={styles.petNameText}>Johhny</Text>
-            </Pressable>
+                <Text
+                  style={[
+                    styles.petNameText,
+                    selectedText && styles.selectedTextStyle,
+                  ]}
+                >
+                  {value.Petname}
+                </Text>
+                <Text style={styles.petNameText}>Johnny</Text>
+              </Pressable>
+            ))}
           </View>
           {showPetData && (
             <View>
-              <View style={styles.petDataCard}>
-                <Image source={Pet3d} style={styles.petCardImage} />
-                <View style={styles.petCardTextData}>
-                  <Text style={styles.petText}>
-                    Breed: {updatedUser?.PetDetails[0].PetBreed}
-                  </Text>
-                  <Text style={styles.petText}>Age: 3</Text>
-                  {updatedUser?.PetDetails[0].Petdoctor === "" ? (
-                    <Text style={styles.petText}>Doctor: No</Text>
-                  ) : (
-                    <Text> {updatedUser?.PetDetails[0].Petdoctor}</Text>
-                  )}
+              {petDetails.map((petDetail, index) => (
+                <View key={index} style={styles.petDataCard}>
+                  <Image source={Pet3d} style={styles.petCardImage} />
+                  <View style={styles.petCardTextData}>
+                    <Text style={styles.petText}>
+                      Breed: {petDetail.PetBreed}
+                    </Text>
+                    <Text style={styles.petText}>Age: {petDetail.Age}</Text>
+                    {petDetail.Petdoctor === "" ? (
+                      <Text style={styles.petText}>Doctor: No</Text>
+                    ) : (
+                      <Text> {petDetail.Petdoctor}</Text>
+                    )}
+                    {petDetail.isPetSick ? (
+                      <View style={styles.sickContainer}>
+                        <Text>Sick:</Text>
+                        <AntDesign name="closecircle" size={24} color="red" />
+                      </View>
+                    ) : (
+                      <View style={styles.sickContainer}>
+                        <Text style={styles.petText}>Sick:</Text>
+                        <AntDesign
+                          name="closecircle"
+                          size={20}
+                          color="#02383C"
+                          style={styles.iconContainer}
+                        />
+                      </View>
+                    )}
+                  </View>
                 </View>
+              ))}
+              <View style={styles.horizontalCardContainer}>
+                <MiniCard
+                  text={"Chose Doctor"}
+                  image={Report}
+                  navigation={navigation}
+                  location="InjuredAnimal"
+                  color="#F1D4E5"
+                />
+                <MiniCard
+                  text={"Update Health"}
+                  image={Health3d}
+                  navigation={navigation}
+                  location="InjuredAnimal"
+                  color="#ECF8F9"
+                />
               </View>
-              <View></View>
+              <View style={styles.addButtonContainePet}>
+                <TouchableOpacity
+                  style={styles.addButtonContainer}
+                  onPress={() => {
+                    navigation.navigate("AddPet");
+                  }}
+                >
+                  <View>
+                    <Ionicons name="add-circle" size={30} color="#F8E8EE" />
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
           )}
         </View>
@@ -182,7 +235,7 @@ const styles = StyleSheet.create({
   addButtonContainer: {
     width: 100,
     height: 50,
-    marginTop: 50,
+    marginTop: 30,
     backgroundColor: "#6d597a",
     justifyContent: "center",
     alignItems: "center",
@@ -254,7 +307,7 @@ const styles = StyleSheet.create({
   },
   petCardTextData: {
     marginLeft: 10,
-    marginTop: 40,
+    marginTop: 35,
   },
   petText: {
     fontSize: 18,
@@ -262,7 +315,19 @@ const styles = StyleSheet.create({
     color: "white",
   },
   horizontalCardContainer: {
-    width: 30,
+    marginTop: 25,
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  addButtonContainePet: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  sickContainer: {
+    flexDirection: "row",
+  },
+  iconContainer: {
+    marginLeft: 25,
   },
 });
 

@@ -78,7 +78,7 @@ module.exports = {
   },
   addPet: async (id, Petname, Pettype, PetBreed, Petage) => {
     const endPoint = "/addPet";
-    const apiLink = `${API_BASE_URL}${endPoint}?$id=${id}`;
+    const apiLink = `${API_BASE_URL}${endPoint}?id=${id}`;
     const data = {
       Petname: Petname,
       Pettype: Pettype,
@@ -90,6 +90,16 @@ module.exports = {
       return response.data;
     } catch (err) {
       return err;
+    }
+  },
+  getPetDetails: async (id) => {
+    const endPoint = "/petDetails";
+    const apiLink = `${API_BASE_URL}${endPoint}?id=${id}`;
+    try {
+      const response = await axios.get(apiLink);
+      return response.data;
+    } catch (e) {
+      return e;
     }
   },
 };
