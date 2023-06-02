@@ -28,6 +28,7 @@ export const NearbyAnimals = ({ navigation }) => {
   };
   useEffect(() => {
     getNearbyInjuredAnimal();
+    console.log(animal);
   }, []);
   const showModal = (animalClicked) => {
     setAnimalSelected(animalClicked);
@@ -59,16 +60,16 @@ export const NearbyAnimals = ({ navigation }) => {
                 const imagePicker = image[index % image.length];
                 return (
                   <View
-                    key={value._id}
+                    key={value?._id}
                     style={[styles.dataCard, { backgroundColor: colourPicker }]}
                   >
                     <View style={styles.picContainer}>
                       <Image style={styles.picStyle} source={imagePicker} />
                       <Text style={styles.headerCardText}>
-                        {value.UserNamewhoReported.toUpperCase()}
+                        {value?.UserNamewhoReported.toUpperCase()}
                       </Text>
                       <Text numberOfLines={1} style={styles.locationText}>
-                        {value.AnimalLocation.formattedAddress}
+                        {value?.AnimalLocation.formattedAddress}
                       </Text>
                     </View>
                     <View style={styles.tablularcontainer}>
@@ -80,9 +81,9 @@ export const NearbyAnimals = ({ navigation }) => {
                     </View>
                     <View style={styles.row}>
                       <Text style={[styles.cell, { fontSize: 15 }]}>
-                        {value.AnimalCondition}
+                        {value?.AnimalCondition}
                       </Text>
-                      {value.hasDocterArrived ? (
+                      {value?.hasDocterArrived ? (
                         <AntDesign
                           name="checkcircle"
                           size={30}
@@ -97,7 +98,7 @@ export const NearbyAnimals = ({ navigation }) => {
                           style={styles.cell}
                         />
                       )}
-                      {value.isAnimalSaved ? (
+                      {value?.isAnimalSaved ? (
                         <AntDesign
                           name="checkcircle"
                           size={30}

@@ -63,7 +63,7 @@ module.exports = {
       console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log("isssuueeee");
+      console.log(error);
     }
   },
   getNearbyAnimal: async (userId) => {
@@ -76,12 +76,13 @@ module.exports = {
       return err;
     }
   },
-  addPet: async (userId, Petname, Pettype, Petage) => {
+  addPet: async (id, Petname, Pettype, PetBreed, Petage) => {
     const endPoint = "/addPet";
-    const apiLink = `${API_BASE_URL}${endPoint}?${userId}`;
+    const apiLink = `${API_BASE_URL}${endPoint}?id=${id}`;
     const data = {
       Petname: Petname,
       Pettype: Pettype,
+      PetBreed: PetBreed,
       Petage: Petage,
     };
     try {
@@ -89,6 +90,16 @@ module.exports = {
       return response.data;
     } catch (err) {
       return err;
+    }
+  },
+  getPetDetails: async (id) => {
+    const endPoint = "/petDetails";
+    const apiLink = `${API_BASE_URL}${endPoint}?id=${id}`;
+    try {
+      const response = await axios.get(apiLink);
+      return response.data;
+    } catch (e) {
+      return e;
     }
   },
 };

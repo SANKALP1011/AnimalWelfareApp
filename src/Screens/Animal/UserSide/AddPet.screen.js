@@ -1,21 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
   TextInput,
+  Alert,
+  Pressable,
 } from "react-native";
 import RadioButton from "../../../Components/RadioButton";
 import { addPet } from "../../../Service/User.service";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { AppAuthContext } from "../../../Context/AuthProvider";
+import Loader from "../../../Components/Loader";
+import loaderAnimation from "../../../Animated Assets/Loader.json";
 
 export const AddPet = ({ navigation }) => {
+  const { user } = useContext(AppAuthContext);
   const [name, setName] = useState("");
   const [value, selectedValue] = useState("");
   const [breed, setBreed] = useState("");
   const [age, setAge] = useState("");
+  const [loader, showLoader] = useState(false);
 
   const data = ["Dog", "Cat", "Other"];
   const handleChoice = (value) => {
@@ -23,9 +30,31 @@ export const AddPet = ({ navigation }) => {
     console.log(value);
   };
 
-  const addUserPet = async () => {};
+  const addUserPet = async () => {
+    showLoader(true);
+    if (!name.trim() || !value.trim() || !breed.trim() || !age.trim()) {
+      Alert.alert(
+        "Please fill out the valid details before proceeding adding your pets"
+      );
+      showLoader(false);
+    } else {
+      try {
+        setTimeout(async () => {
+          await addPet(user._id, name, value, breed, age);
+          Alert.alert("Your pet details have been saved");
+          showLoader(false);
+        }, 2000);
+      } catch (err) {
+        console.log(err);
+        Alert.alert(err);
+        showLoader(false);
+      }
+    }
+  };
+
   return (
     <View style={styles.container}>
+      {loader && <Loader source={loaderAnimation} />}
       <View style={styles.nearbyHeaderContainer}>
         <Text style={styles.headreText}>Pet Buddy Details</Text>
         <MaterialIcons
@@ -76,20 +105,14 @@ export const AddPet = ({ navigation }) => {
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.addButtonContainer}
-          onPress={() => {
-            navigation.navigate("AddPet");
-          }}
-        >
-          <View>
-            <Ionicons name="add-circle" size={30} color="#F8E8EE" />
-          </View>
-        </TouchableOpacity>
+        <Pressable style={styles.addButtonContainer} onPress={addUserPet}>
+          <Ionicons name="add-circle" size={30} color="#F8E8EE" />
+        </Pressable>
       </View>
     </View>
   );
 };
+export default AddPet;
 
 const styles = StyleSheet.create({
   container: {
@@ -193,5 +216,3 @@ const styles = StyleSheet.create({
     shadowRadius: 7.49,
   },
 });
-
-export default AddPet;
