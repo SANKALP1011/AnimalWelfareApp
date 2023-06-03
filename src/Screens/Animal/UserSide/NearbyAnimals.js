@@ -5,12 +5,10 @@ import Loader from "../../../Components/Loader";
 import loaderAnimation from "../../../Animated Assets/Loader.json";
 import { AppAuthContext } from "../../../Context/AuthProvider";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import DetailModal from "../../../Components/DetailModal";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import Dog from "../../../Assets/Dog.png";
-import Cat from "../../../Assets/Cat.png";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import Fox3d from "../../../Assets/Fox3d.png";
+import NearbyDog3d from "../../../Assets/NearbyDog3d.png";
 
 export const NearbyAnimals = ({ navigation }) => {
   const { user } = useContext(AppAuthContext);
@@ -28,16 +26,9 @@ export const NearbyAnimals = ({ navigation }) => {
   };
   useEffect(() => {
     getNearbyInjuredAnimal();
-    console.log(animal);
   }, []);
-  const showModal = (animalClicked) => {
-    setAnimalSelected(animalClicked);
-  };
-  const closeModal = () => {
-    setAnimalSelected(null);
-  };
-  const colour = ["#cdb4db", "#ffc8dd"];
-  const image = [Dog, Cat];
+  const colour = ["#F8E8EE", "#F6FFDE"];
+  const image = [Fox3d, NearbyDog3d];
   return (
     <View style={styles.container}>
       {loader ? (
@@ -117,15 +108,6 @@ export const NearbyAnimals = ({ navigation }) => {
                   </View>
                 );
               })}
-              {/* <DetailModal
-                key={animalSelected?._id}
-                data={animalSelected}
-                visible={animalSelected !== null}
-                close={closeModal}
-                handleClose={() => {
-                  closeModal();
-                }}
-              /> */}
             </View>
           </ScrollView>
         </View>

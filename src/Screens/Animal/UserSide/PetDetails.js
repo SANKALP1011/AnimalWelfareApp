@@ -7,8 +7,12 @@ import {
   Pressable,
   Dimensions,
   Image,
+  Alert,
 } from "react-native";
-import { getUserDetails, getPetDetails } from "../../../Service/User.service";
+import {
+  getPetDetails,
+  updatePetHealthStatus,
+} from "../../../Service/User.service";
 import react, { useState, useEffect, useContext } from "react";
 import { AppAuthContext } from "../../../Context/AuthProvider";
 import Loader from "../../../Components/Loader";
@@ -45,6 +49,20 @@ export const PetDetails = ({ navigation }) => {
   const handleSelectedText = () => {
     setSelectedText(!selectedText);
     setShowPetData(!showPetData);
+  };
+
+  const updatePetStatus = async () => {
+    showLoader(true);
+    try {
+      await updatePetHealthStatus(user._id);
+      showLoader(false);
+      Alert.alert(
+        "Pet status updated , wait till there's an respone from doctor"
+      );
+    } catch (err) {
+      showLoader(false);
+      setError(err);
+    }
   };
   useEffect(() => {
     getPetData();
@@ -84,18 +102,20 @@ export const PetDetails = ({ navigation }) => {
           </View>
           {showPetData && (
             <View>
-              {petDetails.map((petDetail, index) => (
+              {petDetails?.map((petDetail, index) => (
                 <View key={index} style={styles.petDataCard}>
                   <Image source={Pet3d} style={styles.petCardImage} />
                   <View style={styles.petCardTextData}>
                     <Text style={styles.petText}>
-                      Breed: {petDetail.PetBreed}
+                      Breed: {petDetail?.PetBreed}
                     </Text>
-                    <Text style={styles.petText}>Age: {petDetail.Age}</Text>
+                    <Text style={styles.petText}>Age: {petDetail?.Age}</Text>
                     {petDetail.Petdoctor === "" ? (
                       <Text style={styles.petText}>Doctor: No</Text>
                     ) : (
-                      <Text> {petDetail.Petdoctor}</Text>
+                      <Text style={styles.petText}>
+                        Doctor: {petDetail?.Petdoctor}
+                      </Text>
                     )}
                     {petDetail.isPetSick ? (
                       <View style={styles.sickContainer}>
@@ -129,8 +149,8 @@ export const PetDetails = ({ navigation }) => {
                   text={"Update Health"}
                   image={Health3d}
                   navigation={navigation}
-                  location="InjuredAnimal"
                   color="#ECF8F9"
+                  handler={updatePetStatus}
                 />
               </View>
               <View style={styles.addButtonContainePet}>
