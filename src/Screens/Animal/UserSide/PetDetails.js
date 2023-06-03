@@ -123,6 +123,7 @@ export const PetDetails = ({ navigation }) => {
                   navigation={navigation}
                   location="DoctorList"
                   color="#F1D4E5"
+                  id={petDetails[0]._id}
                 />
                 <MiniCard
                   text={"Update Health"}
