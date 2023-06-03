@@ -112,5 +112,26 @@ module.exports = {
       return err;
     }
   },
-  chosePetDoctor: async () => {},
+  chosePetDoctor: async (id, did) => {
+    console.log(id);
+    console.log(did);
+    const endPoint = "/choseDoctor";
+    const apiLink = `${API_BASE_URL}${endPoint}?id=${id}&did=${did}`;
+    try {
+      const response = await axios.post(apiLink);
+      return response.data;
+    } catch (err) {
+      return err;
+    }
+  },
+  updatePetHealthStatus: async (id) => {
+    const endPoint = "/updatePetStatus";
+    const apiLink = `${API_BASE_URL}${endPoint}?id=${id}`;
+    try {
+      const response = await axios.post(apiLink);
+      return response.data;
+    } catch (err) {
+      return err;
+    }
+  },
 };

@@ -5,21 +5,26 @@ import {
   ScrollView,
   Image,
   Pressable,
+  Alert,
 } from "react-native";
-import react, { useState, useEffect } from "react";
-import { getDoctorList } from "../../../Service/User.service";
+import react, { useState, useEffect, useContext } from "react";
+import { getDoctorList, chosePetDoctor } from "../../../Service/User.service";
 import { useTheme } from "@react-navigation/native";
 import Doctor3d from "../../../Assets/Doctor3D.png";
 import FemaleDoc3D from "../../../Assets/FemaleDoc3D.png";
 import { useRoute } from "@react-navigation/native";
+import { AppAuthContext } from "../../../Context/AuthProvider";
+import Loader from "../../../Components/Loader";
+import loaderAnimation from "../../../Animated Assets/Loader.json";
 
 export const DoctorList = ({}) => {
+  const { user } = useContext(AppAuthContext);
   const [doctor, setDoctors] = useState([]);
+  const [loader, showLoader] = useState(false);
   const [error, setError] = useState("");
   const colour = ["#B2A4FF", "#B9E9FC"];
   const image = [Doctor3d, FemaleDoc3D];
-  const route = useRoute();
-  const { id } = route.params;
+
   const getAllDoctors = async () => {
     try {
       const response = await getDoctorList();
@@ -28,45 +33,68 @@ export const DoctorList = ({}) => {
       setError(err);
     }
   };
+  const choseDoctor = async (did) => {
+    try {
+      showLoader(true);
+      await chosePetDoctor(user._id, did);
+      showLoader(false);
+      Alert.alert("You have successfully chose the doctor for your pet");
+    } catch (err) {
+      showLoader(false);
+      setError(err);
+      console.log(err);
+    }
+  };
   useEffect(() => {
     getAllDoctors();
-    console.log(id);
   }, []);
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <View style={styles.cardContainer}>
-          {doctor.map((value, index) => {
-            const colourPicker = colour[index % colour.length];
-            const imagePicker = image[index % image.length];
-            return (
-              <View
-                key={index}
-                style={[
-                  styles.doctorCardContainer,
-                  { backgroundColor: colourPicker },
-                ]}
-              >
-                <Image source={imagePicker} style={styles.doctorCardImage} />
-                <View style={styles.doctorTextDataContainer}>
-                  <Text style={styles.doctorText}>
-                    Name: {value?.DocterName.toUpperCase()}
-                  </Text>
-                  <Text style={styles.doctorText}>
-                    NO: {value?.DocterNumber}
-                  </Text>
-                  <Text numberOfLines={1} style={styles.doctorLocationText}>
-                    {value?.DocterLocation?.formattedAddress}
-                  </Text>
-                  <Pressable style={styles.buttonContainetr}>
-                    <Text style={styles.doctorText}>Chose</Text>
-                  </Pressable>
+      <View style={styles.headreContainer}>
+        <Text style={styles.headreText}>Doctors</Text>
+      </View>
+      {loader ? (
+        <Loader source={loaderAnimation} />
+      ) : (
+        <ScrollView>
+          <View style={styles.cardContainer}>
+            {doctor.map((value, index) => {
+              const colourPicker = colour[index % colour.length];
+              const imagePicker = image[index % image.length];
+              return (
+                <View
+                  key={index}
+                  style={[
+                    styles.doctorCardContainer,
+                    { backgroundColor: colourPicker },
+                  ]}
+                >
+                  <Image source={imagePicker} style={styles.doctorCardImage} />
+                  <View style={styles.doctorTextDataContainer}>
+                    <Text style={styles.doctorText}>
+                      Name: {value?.DocterName.toUpperCase()}
+                    </Text>
+                    <Text style={styles.doctorText}>
+                      NO: {value?.DocterNumber}
+                    </Text>
+                    <Text numberOfLines={1} style={styles.doctorLocationText}>
+                      {value?.DocterLocation?.formattedAddress}
+                    </Text>
+                    <Pressable
+                      style={styles.buttonContainetr}
+                      onPress={() => {
+                        choseDoctor(value?._id);
+                      }}
+                    >
+                      <Text style={styles.doctorText}>Chose</Text>
+                    </Pressable>
+                  </View>
                 </View>
-              </View>
-            );
-          })}
-        </View>
-      </ScrollView>
+              );
+            })}
+          </View>
+        </ScrollView>
+      )}
     </View>
   );
 };
@@ -74,8 +102,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  headreContainer: {
+    marginTop: 60,
+  },
+  headreText: {
+    fontSize: 35,
+    fontFamily: "font-name=firaBold-Type",
+    color: "black",
+    marginLeft: 25,
+  },
   cardContainer: {
-    marginTop: "30%",
+    marginTop: "10%",
     justifyContent: "center",
     alignItems: "center",
   },

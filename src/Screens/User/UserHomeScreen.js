@@ -12,14 +12,12 @@ import {
   Image,
 } from "react-native";
 import { AppAuthContext } from "../../Context/AuthProvider";
-import Dog from "../../Assets/Dog.png";
-import Money from "../../Assets/Money.png";
-import Cat from "../../Assets/Cat.png";
-import Pet from "../../Assets/Dog2.png";
-import Vet from "../../Assets/Vet.png";
 import Adopt from "../../Assets/adopt.png";
 import MiniCard from "../../Components/Minicard";
 import { BigCard } from "../../Components/BigCard";
+import Report3d from "../../Assets/Report3d.png";
+import Nearby3d from "../../Assets/Nearby3d.png";
+import Bone3d from "../../Assets/Bone3d.png";
 
 const appWidth = Dimensions.get("screen").width;
 export const UserHomeScreen = ({ navigation }) => {
@@ -57,39 +55,32 @@ export const UserHomeScreen = ({ navigation }) => {
         <View style={styles.horizontalScrollBox}>
           <MiniCard
             text={"Report an injured animal"}
-            image={Dog}
+            image={Report3d}
             navigation={navigation}
             location="InjuredAnimal"
             color={"#DAE5D0"}
           />
           <MiniCard
-            text={"Nearby Animal"}
-            image={Cat}
+            text={"Location Nearby Animal"}
+            image={Nearby3d}
             navigation={navigation}
             location="NearByAnimals"
             color="#97DEFF"
           />
+
           <MiniCard
+            text={"Check your Pet Details"}
+            image={Bone3d}
+            navigation={navigation}
+            location="PetDetails"
+            color="#655DBB"
+          />
+          {/* <MiniCard
             text={"Donate to ngo"}
             image={Money}
             navigation={navigation}
             location="InjuredAnimal"
             color="#D5B4B4"
-          />
-
-          <MiniCard
-            text={"Pet Details"}
-            image={Pet}
-            navigation={navigation}
-            location="PetDetails"
-            color="#655DBB"
-          />
-          <MiniCard
-            text={"Chose Pet doctor"}
-            image={Vet}
-            navigation={navigation}
-            location="InjuredAnimal"
-            color="#E90064"
           />
           <MiniCard
             text={"Adopt Animal"}
@@ -104,7 +95,7 @@ export const UserHomeScreen = ({ navigation }) => {
             navigation={navigation}
             location="InjuredAnimal"
             color="#CDE990"
-          />
+          /> */}
         </View>
       </ScrollView>
       <ScrollView>

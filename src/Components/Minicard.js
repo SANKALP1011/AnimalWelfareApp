@@ -1,19 +1,35 @@
-import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Pressable,
+} from "react-native";
 
-export const MiniCard = ({ text, navigation, location, image, color, id }) => {
+export const MiniCard = ({
+  text,
+  navigation,
+  location,
+  image,
+  color,
+  id,
+  handler,
+}) => {
   return (
     <View>
-      <TouchableOpacity
+      <Pressable
         style={[styles.homeCardContainer, { backgroundColor: color }]}
         onPress={() => {
           navigation.navigate(location, { id });
+          handler;
         }}
       >
         <View>
           <Text style={styles.cardText}>{text}</Text>
           <Image source={image} style={styles.imageContainer} />
         </View>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 };
@@ -34,8 +50,8 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: 120,
-    height: 60,
-    marginTop: "20%",
+    height: 95,
+    marginTop: "1%",
     marginLeft: "30%",
   },
   cardText: {
@@ -43,6 +59,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     marginTop: "5%",
     marginLeft: "6%",
+    marginBottom: 2,
     fontFamily: "font-name=firaBold-Type",
   },
 });
