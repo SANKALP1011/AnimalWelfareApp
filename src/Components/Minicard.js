@@ -1,12 +1,12 @@
 import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 
-export const MiniCard = ({ text, navigation, location, image, color }) => {
+export const MiniCard = ({ text, navigation, location, image, color, id }) => {
   return (
     <View>
       <TouchableOpacity
         style={[styles.homeCardContainer, { backgroundColor: color }]}
         onPress={() => {
-          navigation.navigate(location);
+          navigation.navigate(location, { id });
         }}
       >
         <View>

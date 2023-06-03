@@ -112,4 +112,5 @@ module.exports = {
       return err;
     }
   },
+  chosePetDoctor: async () => {},
 };
