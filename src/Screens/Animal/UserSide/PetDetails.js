@@ -119,8 +119,13 @@ export const PetDetails = ({ navigation }) => {
                     )}
                     {petDetail.isPetSick ? (
                       <View style={styles.sickContainer}>
-                        <Text>Sick:</Text>
-                        <AntDesign name="closecircle" size={24} color="red" />
+                        <Text style={styles.petText}>Sick:</Text>
+                        <AntDesign
+                          name="closecircle"
+                          size={24}
+                          color="red"
+                          style={styles.iconContainer}
+                        />
                       </View>
                     ) : (
                       <View style={styles.sickContainer}>
@@ -149,6 +154,7 @@ export const PetDetails = ({ navigation }) => {
                   text={"Update Health"}
                   image={Health3d}
                   navigation={navigation}
+                  location="PetDetails"
                   color="#ECF8F9"
                   handler={updatePetStatus}
                 />
@@ -353,10 +359,3 @@ const styles = StyleSheet.create({
 });
 
 export default PetDetails;
-
-// get the user
-//check if pets
-// if no pets , then show the diffrrent ui with no pets ansd all
-// no pets , buttok would rdeirecty to the pet ad page
-//esle show the same page
-// if pets , show the pet details

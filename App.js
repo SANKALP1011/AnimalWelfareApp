@@ -13,6 +13,7 @@ import PetDetails from "./src/Screens/Animal/UserSide/PetDetails";
 import AddPet from "./src/Screens/Animal/UserSide/AddPet.screen";
 import loadFonts from "./src/Fonts/FontLoader";
 import DoctorList from "./src/Screens/Animal/UserSide/DoctorList.screen";
+import NgoList from "./src/Screens/Animal/UserSide/NgoList.screen";
 
 const Stack = createNativeStackNavigator();
 
@@ -59,6 +60,7 @@ function AppWrapper() {
             <Stack.Screen name="PetDetails" component={PetDetails} />
             <Stack.Screen name="AddPet" component={AddPet} />
             <Stack.Screen name="DoctorList" component={DoctorList} />
+            <Stack.Screen name="NgoList" component={NgoList} />
           </>
         )}
       </Stack.Navigator>
