@@ -144,4 +144,14 @@ module.exports = {
       return err;
     }
   },
+  getAdoptedAnimal: async () => {
+    const endPoint = "/ngo/adoptionList";
+    const apiLink = `${API_BASE_URL}${endPoint}`;
+    try {
+      const respone = await axios.get(apiLink);
+      return respone.data;
+    } catch (err) {
+      return err;
+    }
+  },
 };

@@ -18,6 +18,7 @@ import Report3d from "../../Assets/Report3d.png";
 import Nearby3d from "../../Assets/Nearby3d.png";
 import Bone3d from "../../Assets/Bone3d.png";
 import Money3d from "../../Assets/Money3d.png";
+import Adopt3d from "../../Assets/Adopt3d.png";
 
 const appWidth = Dimensions.get("screen").width;
 export const UserHomeScreen = ({ navigation }) => {
@@ -81,6 +82,13 @@ export const UserHomeScreen = ({ navigation }) => {
             navigation={navigation}
             location="NgoList"
             color="#D5B4B4"
+          />
+          <MiniCard
+            text={"Adopt Animals rescued by Ngo"}
+            image={Adopt3d}
+            navigation={navigation}
+            location="InjuredAnimal"
+            color="#CDE990"
           />
           {/* <MiniCard
             text={"Donate to ngo"}
