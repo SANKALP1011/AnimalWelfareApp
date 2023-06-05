@@ -1,6 +1,6 @@
 import axios from "axios";
-import { API_BASE_URL } from "../Api/api.utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { API_BASE_URL } from "../Api/api.utils";
 
 module.exports = {
   signUpUser: async (name, email, password, address) => {
@@ -130,6 +130,26 @@ module.exports = {
     try {
       const response = await axios.post(apiLink);
       return response.data;
+    } catch (err) {
+      return err;
+    }
+  },
+  donateToNgo: async (id, nId, amount) => {
+    const endPoint = "/ngoFund";
+    const apiLink = `${API_BASE_URL}${endPoint}?id=${id}&nid=${nId}`;
+    try {
+      const respone = await axios.post(apiLink, amount);
+      return respone.data;
+    } catch (err) {
+      return err;
+    }
+  },
+  getAdoptedAnimal: async () => {
+    const endPoint = "/ngo/adoptionList";
+    const apiLink = `${API_BASE_URL}${endPoint}`;
+    try {
+      const respone = await axios.get(apiLink);
+      return respone.data;
     } catch (err) {
       return err;
     }
