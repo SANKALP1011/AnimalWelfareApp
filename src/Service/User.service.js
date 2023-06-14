@@ -154,4 +154,14 @@ module.exports = {
       return err;
     }
   },
+  adoptAnimal: async (id, nId) => {
+    const endPoint = "/adoptAnimal";
+    const apiLink = `${API_BASE_URL}${endPoint}?id=${id}&nId=${nId}`;
+    try {
+      const respone = await axios.post(apiLink);
+      return respone.data;
+    } catch (err) {
+      return err;
+    }
+  },
 };
