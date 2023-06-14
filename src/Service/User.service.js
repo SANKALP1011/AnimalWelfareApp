@@ -144,7 +144,7 @@ module.exports = {
       return err;
     }
   },
-  getAdoptedAnimal: async () => {
+  getAdoptedAnimalsList: async () => {
     const endPoint = "/ngo/adoptionList";
     const apiLink = `${API_BASE_URL}${endPoint}`;
     try {

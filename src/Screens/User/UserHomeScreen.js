@@ -87,7 +87,7 @@ export const UserHomeScreen = ({ navigation }) => {
             text={"Adopt Animals rescued by Ngo"}
             image={Adopt3d}
             navigation={navigation}
-            location="InjuredAnimal"
+            location="AdoptionList"
             color="#CDE990"
           />
           {/* <MiniCard
