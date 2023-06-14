@@ -14,17 +14,24 @@ import AdoptionList from "../Screens/Animal/UserSide/AdoptionList.screen";
 const LoggedInStack = createNativeStackNavigator();
 
 export const AuthenticatedScreen = () => {
-  <LoggedInStack.Navigator>
-    <LoggedInStack.Screen name="UserHome" component={UserHomeScreen} />
-    <LoggedInStack.Screen name="InjuredAnimal" component={InjuredAnimal} />
-    <LoggedInStack.Screen name="UserDetails" component={UserDetailScreen} />
-    <LoggedInStack.Screen name="NearByAnimals" component={NearbyAnimals} />
-    <LoggedInStack.Screen name="PetDetails" component={PetDetails} />
-    <LoggedInStack.Screen name="AddPet" component={AddPet} />
-    <LoggedInStack.Screen name="DoctorList" component={DoctorList} />
-    <LoggedInStack.Screen name="NgoList" component={NgoList} />
-    <LoggedInStack.Screen name="AdoptionList" component={AdoptionList} />
-  </LoggedInStack.Navigator>;
+  return (
+    <LoggedInStack.Navigator
+      initialRouteName="UserHome"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <LoggedInStack.Screen name="UserHome" component={UserHomeScreen} />
+      <LoggedInStack.Screen name="InjuredAnimal" component={InjuredAnimal} />
+      <LoggedInStack.Screen name="UserDetails" component={UserDetailScreen} />
+      <LoggedInStack.Screen name="NearByAnimals" component={NearbyAnimals} />
+      <LoggedInStack.Screen name="PetDetails" component={PetDetails} />
+      <LoggedInStack.Screen name="AddPet" component={AddPet} />
+      <LoggedInStack.Screen name="DoctorList" component={DoctorList} />
+      <LoggedInStack.Screen name="NgoList" component={NgoList} />
+      <LoggedInStack.Screen name="AdoptionList" component={AdoptionList} />
+    </LoggedInStack.Navigator>
+  );
 };
 
 export default AuthenticatedScreen;

@@ -6,10 +6,16 @@ import LogInScreen from "../Screens/Authentication/User/LogInScreen";
 const NotLoggedInStack = createNativeStackNavigator();
 
 export const UnAuthenticatedScreen = () => {
-  <NotLoggedInStack.Navigator>
-    <NotLoggedInStack.Screen name="SignUp" component={SignUpScreen} />
-    <NotLoggedInStack.Screen name="LogIn" component={LogInScreen} />
-  </NotLoggedInStack.Navigator>;
+  return (
+    <NotLoggedInStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <NotLoggedInStack.Screen name="SignUp" component={SignUpScreen} />
+      <NotLoggedInStack.Screen name="LogIn" component={LogInScreen} />
+    </NotLoggedInStack.Navigator>
+  );
 };
 
 export default UnAuthenticatedScreen;
