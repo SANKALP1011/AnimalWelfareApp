@@ -52,7 +52,7 @@ export const UserHomeScreen = ({ navigation }) => {
           </View>
         )}
       </View>
-      <ScrollView style={{ flex: 1 }} horizontal={true}>
+      <ScrollView horizontal={true}>
         <View style={styles.horizontalScrollBox}>
           <MiniCard
             text={"Report an injured animal"}
@@ -113,26 +113,10 @@ export const UserHomeScreen = ({ navigation }) => {
           /> */}
         </View>
       </ScrollView>
-      <ScrollView>
-        <BigCard
-          text={"Demo"}
-          navigation={navigation}
-          location="InjuredAnimal"
-          color="#FDEBED"
-        />
-        <BigCard
-          text={"Demo"}
-          navigation={navigation}
-          location="InjuredAnimal"
-          color="#DFD3C3"
-        />
-        <BigCard
-          text={"Demo"}
-          navigation={navigation}
-          location="InjuredAnimal"
-          color="#DEBACE"
-        />
-      </ScrollView>
+
+      <View style={styles.graphContainer}>
+        <Text></Text>
+      </View>
     </View>
   );
 };
@@ -143,7 +127,7 @@ const styles = StyleSheet.create({
   },
   horizontalScrollBox: {
     flexDirection: "row",
-    alignItems: "center",
+    marginTop: 30,
   },
   cardContainer: {
     flexDirection: "row",
@@ -168,7 +152,7 @@ const styles = StyleSheet.create({
   },
   userProfile: {
     marginTop: "4%",
-    marginBottom: "10%%",
+    marginBottom: "10%",
     marginLeft: "3%",
   },
   profileSubText: {
@@ -209,6 +193,23 @@ const styles = StyleSheet.create({
     fontSize: "17px",
     marginTop: "5%",
     marginLeft: "6%",
+  },
+  graphContainer: {
+    width: "90%",
+    height: 300,
+    borderRadius: 20,
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 4,
+    flexDirection: "row",
+    backgroundColor: "#5F264A",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 export default UserHomeScreen;
