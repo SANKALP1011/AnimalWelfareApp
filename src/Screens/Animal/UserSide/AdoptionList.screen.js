@@ -5,15 +5,19 @@ import {
   ScrollView,
   Image,
   Pressable,
+  Alert,
 } from "react-native";
-import react, { useState, useEffect } from "react";
+import react, { useState, useEffect, useContext } from "react";
 import { getAdoptedAnimalsList } from "../../../Service/User.service";
 import Loader from "../../../Components/Loader";
 import loaderAnimation from "../../../Animated Assets/Loader.json";
 import AdoptedImage3d from "../../../Assets/AdoptedImage3d.png";
 import fox3dd from "../../../Assets/fox3dd.png";
+import { adoptAnimal } from "../../../Service/User.service";
+import { AppAuthContext } from "../../../Context/AuthProvider";
 
 export const AdoptionList = ({ navigation }) => {
+  const { user } = useContext(AppAuthContext);
   const [adoptedList, setAdoptedList] = useState([]);
   const [error, setError] = useState("");
   const [loader, showLoader] = useState(false);
@@ -25,7 +29,6 @@ export const AdoptionList = ({ navigation }) => {
     try {
       const respone = await getAdoptedAnimalsList();
       setAdoptedList(respone);
-
       showLoader(false);
     } catch (err) {
       setError(err);
@@ -33,8 +36,16 @@ export const AdoptionList = ({ navigation }) => {
     }
   };
 
-  const adoptAnimal = async () => {
-    console.log("adopetedd");
+  const adoptAnimalFromList = async (aniId) => {
+    showLoader(true);
+    try {
+      await adoptAnimal(user._id, aniId);
+      Alert.alert("This animal is successfully adopted");
+      showLoader(false);
+    } catch (err) {
+      setError(err);
+      showLoader(false);
+    }
   };
 
   useEffect(() => {
@@ -73,16 +84,20 @@ export const AdoptionList = ({ navigation }) => {
                     </Text>
                     {value?.isAdopted ? (
                       <View>
-                        <Text>jlj</Text>
+                        <Text style={styles.adoptedText}>
+                          Adopted By: {value?.AdopterName}
+                        </Text>
                       </View>
                     ) : (
                       <View>
-                        <Text style={styles.adoptedText}>Adopted: No</Text>
+                        <Text style={styles.adoptedText}>Adopted By: No</Text>
                       </View>
                     )}
                     <Pressable
                       style={styles.buttonContainetr}
-                      onPress={adoptAnimal}
+                      onPress={() => {
+                        adoptAnimalFromList(value?._id);
+                      }}
                     >
                       <Text style={styles.adoptedText}>Adopt</Text>
                     </Pressable>
@@ -184,4 +199,5 @@ export default AdoptionList;
     "isAdopted": false,
     "isRescued": false,
   },
+  user id and animal id
 */
