@@ -46,6 +46,8 @@ function AppWrapper() {
     );
   }
   return (
-    <>{user === null ? <UnAuthenticatedScreen /> : <AuthenticatedScreen />}</>
+    <NavigationContainer>
+      {user === null ? <UnAuthenticatedScreen /> : <AuthenticatedScreen />}
+    </NavigationContainer>
   );
 }
