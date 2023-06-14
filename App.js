@@ -14,6 +14,9 @@ import AddPet from "./src/Screens/Animal/UserSide/AddPet.screen";
 import loadFonts from "./src/Fonts/FontLoader";
 import DoctorList from "./src/Screens/Animal/UserSide/DoctorList.screen";
 import NgoList from "./src/Screens/Animal/UserSide/NgoList.screen";
+import AdoptionList from "./src/Screens/Animal/UserSide/AdoptionList.screen";
+import AuthenticatedScreen from "./src/ScreenStack/AuthenticatedScreen.stack";
+import UnAuthenticatedScreen from "./src/ScreenStack/UnAuthenticatedScreen.stack";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,27 +46,6 @@ function AppWrapper() {
     );
   }
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        {user === null ? (
-          <Stack.Screen name="SignUp" component={SignUpScreen} />
-        ) : (
-          <>
-            <Stack.Screen name="UserHome" component={UserHomeScreen} />
-            <Stack.Screen name="InjuredAnimal" component={InjuredAnimal} />
-            <Stack.Screen name="UserDetails" component={UserDetailScreen} />
-            <Stack.Screen name="NearByAnimals" component={NearbyAnimals} />
-            <Stack.Screen name="PetDetails" component={PetDetails} />
-            <Stack.Screen name="AddPet" component={AddPet} />
-            <Stack.Screen name="DoctorList" component={DoctorList} />
-            <Stack.Screen name="NgoList" component={NgoList} />
-          </>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>{user === null ? <UnAuthenticatedScreen /> : <AuthenticatedScreen />}</>
   );
 }
