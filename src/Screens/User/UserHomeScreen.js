@@ -9,7 +9,7 @@ import {
   Dimensions,
   Image,
 } from "react-native";
-import { LineChart } from "react-native-gifted-charts";
+
 import { AppAuthContext } from "../../Context/AuthProvider";
 import { getUserDetails } from "../../Service/User.service";
 import MiniCard from "../../Components/Minicard";
@@ -21,6 +21,7 @@ import Adopt3d from "../../Assets/Adopt3d.png";
 import Data3d from "../../Assets/Data3d.png";
 import Loader from "../../Components/Loader";
 import loaderAnimation from "../../Animated Assets/Loader.json";
+import { LineChart } from "react-native-chart-kit";
 
 const appWidth = Dimensions.get("screen").width;
 export const UserHomeScreen = ({ navigation }) => {
@@ -28,8 +29,6 @@ export const UserHomeScreen = ({ navigation }) => {
   const [userData, setUserData] = useState(null);
   const [cacheData, setCacheData] = useState({});
   const [loader, showLoader] = useState(false);
-
-  const data = [{ value: 15 }, { value: 30 }, { value: 26 }, { value: 40 }];
 
   const CACHE_EXPIRATION_TIME = 10000;
 
@@ -63,6 +62,23 @@ export const UserHomeScreen = ({ navigation }) => {
   useEffect(() => {
     getUpdatedUser();
   }, [user]);
+
+  const reportedLenght = userData?.animalReported.length;
+  const data = {
+    labels: ["January", "February", "March", "April", "May", "June"],
+    datasets: [
+      {
+        data: [
+          reportedLenght,
+          reportedLenght,
+          reportedLenght,
+          0,
+          reportedLenght,
+          0,
+        ],
+      },
+    ],
+  };
 
   return (
     <View style={styles.container}>
@@ -136,20 +152,17 @@ export const UserHomeScreen = ({ navigation }) => {
       <View style={styles.graphContainer}>
         <LineChart
           data={data}
-          thickness={5}
-          hideRules
-          hideYAxisText
-          yAxisColor="#CD1818"
-          verticalLinesColor="#CD1818"
-          xAxisColor="#CD1818"
-          color="#CD1818"
-          isAnimated
-          curved
-          animateOnDataChange
-          animationDuration={1000}
-          onDataChangeAnimationDuration={300}
-          height={150}
+          width={400}
+          height={160}
+          chartConfig={{
+            backgroundGradientFromOpacity: 0,
+            backgroundGradientToOpacity: 0,
+            decimalPlaces: 0,
+            color: (opacity = 1) => `rgba(255, 0, 0, ${opacity})`,
+          }}
+          bezier
         />
+        <Text style={styles.dataText}>Animal Saved</Text>
       </View>
       <View style={styles.dataViewContainer}>
         <View style={styles.leftDataContainer}>
@@ -256,6 +269,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 18,
     justifyContent: "center",
+    alignItems: "center",
   },
   dataViewContainer: {
     width: "90%",
