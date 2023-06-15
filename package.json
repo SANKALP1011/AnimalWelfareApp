@@ -25,6 +25,7 @@
     "react-dom": "^18.2.0",
     "react-native": "0.71.3",
     "react-native-gesture-handler": "~2.9.0",
+    "react-native-gifted-charts": "^1.2.42",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-mmkv": "^2.6.3",
     "react-native-modal": "^13.0.1",

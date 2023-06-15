@@ -4,25 +4,65 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  TouchableOpacity,
   ActivityIndicator,
-  Button,
   Pressable,
   Dimensions,
   Image,
 } from "react-native";
+import { LineChart } from "react-native-gifted-charts";
 import { AppAuthContext } from "../../Context/AuthProvider";
+import { getUserDetails } from "../../Service/User.service";
 import MiniCard from "../../Components/Minicard";
-import { BigCard } from "../../Components/BigCard";
 import Report3d from "../../Assets/Report3d.png";
 import Nearby3d from "../../Assets/Nearby3d.png";
 import Bone3d from "../../Assets/Bone3d.png";
 import Money3d from "../../Assets/Money3d.png";
 import Adopt3d from "../../Assets/Adopt3d.png";
+import Data3d from "../../Assets/Data3d.png";
+import Loader from "../../Components/Loader";
+import loaderAnimation from "../../Animated Assets/Loader.json";
 
 const appWidth = Dimensions.get("screen").width;
 export const UserHomeScreen = ({ navigation }) => {
   const { user } = useContext(AppAuthContext);
+  const [userData, setUserData] = useState(null);
+  const [cacheData, setCacheData] = useState({});
+  const [loader, showLoader] = useState(false);
+
+  const data = [{ value: 15 }, { value: 30 }, { value: 26 }, { value: 40 }];
+
+  const CACHE_EXPIRATION_TIME = 10000;
+
+  const getUpdatedUser = async () => {
+    try {
+      const cacheKey = user._id;
+      const cachedData = cacheData[cacheKey];
+
+      if (
+        cachedData &&
+        Date.now() - cachedData.timestamp < CACHE_EXPIRATION_TIME
+      ) {
+        // Use cached data if it exists and time is not expired
+        setUserData(cachedData.data);
+        showLoader(false);
+      } else {
+        const response = await getUserDetails(user._id);
+        setUserData(response);
+        showLoader(false);
+        // Cache the fetched data with a new timestapn if the data is updatd fro  the user side
+        setCacheData((prevCacheData) => ({
+          ...prevCacheData,
+          [cacheKey]: { data: response, timestamp: Date.now() },
+        }));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getUpdatedUser();
+  }, [user]);
 
   return (
     <View style={styles.container}>
@@ -52,7 +92,7 @@ export const UserHomeScreen = ({ navigation }) => {
           </View>
         )}
       </View>
-      <ScrollView style={{ flex: 1 }} horizontal={true}>
+      <ScrollView horizontal={true}>
         <View style={styles.horizontalScrollBox}>
           <MiniCard
             text={"Report an injured animal"}
@@ -90,60 +130,50 @@ export const UserHomeScreen = ({ navigation }) => {
             location="AdoptionList"
             color="#CDE990"
           />
-          {/* <MiniCard
-            text={"Donate to ngo"}
-            image={Money}
-            navigation={navigation}
-            location="InjuredAnimal"
-            color="#D5B4B4"
-          />
-          <MiniCard
-            text={"Adopt Animal"}
-            image={Pet}
-            navigation={navigation}
-            location="InjuredAnimal"
-            color="#E5D1FA"
-          />
-          <MiniCard
-            text={"Adopted Animal Details"}
-            image={Adopt}
-            navigation={navigation}
-            location="InjuredAnimal"
-            color="#CDE990"
-          /> */}
         </View>
       </ScrollView>
-      <ScrollView>
-        <BigCard
-          text={"Demo"}
-          navigation={navigation}
-          location="InjuredAnimal"
-          color="#FDEBED"
+
+      <View style={styles.graphContainer}>
+        <LineChart
+          data={data}
+          thickness={5}
+          hideRules
+          hideYAxisText
+          yAxisColor="#CD1818"
+          verticalLinesColor="#CD1818"
+          xAxisColor="#CD1818"
+          color="#CD1818"
+          isAnimated
+          curved
+          animateOnDataChange
+          animationDuration={1000}
+          onDataChangeAnimationDuration={300}
+          height={150}
         />
-        <BigCard
-          text={"Demo"}
-          navigation={navigation}
-          location="InjuredAnimal"
-          color="#DFD3C3"
-        />
-        <BigCard
-          text={"Demo"}
-          navigation={navigation}
-          location="InjuredAnimal"
-          color="#DEBACE"
-        />
-      </ScrollView>
+      </View>
+      <View style={styles.dataViewContainer}>
+        <View style={styles.leftDataContainer}>
+          <Text style={styles.dataText}>
+            Animal Adopted : {userData?.AdoptedAnimal.length}
+          </Text>
+          <Text style={styles.dataText}>
+            Ngo Donated : {userData?.donatedtoNgo.length}
+          </Text>
+        </View>
+        <View>
+          <Image source={Data3d} style={styles.dataCardImage} />
+        </View>
+      </View>
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
   },
   horizontalScrollBox: {
     flexDirection: "row",
-    alignItems: "center",
+    marginTop: 22,
   },
   cardContainer: {
     flexDirection: "row",
@@ -168,7 +198,7 @@ const styles = StyleSheet.create({
   },
   userProfile: {
     marginTop: "4%",
-    marginBottom: "10%%",
+    marginBottom: "10%",
     marginLeft: "3%",
   },
   profileSubText: {
@@ -209,6 +239,56 @@ const styles = StyleSheet.create({
     fontSize: "17px",
     marginTop: "5%",
     marginLeft: "6%",
+  },
+  graphContainer: {
+    width: "90%",
+    height: 200,
+    borderRadius: 20,
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 4,
+    backgroundColor: "#0C134F",
+    marginBottom: 10,
+    marginLeft: 18,
+    justifyContent: "center",
+  },
+  dataViewContainer: {
+    width: "90%",
+    height: 150,
+    borderRadius: 20,
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 4,
+    backgroundColor: "#790252",
+    marginBottom: 40,
+    marginLeft: 17,
+    flexDirection: "row",
+  },
+  dataCardImage: {
+    width: 130,
+    height: 130,
+    marginLeft: 30,
+    marginTop: 10,
+  },
+  leftDataContainer: {
+    marginLeft: 20,
+    marginTop: 40,
+  },
+  dataText: {
+    fontSize: 18,
+    fontFamily: "font-name=firaBold-Type",
+    color: "white",
+    margin: 5,
   },
 });
 export default UserHomeScreen;
