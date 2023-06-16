@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import SignUpScreen from "../Screens/Authentication/User/SignUpScreen";
-import LogInScreen from "../Screens/Authentication/User/LogInScreen";
+import SignUpScreen from "../../Screens/Authentication/User/SignUpScreen";
+import LogInScreen from "../../Screens/Authentication/User/LogInScreen";
 
 const NotLoggedInStack = createNativeStackNavigator();
 
