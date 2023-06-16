@@ -1,15 +1,15 @@
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import UserHomeScreen from "../Screens/User/UserHomeScreen";
-import InjuredAnimal from "../Screens/Animal/UserSide/InjuredAnimal.screen";
-import UserDetailScreen from "../Screens/User/UserDetailScreen";
-import NearbyAnimals from "../Screens/Animal/UserSide/NearbyAnimals";
-import PetDetails from "../Screens/Animal/UserSide/PetDetails";
-import AddPet from "../Screens/Animal/UserSide/AddPet.screen";
-import DoctorList from "../Screens/Animal/UserSide/DoctorList.screen";
-import NgoList from "../Screens/Animal/UserSide/NgoList.screen";
-import AdoptionList from "../Screens/Animal/UserSide/AdoptionList.screen";
+import UserHomeScreen from "../../Screens/User/UserHomeScreen";
+import InjuredAnimal from "../../Screens/Animal/UserSide/InjuredAnimal.screen";
+import UserDetailScreen from "../../Screens/User/UserDetailScreen";
+import NearbyAnimals from "../../Screens/Animal/UserSide/NearbyAnimals";
+import PetDetails from "../../Screens/Animal/UserSide/PetDetails";
+import AddPet from "../../Screens/Animal/UserSide/AddPet.screen";
+import DoctorList from "../../Screens/Animal/UserSide/DoctorList.screen";
+import NgoList from "../../Screens/Animal/UserSide/NgoList.screen";
+import AdoptionList from "../../Screens/Animal/UserSide/AdoptionList.screen";
 
 const LoggedInStack = createNativeStackNavigator();
 
