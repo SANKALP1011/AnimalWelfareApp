@@ -28,7 +28,7 @@ export const UserHomeScreen = ({ navigation }) => {
   const { user } = useContext(AppAuthContext);
   const [userData, setUserData] = useState(null);
   const [cacheData, setCacheData] = useState({});
-  const [loader, showLoader] = useState(false);
+  const [loader, showLoader] = useState(true);
 
   const CACHE_EXPIRATION_TIME = 10000;
 
@@ -63,19 +63,12 @@ export const UserHomeScreen = ({ navigation }) => {
     getUpdatedUser();
   }, [user]);
 
-  const reportedLenght = userData?.animalReported.length;
+  // const reportedLenght = userData?.animalReported.length;
   const data = {
     labels: ["January", "February", "March", "April", "May", "June"],
     datasets: [
       {
-        data: [
-          reportedLenght,
-          reportedLenght,
-          reportedLenght,
-          0,
-          reportedLenght,
-          0,
-        ],
+        data: [2, 3, 1, 0, 4, 0],
       },
     ],
     legend: ["Number of Animal Saved"],
@@ -91,32 +84,37 @@ export const UserHomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.userDetailsContainer}>
-        {user ? (
-          <View>
-            <View style={styles.userProfile}>
-              <Text style={styles.textStyle}>
-                Welcome back, {user.UserName}
-              </Text>
-              <Pressable
-                style={styles.button}
-                onPress={() => {
-                  navigation.navigate("UserDetails");
-                }}
-              >
-                <Text style={styles.text}>Details</Text>
-              </Pressable>
+      {loader ? (
+        <Loader source={loaderAnimation} />
+      ) : (
+        <View style={styles.userDetailsContainer}>
+          {user ? (
+            <View>
+              <View style={styles.userProfile}>
+                <Text style={styles.textStyle}>
+                  Welcome back, {user.UserName}
+                </Text>
+                <Pressable
+                  style={styles.button}
+                  onPress={() => {
+                    navigation.navigate("UserDetails");
+                  }}
+                >
+                  <Text style={styles.text}>Details</Text>
+                </Pressable>
+              </View>
             </View>
-          </View>
-        ) : (
-          <View>
-            <ActivityIndicator
-              size="large"
-              animating={true}
-            ></ActivityIndicator>
-          </View>
-        )}
-      </View>
+          ) : (
+            <View>
+              <ActivityIndicator
+                size="large"
+                animating={true}
+              ></ActivityIndicator>
+            </View>
+          )}
+        </View>
+      )}
+
       <ScrollView horizontal={true}>
         <View style={styles.horizontalScrollBox}>
           <MiniCard
@@ -133,7 +131,6 @@ export const UserHomeScreen = ({ navigation }) => {
             location="NearByAnimals"
             color="#97DEFF"
           />
-
           <MiniCard
             text={"Check your Pet Details"}
             image={Bone3d}
@@ -142,14 +139,14 @@ export const UserHomeScreen = ({ navigation }) => {
             color="#655DBB"
           />
           <MiniCard
-            text={"Donate to your choice of  ngo"}
+            text={"Donate to your choice of NGO"}
             image={Money3d}
             navigation={navigation}
             location="NgoList"
             color="#D5B4B4"
           />
           <MiniCard
-            text={"Adopt Animals rescued by Ngo"}
+            text={"Adopt Animals rescued by NGO"}
             image={Adopt3d}
             navigation={navigation}
             location="AdoptionList"
@@ -167,13 +164,14 @@ export const UserHomeScreen = ({ navigation }) => {
           bezier
         />
       </View>
+
       <View style={styles.dataViewContainer}>
         <View style={styles.leftDataContainer}>
           <Text style={styles.dataText}>
-            Animal Adopted : {userData?.AdoptedAnimal.length}
+            Animal Adopted: {userData?.AdoptedAnimal.length}
           </Text>
           <Text style={styles.dataText}>
-            Ngo Donated : {userData?.donatedtoNgo.length}
+            NGO Donated: {userData?.donatedtoNgo.length}
           </Text>
         </View>
         <View>
