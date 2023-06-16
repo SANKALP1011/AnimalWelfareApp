@@ -10,7 +10,7 @@ import {
   Alert,
 } from "react-native";
 import { useState, useEffect, useContext } from "react";
-import { AppAuthContext } from "../../../Context/AuthProvider";
+import { AppAuthContext } from "../../../Context/user.authContext";
 import { reportInjuredAnimal } from "../../../Service/User.service";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import animalJSON from "../../../Animated Assets/Animal.json";

@@ -3,7 +3,7 @@ import { getNearbyAnimal } from "../../../Service/User.service";
 import React, { useEffect, useState, useContext } from "react";
 import Loader from "../../../Components/Loader";
 import loaderAnimation from "../../../Animated Assets/Loader.json";
-import { AppAuthContext } from "../../../Context/AuthProvider";
+import { AppAuthContext } from "../../../Context/user.authContext";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";

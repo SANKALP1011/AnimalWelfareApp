@@ -10,58 +10,60 @@ import {
   Image,
 } from "react-native";
 
-import { AppAuthContext } from "../../Context/user.authContext";
-import { getUserDetails } from "../../Service/User.service";
+import { DoctorAuthContext } from "../../Context/doctor.authContext";
 import MiniCard from "../../Components/Minicard";
-import Report3d from "../../Assets/Report3d.png";
-import Nearby3d from "../../Assets/Nearby3d.png";
-import Bone3d from "../../Assets/Bone3d.png";
-import Money3d from "../../Assets/Money3d.png";
-import Adopt3d from "../../Assets/Adopt3d.png";
-import Data3d from "../../Assets/Data3d.png";
+import Report3d from "../../../Assets/Report3d.png";
+import Nearby3d from "../../../Assets/Nearby3d.png";
+import Bone3d from "../../../Assets/Bone3d.png";
+import Money3d from "../../../Assets/Money3d.png";
+import Adopt3d from "../../../Assets/Adopt3d.png";
+import Data3d from "../../../Assets/Data3d.png";
 import Loader from "../../Components/Loader";
 import loaderAnimation from "../../Animated Assets/Loader.json";
 import { LineChart } from "react-native-chart-kit";
+import Dochelp3d from "../../../Assets/Dochelp3d.png";
+import AdoptedImage3d from "../../../Assets/AdoptedImage3d.png";
+import Vacc3d from "../../../Assets/Vacc3d.png";
 
 const appWidth = Dimensions.get("screen").width;
-export const UserHomeScreen = ({ navigation }) => {
-  const { user } = useContext(AppAuthContext);
-  const [userData, setUserData] = useState(null);
+export const DoctorHome = ({ navigation }) => {
+  const { doctor } = useContext(DoctorAuthContext);
+  const [doctorData, setDoctorrData] = useState(null);
   const [cacheData, setCacheData] = useState({});
-  const [loader, showLoader] = useState(true);
+  const [loader, showLoader] = useState(false);
 
-  const CACHE_EXPIRATION_TIME = 10000;
+  //   const CACHE_EXPIRATION_TIME = 10000;
 
-  const getUpdatedUser = async () => {
-    try {
-      const cacheKey = user._id;
-      const cachedData = cacheData[cacheKey];
+  //   const getUpdatedUser = async () => {
+  //     try {
+  //       const cacheKey = user._id;
+  //       const cachedData = cacheData[cacheKey];
 
-      if (
-        cachedData &&
-        Date.now() - cachedData.timestamp < CACHE_EXPIRATION_TIME
-      ) {
-        // Use cached data if it exists and time is not expired
-        setUserData(cachedData.data);
-        showLoader(false);
-      } else {
-        const response = await getUserDetails(user._id);
-        setUserData(response);
-        showLoader(false);
-        // Cache the fetched data with a new timestapn if the data is updatd fro  the user side
-        setCacheData((prevCacheData) => ({
-          ...prevCacheData,
-          [cacheKey]: { data: response, timestamp: Date.now() },
-        }));
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //       if (
+  //         cachedData &&
+  //         Date.now() - cachedData.timestamp < CACHE_EXPIRATION_TIME
+  //       ) {
+  //         // Use cached data if it exists and time is not expired
+  //         setUserData(cachedData.data);
+  //         showLoader(false);
+  //       } else {
+  //         const response = await getUserDetails(user._id);
+  //         setUserData(response);
+  //         showLoader(false);
+  //         // Cache the fetched data with a new timestapn if the data is updatd fro  the user side
+  //         setCacheData((prevCacheData) => ({
+  //           ...prevCacheData,
+  //           [cacheKey]: { data: response, timestamp: Date.now() },
+  //         }));
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
 
-  useEffect(() => {
-    getUpdatedUser();
-  }, [user]);
+  //   useEffect(() => {
+  //     getUpdatedUser();
+  //   }, [user]);
 
   // const reportedLenght = userData?.animalReported.length;
   const data = {
@@ -88,11 +90,11 @@ export const UserHomeScreen = ({ navigation }) => {
         <Loader source={loaderAnimation} />
       ) : (
         <View style={styles.userDetailsContainer}>
-          {user ? (
+          {doctor ? (
             <View>
               <View style={styles.userProfile}>
                 <Text style={styles.textStyle}>
-                  Welcome back, {user.UserName}
+                  Welcome back, {doctor.DocterName}
                 </Text>
                 <Pressable
                   style={styles.button}
@@ -114,47 +116,38 @@ export const UserHomeScreen = ({ navigation }) => {
           )}
         </View>
       )}
-
       <ScrollView horizontal={true}>
         <View style={styles.horizontalScrollBox}>
-          <MiniCard
-            text={"Report an injured animal"}
-            image={Report3d}
-            navigation={navigation}
-            location="InjuredAnimal"
-            color={"#DAE5D0"}
-          />
           <MiniCard
             text={"Location Nearby Animal"}
             image={Nearby3d}
             navigation={navigation}
             location="NearByAnimals"
-            color="#97DEFF"
+            color="#FFB4B4"
           />
           <MiniCard
-            text={"Check your Pet Details"}
-            image={Bone3d}
+            text={"Provide help to Animals"}
+            image={Dochelp3d}
             navigation={navigation}
             location="PetDetails"
             color="#655DBB"
           />
           <MiniCard
-            text={"Donate to your choice of NGO"}
-            image={Money3d}
+            text={"Check your Pet Patient"}
+            image={AdoptedImage3d}
             navigation={navigation}
             location="NgoList"
-            color="#D5B4B4"
+            color="#FFEA20"
           />
           <MiniCard
-            text={"Adopt Animals rescued by NGO"}
-            image={Adopt3d}
+            text={"Provide Vaccination to the Strays"}
+            image={Vacc3d}
             navigation={navigation}
             location="AdoptionList"
-            color="#CDE990"
+            color="#ABD9FF"
           />
         </View>
       </ScrollView>
-
       <View style={styles.graphContainer}>
         <LineChart
           data={data}
@@ -168,12 +161,14 @@ export const UserHomeScreen = ({ navigation }) => {
       <View style={styles.dataViewContainer}>
         <View style={styles.leftDataContainer}>
           <Text style={styles.dataText}>
-            Animal Adopted: {userData?.AdoptedAnimal.length}
+            Animal Saved: {doctor?.No_Of_Animal_Saved.length}
           </Text>
+
           <Text style={styles.dataText}>
-            NGO Donated: {userData?.donatedtoNgo.length}
+            Nearby Animal: {doctor?.NearByAnimal.length}
           </Text>
         </View>
+
         <View>
           <Image source={Data3d} style={styles.dataCardImage} />
         </View>
@@ -200,7 +195,7 @@ const styles = StyleSheet.create({
     height: 150,
     marginTop: "20%",
     marginHorizontal: "5%",
-    backgroundColor: "#BCCEF8",
+    backgroundColor: "#8B1874",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -266,7 +261,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 4,
     elevation: 4,
-    backgroundColor: "#0C134F",
+    backgroundColor: "#191825",
     marginBottom: 10,
     marginLeft: 18,
     justifyContent: "center",
@@ -284,7 +279,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 4,
     elevation: 4,
-    backgroundColor: "#790252",
+    backgroundColor: "#FF4949",
     marginBottom: 40,
     marginLeft: 17,
     flexDirection: "row",
@@ -306,4 +301,4 @@ const styles = StyleSheet.create({
     margin: 5,
   },
 });
-export default UserHomeScreen;
+export default DoctorHome;

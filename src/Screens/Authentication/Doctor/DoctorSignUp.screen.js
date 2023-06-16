@@ -8,30 +8,27 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import ImageHolder from "../../../Components/ImageHolder";
 import SignUpImage from "../../../Assets/SignUp.png";
 import { useContext, useEffect, useState } from "react";
-import { signUpUser } from "../../../Service/User.service";
+import { doctorSignIn } from "../../../Service/Doctor.service";
 import Loader from "../../../Components/Loader";
 import loaderAnimation from "../../../Animated Assets/Loader.json";
-import { AppAuthContext } from "../../../Context/user.authContext";
+import { DoctorAuthContext } from "../../../Context/doctor.authContext";
+import Doctor3D from "../../../Assets/Doctor3D.png";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const SignUpScreen = ({ navigation }) => {
+export const DoctorSignUp = ({ navigation }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [address, setAddress] = useState("");
   const [loader, showLoader] = useState(false);
 
-  const { user, signup } = useContext(AppAuthContext);
-  // useEffect(() => {
-  //   if (user) {
-  //     navigation.navigate("UserHome"); // Navigate to the home screen if user exists
-  //   }
-  // }, [user, navigation]);
+  const { doctorSignup } = useContext(DoctorAuthContext);
 
   const signUp = async () => {
     if (!name.trim() || !email.trim() || !password.trim() || !address.trim()) {
@@ -40,8 +37,8 @@ export const SignUpScreen = ({ navigation }) => {
       try {
         showLoader(true);
         setTimeout(async () => {
-          const response = await signUpUser(name, email, password, address);
-          signup(response);
+          const response = await doctorSignIn(name, email, password, address);
+          doctorSignup(response);
           showLoader(false);
           Alert.alert("You are signed in successfully");
         }, 2500);
@@ -55,7 +52,7 @@ export const SignUpScreen = ({ navigation }) => {
     <View style={styles.container}>
       {loader && <Loader source={loaderAnimation} />}
       <View style={styles.ImageContainer}>
-        <ImageHolder imgSource={SignUpImage} />
+        <ImageHolder imgSource={Doctor3D} />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.textStyle}>Sign Up</Text>
@@ -104,9 +101,9 @@ export const SignUpScreen = ({ navigation }) => {
           </TouchableWithoutFeedback>
         </KeyboardAwareScrollView>
         <View style={styles.bView}>
-          <TouchableOpacity style={styles.buttonView}>
-            <Button title="Sign Up" onPress={signUp} />
-          </TouchableOpacity>
+          <Pressable style={styles.buttonView} onPress={signUp}>
+            <Text style={styles.buttonText}>Sign Up</Text>
+          </Pressable>
         </View>
         <View style={styles.footerContainer}>
           <Text style={styles.footerText}>
@@ -149,6 +146,8 @@ const styles = StyleSheet.create({
   textStyle: {
     fontWeight: "bold",
     fontSize: 30,
+
+    fontFamily: "font-name=firaBold-Type",
   },
   inputContainer: {
     paddingTop: 40,
@@ -164,31 +163,39 @@ const styles = StyleSheet.create({
   bView: {
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: "1%",
   },
   buttonView: {
-    width: 130,
-    height: 50,
-    borderRadius: 15,
-    fontWeight: "bolder",
-    paddingTop: 5,
-    backgroundColor: "#FFFFFF",
-    shadowColor: "rgba(0, 0, 0, 0.1)",
-    shadowOpacity: 1,
-    elevation: 10,
-    shadowRadius: 20,
-    shadowOffset: { width: 1, height: 13 },
+    width: 100,
+    height: 40,
+    borderRadius: 10,
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 4,
+    backgroundColor: "black",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 10,
   },
   signUpPaper: {
     width: "100%",
     height: "100%",
     marginTop: 20,
-    backgroundColor: "#D9D7F1",
+    backgroundColor: "#B799FF",
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
-    shadowColor: "rgba(0, 0, 0, 0.1)",
-    shadowOpacity: 1,
-    elevation: 10,
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 4,
     shadowRadius: 20,
     shadowOffset: { width: 1, height: 13 },
   },
@@ -203,7 +210,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     opacity: 0.5,
+    fontFamily: "font-name=firaBold-Type",
+  },
+  buttonText: {
+    fontSize: 18,
+    fontFamily: "font-name=firaBold-Type",
+    color: "white",
   },
 });
 
-export default SignUpScreen;
+export default DoctorSignUp;
