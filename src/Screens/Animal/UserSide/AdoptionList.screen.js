@@ -14,7 +14,7 @@ import loaderAnimation from "../../../Animated Assets/Loader.json";
 import AdoptedImage3d from "../../../Assets/AdoptedImage3d.png";
 import fox3dd from "../../../Assets/fox3dd.png";
 import { adoptAnimal } from "../../../Service/User.service";
-import { AppAuthContext } from "../../../Context/AuthProvider";
+import { AppAuthContext } from "../../../Context/user.authContext";
 
 export const AdoptionList = ({ navigation }) => {
   const { user } = useContext(AppAuthContext);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Text, Pressable } from "react-native";
-import { AppAuthContext } from "../../Context/AuthProvider";
+import { AppAuthContext } from "../../Context/user.authContext";
 import { useContext } from "react";
 import Profile from "../../Assets/Profile.png";
 import ProfilePic from "../../Components/ProfilePic";

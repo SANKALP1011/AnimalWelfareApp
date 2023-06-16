@@ -13,7 +13,7 @@ import { useTheme } from "@react-navigation/native";
 import Doctor3d from "../../../Assets/Doctor3D.png";
 import FemaleDoc3D from "../../../Assets/FemaleDoc3D.png";
 import { useRoute } from "@react-navigation/native";
-import { AppAuthContext } from "../../../Context/AuthProvider";
+import { AppAuthContext } from "../../../Context/user.authContext";
 import Loader from "../../../Components/Loader";
 import loaderAnimation from "../../../Animated Assets/Loader.json";
 

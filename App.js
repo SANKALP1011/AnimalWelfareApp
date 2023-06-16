@@ -2,7 +2,7 @@ import { Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useContext, useEffect, useState } from "react";
-import { AuthProvider, AppAuthContext } from "./src/Context/AuthProvider";
+import { AuthProvider, AppAuthContext } from "./src/Context/user.authContext";
 import loadFonts from "./src/Fonts/FontLoader";
 import AuthenticatedScreen from "./src/ScreenStack/UserStack/AuthenticatedScreen.stack";
 import UnAuthenticatedScreen from "./src/ScreenStack/UserStack/UnAuthenticatedScreen.stack";
@@ -11,6 +11,7 @@ import {
   DoctorAuthContext,
 } from "./src/Context/doctor.authContext";
 import DoctorUnAuthScreen from "./src/ScreenStack/DoctorStack/DoctorUnAuthScreen.stack";
+import DoctorAuthScreen from "./src/ScreenStack/DoctorStack/DoctorAuthScreen.stack";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +35,7 @@ function AppWrapper() {
       setFontLoader(true);
     };
     fontLoader();
+    console.log(doctor);
   }, []);
   if (!loadFont) {
     return (
@@ -43,8 +45,11 @@ function AppWrapper() {
     );
   }
   return (
+    // <NavigationContainer>
+    //   {user === null ? <UnAuthenticatedScreen /> : <AuthenticatedScreen />}
+    // </NavigationContainer>
     <NavigationContainer>
-      {doctor === null ? <DoctorUnAuthScreen /> : <AuthenticatedScreen />}
+      {doctor === null ? <DoctorUnAuthScreen /> : <DoctorAuthScreen />}
     </NavigationContainer>
   );
 }

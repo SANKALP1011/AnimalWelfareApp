@@ -14,7 +14,7 @@ import {
   updatePetHealthStatus,
 } from "../../../Service/User.service";
 import react, { useState, useEffect, useContext } from "react";
-import { AppAuthContext } from "../../../Context/AuthProvider";
+import { AppAuthContext } from "../../../Context/user.authContext";
 import Loader from "../../../Components/Loader";
 import loaderAnimation from "../../../Animated Assets/Loader.json";
 import petAnimation from "../../../Animated Assets/Pet.json";

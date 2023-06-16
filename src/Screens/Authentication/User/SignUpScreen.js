@@ -17,7 +17,7 @@ import { useContext, useEffect, useState } from "react";
 import { signUpUser } from "../../../Service/User.service";
 import Loader from "../../../Components/Loader";
 import loaderAnimation from "../../../Animated Assets/Loader.json";
-import { AppAuthContext } from "../../../Context/AuthProvider";
+import { AppAuthContext } from "../../../Context/user.authContext";
 
 export const SignUpScreen = ({ navigation }) => {
   const [name, setName] = useState("");

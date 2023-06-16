@@ -3,24 +3,18 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import DoctorSignUp from "../../Screens/Authentication/Doctor/DoctorSignUp.screen";
 import DoctorLogIn from "../../Screens/Authentication/Doctor/DoctorLogIn.screen";
 
-const DoctorNotLoggedInStack = createNativeStackNavigator();
+const DoctorUnAuthStack = createNativeStackNavigator();
 
 const DoctorUnAuthScreen = () => {
   return (
-    <DoctorNotLoggedInStack.Navigator
+    <DoctorUnAuthStack.Navigator
       screenOptions={{
         headerShown: false,
       }}
     >
-      <DoctorNotLoggedInStack.Screen
-        name="DoctorSignUp"
-        component={DoctorSignUp}
-      />
-      <DoctorNotLoggedInStack.Screen
-        name="DoctorLogIn"
-        component={DoctorLogIn}
-      />
-    </DoctorNotLoggedInStack.Navigator>
+      <DoctorUnAuthStack.Screen name="DoctorSignUp" component={DoctorSignUp} />
+      <DoctorUnAuthStack.Screen name="DoctorLogIn" component={DoctorLogIn} />
+    </DoctorUnAuthStack.Navigator>
   );
 };
 

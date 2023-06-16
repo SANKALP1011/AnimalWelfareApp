@@ -28,11 +28,13 @@ export const DoctorAuthProvider = ({ children }) => {
       try {
         const retrievedData = await AsyncStorage.getItem("doctor");
         const parsedData = JSON.parse(retrievedData);
+        console.log(parsedData);
 
         if (parsedData && typeof parsedData === "object") {
           setDoctor(parsedData);
+          console.log(parsedData);
         } else {
-          console.log("Invalid doctor data or not signed in");
+          console.log("Sorry , no doctor exists in our storage");
         }
       } catch (error) {
         console.log("Error fetching doctor data:", error);
@@ -48,7 +50,7 @@ export const DoctorAuthProvider = ({ children }) => {
 
   useEffect(() => {
     fetchDoctor();
-  }, [doctor]);
+  }, []);
 
   return (
     <DoctorAuthContext.Provider
