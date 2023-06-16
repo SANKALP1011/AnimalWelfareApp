@@ -78,6 +78,15 @@ export const UserHomeScreen = ({ navigation }) => {
         ],
       },
     ],
+    legend: ["Number of Animal Saved"],
+  };
+
+  const chartConfig = {
+    dotColor: "#FAF0E4",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientToOpacity: 0,
+    decimalPlaces: 0,
+    color: (opacity = 1) => `rgba(255, 0, 0, ${opacity})`,
   };
 
   return (
@@ -153,16 +162,10 @@ export const UserHomeScreen = ({ navigation }) => {
         <LineChart
           data={data}
           width={400}
-          height={160}
-          chartConfig={{
-            backgroundGradientFromOpacity: 0,
-            backgroundGradientToOpacity: 0,
-            decimalPlaces: 0,
-            color: (opacity = 1) => `rgba(255, 0, 0, ${opacity})`,
-          }}
+          height={170}
+          chartConfig={chartConfig}
           bezier
         />
-        <Text style={styles.dataText}>Animal Saved</Text>
       </View>
       <View style={styles.dataViewContainer}>
         <View style={styles.leftDataContainer}>
