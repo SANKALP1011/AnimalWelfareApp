@@ -44,7 +44,6 @@ export const ProvideHelp = ({ navigation }) => {
     try {
       console.log(aniId);
       const respone = await provideAnimalHelp(doctor._id, aniId);
-      console.log(respone);
       showLoader(false);
       Alert.alert("You have rescued the animal");
     } catch (err) {
@@ -88,7 +87,7 @@ export const ProvideHelp = ({ navigation }) => {
                     <View style={styles.picContainer}>
                       <Image style={styles.picStyle} source={imagePicker} />
                       <Text style={styles.headerCardText}>
-                        {value?.UserNamewhoReported.toUpperCase()}
+                        {value?.AnimalType.toUpperCase()}
                       </Text>
                       <Text numberOfLines={1} style={styles.locationText}>
                         {value?.AnimalLocation.formattedAddress}
@@ -139,7 +138,7 @@ export const ProvideHelp = ({ navigation }) => {
                     <Pressable
                       style={styles.buttonContainetr}
                       onPress={() => {
-                        updateRescueStatus(value._id);
+                        updateRescueStatus(value?._id);
                       }}
                     >
                       <Text style={styles.ngoText}>Saved?</Text>

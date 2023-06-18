@@ -46,7 +46,7 @@ module.exports = {
   },
   provideAnimalHelp: async (docId, aniId) => {
     const endPoint = "/animalHelp";
-    const apiLink = `${API_BASE_URL}${endPoint}?docId=${docId}&?aniId=${aniId}`;
+    const apiLink = `${API_BASE_URL}${endPoint}?docId=${docId}&aniId=${aniId}`;
     try {
       const respone = await axios.post(apiLink);
       return respone.data;
