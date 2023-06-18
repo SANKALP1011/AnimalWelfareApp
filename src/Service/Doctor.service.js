@@ -54,4 +54,14 @@ module.exports = {
       return err.message;
     }
   },
+  getUpdatedDoctorDetails: async (docId) => {
+    const endPoint = "/getDoctorById";
+    const apiLink = `${API_BASE_URL}${endPoint}?docId=${docId}`;
+    try {
+      const response = await axios.get(apiLink);
+      return response.data;
+    } catch (err) {
+      return err.message;
+    }
+  },
 };
