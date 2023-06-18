@@ -12,60 +12,26 @@ import {
 
 import { DoctorAuthContext } from "../../Context/doctor.authContext";
 import MiniCard from "../../Components/Minicard";
-import Report3d from "../../../Assets/Report3d.png";
-import Nearby3d from "../../../Assets/Nearby3d.png";
-import Bone3d from "../../../Assets/Bone3d.png";
-import Money3d from "../../../Assets/Money3d.png";
-import Adopt3d from "../../../Assets/Adopt3d.png";
-import Data3d from "../../../Assets/Data3d.png";
+
+import Nearby3d from "../../Assets/Nearby3d.png";
+
+import Data3d from "../../Assets/Data3d.png";
 import Loader from "../../Components/Loader";
 import loaderAnimation from "../../Animated Assets/Loader.json";
 import { LineChart } from "react-native-chart-kit";
-import Dochelp3d from "../../../Assets/Dochelp3d.png";
-import AdoptedImage3d from "../../../Assets/AdoptedImage3d.png";
-import Vacc3d from "../../../Assets/Vacc3d.png";
+import Dochelp3d from "../../Assets/Dochelp3d.png";
+import AdoptedImage3d from "../../Assets/AdoptedImage3d.png";
+import Vacc3d from "../../Assets/Vacc3d.png";
 
 const appWidth = Dimensions.get("screen").width;
 export const DoctorHome = ({ navigation }) => {
   const { doctor } = useContext(DoctorAuthContext);
-  const [doctorData, setDoctorrData] = useState(null);
-  const [cacheData, setCacheData] = useState({});
+  // const [doctorData, setDoctorrData] = useState(null);
+  // const [cacheData, setCacheData] = useState({});
   const [loader, showLoader] = useState(false);
 
-  //   const CACHE_EXPIRATION_TIME = 10000;
+  console.log(doctor._id);
 
-  //   const getUpdatedUser = async () => {
-  //     try {
-  //       const cacheKey = user._id;
-  //       const cachedData = cacheData[cacheKey];
-
-  //       if (
-  //         cachedData &&
-  //         Date.now() - cachedData.timestamp < CACHE_EXPIRATION_TIME
-  //       ) {
-  //         // Use cached data if it exists and time is not expired
-  //         setUserData(cachedData.data);
-  //         showLoader(false);
-  //       } else {
-  //         const response = await getUserDetails(user._id);
-  //         setUserData(response);
-  //         showLoader(false);
-  //         // Cache the fetched data with a new timestapn if the data is updatd fro  the user side
-  //         setCacheData((prevCacheData) => ({
-  //           ...prevCacheData,
-  //           [cacheKey]: { data: response, timestamp: Date.now() },
-  //         }));
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-
-  //   useEffect(() => {
-  //     getUpdatedUser();
-  //   }, [user]);
-
-  // const reportedLenght = userData?.animalReported.length;
   const data = {
     labels: ["January", "February", "March", "April", "May", "June"],
     datasets: [
@@ -119,17 +85,10 @@ export const DoctorHome = ({ navigation }) => {
       <ScrollView horizontal={true}>
         <View style={styles.horizontalScrollBox}>
           <MiniCard
-            text={"Location Nearby Animal"}
-            image={Nearby3d}
-            navigation={navigation}
-            location="NearByAnimals"
-            color="#FFB4B4"
-          />
-          <MiniCard
-            text={"Provide help to Animals"}
+            text={"Provide help to Nearby Animals"}
             image={Dochelp3d}
             navigation={navigation}
-            location="PetDetails"
+            location="ProvideHelp"
             color="#655DBB"
           />
           <MiniCard
