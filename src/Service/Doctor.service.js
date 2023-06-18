@@ -34,4 +34,24 @@ module.exports = {
       return err;
     }
   },
+  getNearbyInjuredAnimal: async (docId) => {
+    const endPoint = "/nearByAnimal";
+    const apiLink = `${API_BASE_URL}${endPoint}?docId=${docId}`;
+    try {
+      const respone = await axios.get(apiLink);
+      return respone.data;
+    } catch (err) {
+      return err.message;
+    }
+  },
+  provideAnimalHelp: async (docId, aniId) => {
+    const endPoint = "/animalHelp";
+    const apiLink = `${API_BASE_URL}${endPoint}?docId=${docId}&aniId=${aniId}`;
+    try {
+      const respone = await axios.post(apiLink);
+      return respone.data;
+    } catch (err) {
+      return err.message;
+    }
+  },
 };
