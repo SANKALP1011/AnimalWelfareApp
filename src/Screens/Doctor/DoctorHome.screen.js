@@ -11,10 +11,8 @@ import {
 } from "react-native";
 
 import { DoctorAuthContext } from "../../Context/doctor.authContext";
+import { getUpdatedDoctorDetails } from "../../Service/Doctor.service";
 import MiniCard from "../../Components/Minicard";
-
-import Nearby3d from "../../Assets/Nearby3d.png";
-
 import Data3d from "../../Assets/Data3d.png";
 import Loader from "../../Components/Loader";
 import loaderAnimation from "../../Animated Assets/Loader.json";
@@ -26,12 +24,42 @@ import Vacc3d from "../../Assets/Vacc3d.png";
 const appWidth = Dimensions.get("screen").width;
 export const DoctorHome = ({ navigation }) => {
   const { doctor } = useContext(DoctorAuthContext);
-  // const [doctorData, setDoctorrData] = useState(null);
-  // const [cacheData, setCacheData] = useState({});
+  const [doctorData, setDoctorrData] = useState(null);
+  const [cacheData, setCacheData] = useState({});
   const [loader, showLoader] = useState(false);
 
-  console.log(doctor._id);
+  const CACHE_EXPIRATION_TIME = 10000;
 
+  const getUpdatedDoctor = async () => {
+    try {
+      const cacheKey = doctor._id;
+      const cachedData = cacheData[cacheKey];
+
+      if (
+        cachedData &&
+        Date.now() - cachedData.timestamp < CACHE_EXPIRATION_TIME
+      ) {
+        // Use cached data if it exists and time is not expired
+        setDoctorrData(cachedData.data);
+        showLoader(false);
+      } else {
+        const response = await getUpdatedDoctorDetails(doctor._id);
+        setDoctorrData(response);
+        showLoader(false);
+        // Cache the fetched data with a new timestapn if the data is updatd fro  the user side
+        setCacheData((prevCacheData) => ({
+          ...prevCacheData,
+          [cacheKey]: { data: response, timestamp: Date.now() },
+        }));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getUpdatedDoctor();
+  }, []);
   const data = {
     labels: ["January", "February", "March", "April", "May", "June"],
     datasets: [
@@ -95,7 +123,7 @@ export const DoctorHome = ({ navigation }) => {
             text={"Check your Pet Patient"}
             image={AdoptedImage3d}
             navigation={navigation}
-            location="NgoList"
+            location="PetPatient"
             color="#FFEA20"
           />
           <MiniCard
@@ -120,11 +148,11 @@ export const DoctorHome = ({ navigation }) => {
       <View style={styles.dataViewContainer}>
         <View style={styles.leftDataContainer}>
           <Text style={styles.dataText}>
-            Animal Saved: {doctor?.No_Of_Animal_Saved.length}
+            Animal Saved: {doctorData?.No_Of_Animal_Saved.length}
           </Text>
 
           <Text style={styles.dataText}>
-            Nearby Animal: {doctor?.NearByAnimal.length}
+            Nearby Animal: {doctorData?.NearByAnimal.length || "0"}
           </Text>
         </View>
 
