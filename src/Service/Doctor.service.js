@@ -64,4 +64,57 @@ module.exports = {
       return err.message;
     }
   },
+  getPetPatientDetails: async (docId) => {
+    const endPoint = "/getPatient";
+    const apiLink = `${API_BASE_URL}${endPoint}?docId=${docId}`;
+    try {
+      const respone = await axios.get(apiLink);
+      return respone.data;
+    } catch (err) {
+      return err.message;
+    }
+  },
+  providePetCheck: async (id, medicineName, dose, exercise, diet, next) => {
+    const data = {
+      MedicineName: medicineName,
+      Dose: dose,
+      Exercise: exercise,
+      Diet: diet,
+      Next: next,
+    };
+    const endPoint = "/petCheckup";
+    const apiLink = `${API_BASE_URL}${endPoint}?id=${id}`;
+    try {
+      const respone = await axios.post(apiLink, data);
+      return respone.data;
+    } catch (err) {
+      return err.message;
+    }
+  },
+  updatePetHealthCard: async (
+    id,
+    vaccineCount,
+    vaccineDoseLeft,
+    rabbiesVaccine,
+    immunityVacc,
+    wormVacc,
+    nextCheckUp
+  ) => {
+    const data = {
+      VaccineCount: vaccineCount,
+      VaccineDoseLeft: vaccineDoseLeft,
+      RabbiesVaccine: rabbiesVaccine,
+      ImmunityVacc: immunityVacc,
+      WormVacc: wormVacc,
+      NextCheckUp: nextCheckUp,
+    };
+    const endPoint = "/updateHealth";
+    const apiLink = `${API_BASE_URL}${endPoint}?id=${id}`;
+    try {
+      const respone = await axios.post(apiLink, data);
+      return respone.data;
+    } catch (err) {
+      return err.message;
+    }
+  },
 };

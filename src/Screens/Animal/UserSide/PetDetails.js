@@ -121,7 +121,7 @@ export const PetDetails = ({ navigation }) => {
                       <View style={styles.sickContainer}>
                         <Text style={styles.petText}>Sick:</Text>
                         <AntDesign
-                          name="closecircle"
+                          name="checkcircle"
                           size={24}
                           color="red"
                           style={styles.iconContainer}

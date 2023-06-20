@@ -123,7 +123,7 @@ export const DoctorHome = ({ navigation }) => {
             text={"Check your Pet Patient"}
             image={AdoptedImage3d}
             navigation={navigation}
-            location="NgoList"
+            location="PetPatient"
             color="#FFEA20"
           />
           <MiniCard
