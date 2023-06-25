@@ -93,7 +93,7 @@ export const DoctorHome = ({ navigation }) => {
                 <Pressable
                   style={styles.button}
                   onPress={() => {
-                    navigation.navigate("UserDetails");
+                    navigation.navigate("DoctorDetailScreen");
                   }}
                 >
                   <Text style={styles.text}>Details</Text>
@@ -130,7 +130,7 @@ export const DoctorHome = ({ navigation }) => {
             text={"Provide Vaccination to the Strays"}
             image={Vacc3d}
             navigation={navigation}
-            location="AdoptionList"
+            location="StrayVacc"
             color="#ABD9FF"
           />
         </View>
