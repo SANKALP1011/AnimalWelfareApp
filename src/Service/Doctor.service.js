@@ -117,4 +117,34 @@ module.exports = {
       return err.message;
     }
   },
+  getStrayList: async () => {
+    const endPoint = "/strayList";
+    const apiLink = `${API_BASE_URL}${endPoint}`;
+    try {
+      const respone = await axios.get(apiLink);
+      return respone.data;
+    } catch (err) {
+      return err.message;
+    }
+  },
+  vaccinateStrayAnimals: async (id, stId) => {
+    const endPoint = "/vaccinateStray";
+    const apiLink = `${API_BASE_URL}${endPoint}?id=${id}&stId=${stId}`;
+    try {
+      const response = await axios.post(apiLink);
+      return response.data;
+    } catch (err) {
+      return err;
+    }
+  },
+  getDoctorDetails: async (docId) => {
+    const endPoint = "/getDoctorById";
+    const apiLink = `${API_BASE_URL}${endPoint}?docId=${docId}`;
+    try {
+      const respone = await axios.get(apiLink);
+      return respone.data;
+    } catch (err) {
+      return err;
+    }
+  },
 };

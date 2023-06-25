@@ -6,6 +6,7 @@ import {
   Image,
   Pressable,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import {
@@ -75,78 +76,91 @@ export const ProvideHelp = ({ navigation }) => {
             />
           </View>
           <ScrollView style={styles.scrollViewContainer}>
-            <View>
-              {nearbyAnimal?.map((value, index) => {
-                const colourPicker = colour[index % colour.length];
-                const imagePicker = image[index % image.length];
-                return (
-                  <View
-                    key={value?._id}
-                    style={[styles.dataCard, { backgroundColor: colourPicker }]}
-                  >
-                    <View style={styles.picContainer}>
-                      <Image style={styles.picStyle} source={imagePicker} />
-                      <Text style={styles.headerCardText}>
-                        {value?.AnimalType.toUpperCase()}
-                      </Text>
-                      <Text numberOfLines={1} style={styles.locationText}>
-                        {value?.AnimalLocation.formattedAddress}
-                      </Text>
-                    </View>
-                    <View style={styles.tablularcontainer}>
-                      <View style={styles.row}>
-                        <Text style={styles.header}>Condition</Text>
-                        <Text style={styles.header}>Doctor</Text>
-                        <Text style={styles.header}>Saved</Text>
-                      </View>
-                    </View>
-                    <View style={styles.row}>
-                      <Text style={[styles.cell, { fontSize: 15 }]}>
-                        {value?.AnimalCondition}
-                      </Text>
-                      {value?.hasDocterArrived ? (
-                        <AntDesign
-                          name="checkcircle"
-                          size={30}
-                          color="Green"
-                          style={styles.cell}
-                        />
-                      ) : (
-                        <Entypo
-                          name="circle-with-cross"
-                          size={30}
-                          color="#FB2576"
-                          style={styles.cell}
-                        />
-                      )}
-                      {value?.isAnimalSaved ? (
-                        <AntDesign
-                          name="checkcircle"
-                          size={30}
-                          color="Green"
-                          style={styles.cell}
-                        />
-                      ) : (
-                        <Entypo
-                          name="circle-with-cross"
-                          size={30}
-                          color="#FB2576"
-                          style={styles.cell}
-                        />
-                      )}
-                    </View>
-                    <Pressable
-                      style={styles.buttonContainetr}
-                      onPress={() => {
-                        updateRescueStatus(value?._id);
-                      }}
+            {nearbyAnimal.length === 0 ? (
+              <View style={styles.bottomContainer}>
+                <Entypo name="emoji-happy" size={60} color="#070A52" />
+                <Text style={styles.bottomText}>
+                  Kudoos ! You have saved all the animals that were near you as
+                  of now
+                </Text>
+              </View>
+            ) : (
+              <View>
+                {nearbyAnimal.map((value, index) => {
+                  const colourPicker = colour[index % colour.length];
+                  const imagePicker = image[index % image.length];
+                  return (
+                    <View
+                      key={value?._id}
+                      style={[
+                        styles.dataCard,
+                        { backgroundColor: colourPicker },
+                      ]}
                     >
-                      <Text style={styles.ngoText}>Saved?</Text>
-                    </Pressable>
-                  </View>
-                );
-              })}
-            </View>
+                      <View style={styles.picContainer}>
+                        <Image style={styles.picStyle} source={imagePicker} />
+                        <Text style={styles.headerCardText}>
+                          {value?.AnimalType.toUpperCase()}
+                        </Text>
+                        <Text numberOfLines={1} style={styles.locationText}>
+                          {value?.AnimalLocation.formattedAddress}
+                        </Text>
+                      </View>
+                      <View style={styles.tablularcontainer}>
+                        <View style={styles.row}>
+                          <Text style={styles.header}>Condition</Text>
+                          <Text style={styles.header}>Doctor</Text>
+                          <Text style={styles.header}>Saved</Text>
+                        </View>
+                      </View>
+                      <View style={styles.row}>
+                        <Text style={[styles.cell, { fontSize: 15 }]}>
+                          {value?.AnimalCondition}
+                        </Text>
+                        {value?.hasDocterArrived ? (
+                          <AntDesign
+                            name="checkcircle"
+                            size={30}
+                            color="Green"
+                            style={styles.cell}
+                          />
+                        ) : (
+                          <Entypo
+                            name="circle-with-cross"
+                            size={30}
+                            color="#FB2576"
+                            style={styles.cell}
+                          />
+                        )}
+                        {value?.isAnimalSaved ? (
+                          <AntDesign
+                            name="checkcircle"
+                            size={30}
+                            color="Green"
+                            style={styles.cell}
+                          />
+                        ) : (
+                          <Entypo
+                            name="circle-with-cross"
+                            size={30}
+                            color="#FB2576"
+                            style={styles.cell}
+                          />
+                        )}
+                      </View>
+                      <Pressable
+                        style={styles.buttonContainetr}
+                        onPress={() => {
+                          updateRescueStatus(value?._id);
+                        }}
+                      >
+                        <Text style={styles.ngoText}>Saved?</Text>
+                      </Pressable>
+                    </View>
+                  );
+                })}
+              </View>
+            )}
           </ScrollView>
         </View>
       )}
@@ -263,6 +277,19 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 134,
     marginBottom: 10,
+  },
+  bottomContainer: {
+    marginTop: 180,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  bottomText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "grey",
+    marginTop: 20,
+    fontFamily: "font-name=firaBold-Type",
+    padding: 20,
   },
 });
 
