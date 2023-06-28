@@ -41,4 +41,28 @@ module.exports = {
       return err;
     }
   },
+  addStrayAnimal: async (id, StrayName, StrType) => {
+    const data = {
+      StrayName: StrayName,
+      StrType: StrType,
+    };
+    const endPoint = "/ngo/strayList";
+    const apiLink = `${API_BASE_URL}${endPoint}?id=${id}`;
+    try {
+      const respone = await axios.post(apiLink, data);
+      return respone.data;
+    } catch (err) {
+      return err.message;
+    }
+  },
+  checkStrayAnimalStatus: async (id) => {
+    const endPoint = "/ngo/getStrayList";
+    const apiLink = `${API_BASE_URL}${endPoint}?id=${id}`;
+    try {
+      const respone = await axios.get(apiLink);
+      return respone.data;
+    } catch (err) {
+      return err.message;
+    }
+  },
 };
