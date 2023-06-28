@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
   dataCardImage: {
     width: 130,
     height: 130,
-    marginLeft: 30,
+    marginLeft: 20,
     marginTop: 10,
   },
   leftDataContainer: {

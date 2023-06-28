@@ -41,4 +41,10 @@ module.exports = {
       return err;
     }
   },
+  addStrayAnimal: async (id, StrayName, StrType) => {
+    const data = {
+      StrayName: StrayName,
+      StrType: StrType,
+    };
+  },
 };
