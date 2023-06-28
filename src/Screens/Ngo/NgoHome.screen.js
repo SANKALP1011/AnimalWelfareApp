@@ -115,14 +115,14 @@ export const NgoHome = ({ navigation }) => {
             text={"Add stray Animals for track"}
             image={Dochelp3d}
             navigation={navigation}
-            location="ProvideHelp"
+            location="AddStray"
             color="#FC2947"
           />
           <MiniCard
             text={"Check Stray Animal Status"}
             image={AdoptedImage3d}
             navigation={navigation}
-            location="PetPatient"
+            location="StrayStatus"
             color="#31E1F7"
           />
           <MiniCard
