@@ -1,3 +1,7 @@
+import React, { useState, useEffect, useContext, createContext } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+export const NGOAuthContext = createContext();
+
 export const NGOAuthProvider = ({ children }) => {
   const [ngo, setNgo] = useState(null);
 

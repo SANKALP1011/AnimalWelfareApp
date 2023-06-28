@@ -10,8 +10,11 @@ import {
   DoctorAuthProvider,
   DoctorAuthContext,
 } from "./src/Context/doctor.authContext";
+import { NGOAuthProvider, NGOAuthContext } from "./src/Context/ngo.authContext";
 import DoctorUnAuthScreen from "./src/ScreenStack/DoctorStack/DoctorUnAuthScreen.stack";
 import DoctorAuthScreen from "./src/ScreenStack/DoctorStack/DoctorAuthScreen.stack";
+import NgoUnAuthScreen from "./src/ScreenStack/NgoStack/NgoUnAuthScreen.stack";
+import NgoAuthScreen from "./src/ScreenStack/NgoStack/NgoAuthScreen.stack";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,7 +22,9 @@ export default function App() {
   return (
     <AuthProvider>
       <DoctorAuthProvider>
-        <AppWrapper />
+        <NGOAuthProvider>
+          <AppWrapper />
+        </NGOAuthProvider>
       </DoctorAuthProvider>
     </AuthProvider>
   );
@@ -28,6 +33,7 @@ export default function App() {
 function AppWrapper() {
   const { user } = useContext(AppAuthContext);
   const { doctor } = useContext(DoctorAuthContext);
+  const { ngo } = useContext(NGOAuthContext);
   const [loadFont, setFontLoader] = useState(false);
   useEffect(() => {
     const fontLoader = async () => {
@@ -35,7 +41,7 @@ function AppWrapper() {
       setFontLoader(true);
     };
     fontLoader();
-    console.log(doctor);
+    console.log(ngo);
   }, []);
   if (!loadFont) {
     return (
@@ -48,8 +54,11 @@ function AppWrapper() {
     // <NavigationContainer>
     //   {user === null ? <UnAuthenticatedScreen /> : <AuthenticatedScreen />}
     // </NavigationContainer>
+    // <NavigationContainer>
+    //   {doctor === null ? <DoctorUnAuthScreen /> : <DoctorAuthScreen />}
+    // </NavigationContainer>
     <NavigationContainer>
-      {doctor === null ? <DoctorUnAuthScreen /> : <DoctorAuthScreen />}
+      {ngo === null ? <NgoUnAuthScreen /> : <NgoAuthScreen />}
     </NavigationContainer>
   );
 }
