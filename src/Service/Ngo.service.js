@@ -1,4 +1,5 @@
 import axios from "axios";
+import typescript from "react-native-svg";
 import { API_BASE_URL } from "../Api/api.utils";
 
 module.exports = {
@@ -34,6 +35,16 @@ module.exports = {
   getNgoList: async () => {
     const endPoint = "/ngo/getNgo";
     const apiLink = `${API_BASE_URL}${endPoint}`;
+    try {
+      const respone = await axios.get(apiLink);
+      return respone.data;
+    } catch (err) {
+      return err;
+    }
+  },
+  getUpdatedNgoDetails: async (ngoId) => {
+    const endPoint = "/ngo/getNgoById";
+    const apiLink = `${API_BASE_URL}${endPoint}?ngoId=${ngoId}`;
     try {
       const respone = await axios.get(apiLink);
       return respone.data;
