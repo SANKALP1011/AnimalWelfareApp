@@ -22,13 +22,14 @@ export const StrayStatus = ({ navigation }) => {
   const [error, setError] = useState("");
   const [loader, showLoader] = useState(false);
 
-  const colour = ["#00C4FF", "#5C469C"];
+  const colour = ["#525FE1", "#F86F03"];
   const image = [Company3d, Company3dTwo];
 
   const getstrayData = async () => {
     showLoader(true);
     try {
       const respone = await checkStrayAnimalStatus(ngo._id);
+      console.log(respone);
       setstrayData(respone);
       showLoader(false);
     } catch (err) {
@@ -53,10 +54,11 @@ export const StrayStatus = ({ navigation }) => {
       </View>
       {loader ? (
         <Loader source={loaderAnimation} />
-      ) : strayData.length !== 0 ? (
+      ) : strayData.flat().length !== 0 ? ( // Use flat() to flatten the array
         <ScrollView>
           <View style={styles.ngoContainer}>
-            {strayData.map((value, index) => {
+            {strayData.flat().map((value, index) => {
+              // Use flat() to flatten the array
               const colourPicker = colour[index % colour.length];
               const imagePicker = image[index % image.length];
               return (
@@ -73,7 +75,7 @@ export const StrayStatus = ({ navigation }) => {
                       Name: {value?.StrayName}
                     </Text>
                     <Text style={styles.ngoText} numberOfLines={1}>
-                      Addr: {value?.StrType}
+                      Type: {value?.StrType}
                     </Text>
                     {value.isVaccinated ? (
                       <View style={styles.sickContainer}>
@@ -104,7 +106,7 @@ export const StrayStatus = ({ navigation }) => {
         </ScrollView>
       ) : (
         <View>
-          <Text>There is no ngo data availailbe</Text>
+          <Text>No stray animal data available</Text>
         </View>
       )}
     </View>
