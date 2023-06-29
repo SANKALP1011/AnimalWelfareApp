@@ -1,4 +1,5 @@
 import axios from "axios";
+import typescript from "react-native-svg";
 import { API_BASE_URL } from "../Api/api.utils";
 
 module.exports = {
@@ -41,6 +42,16 @@ module.exports = {
       return err;
     }
   },
+  getUpdatedNgoDetails: async (ngoId) => {
+    const endPoint = "/ngo/getNgoById";
+    const apiLink = `${API_BASE_URL}${endPoint}?ngoId=${ngoId}`;
+    try {
+      const respone = await axios.get(apiLink);
+      return respone.data;
+    } catch (err) {
+      return err;
+    }
+  },
   addStrayAnimal: async (id, StrayName, StrType) => {
     const data = {
       StrayName: StrayName,
@@ -63,6 +74,20 @@ module.exports = {
       return respone.data;
     } catch (err) {
       return err.message;
+    }
+  },
+  addAnimalForAdoption: async (id, Name, Type) => {
+    const data = {
+      Name: Name,
+      Type: Type,
+    };
+    const endPoint = "/ngo/addAdoptList";
+    const apiLink = `${API_BASE_URL}${endPoint}?id=${id}`;
+    try {
+      const respone = await axios.post(apiLink, data);
+      return respone.data;
+    } catch (err) {
+      return err;
     }
   },
 };

@@ -11,6 +11,7 @@ import {
 } from "react-native";
 
 import { NGOAuthContext } from "../../Context/ngo.authContext";
+import { getUpdatedNgoDetails } from "../../Service/Ngo.service";
 import MiniCard from "../../Components/Minicard";
 import Data3d from "../../Assets/Data3d.png";
 import Loader from "../../Components/Loader";
@@ -29,36 +30,36 @@ export const NgoHome = ({ navigation }) => {
 
   const CACHE_EXPIRATION_TIME = 10000;
 
-  //   const getUpdatedngo = async () => {
-  //     try {
-  //       const cacheKey = ngo._id;
-  //       const cachedData = cacheData[cacheKey];
+  const getUpdatedngo = async () => {
+    try {
+      const cacheKey = ngo._id;
+      const cachedData = cacheData[cacheKey];
 
-  //       if (
-  //         cachedData &&
-  //         Date.now() - cachedData.timestamp < CACHE_EXPIRATION_TIME
-  //       ) {
-  //         // Use cached data if it exists and time is not expired
-  //         setNgoData(cachedData.data);
-  //         showLoader(false);
-  //       } else {
-  //         const response = await getUpdatedngoDetails(ngo._id);
-  //         setNgoData(response);
-  //         showLoader(false);
-  //         // Cache the fetched data with a new timestapn if the data is updatd fro  the user side
-  //         setCacheData((prevCacheData) => ({
-  //           ...prevCacheData,
-  //           [cacheKey]: { data: response, timestamp: Date.now() },
-  //         }));
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
+      if (
+        cachedData &&
+        Date.now() - cachedData.timestamp < CACHE_EXPIRATION_TIME
+      ) {
+        // Use cached data if it exists and time is not expired
+        setNgoData(cachedData.data);
+        showLoader(false);
+      } else {
+        const response = await getUpdatedNgoDetails(ngo._id);
+        setNgoData(response);
+        showLoader(false);
+        // Cache the fetched data with a new timestapn if the data is updatd fro  the user side
+        setCacheData((prevCacheData) => ({
+          ...prevCacheData,
+          [cacheKey]: { data: response, timestamp: Date.now() },
+        }));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  //   useEffect(() => {
-  //     getUpdatedngo();
-  //   }, []);
+  useEffect(() => {
+    getUpdatedngo();
+  }, []);
   const data = {
     labels: ["January", "February", "March", "April", "May", "June"],
     datasets: [
@@ -92,7 +93,7 @@ export const NgoHome = ({ navigation }) => {
                 <Pressable
                   style={styles.button}
                   onPress={() => {
-                    navigation.navigate("ngoDetailScreen");
+                    navigation.navigate("NgoDetails");
                   }}
                 >
                   <Text style={styles.text}>Details</Text>
@@ -129,7 +130,7 @@ export const NgoHome = ({ navigation }) => {
             text={"Add animals for adoption"}
             image={Vacc3d}
             navigation={navigation}
-            location="StrayVacc"
+            location="AddAdoption"
             color="#FFF338"
           />
         </View>
