@@ -65,4 +65,18 @@ module.exports = {
       return err.message;
     }
   },
+  addAnimalForAdoption: async (id, Name, Type) => {
+    const data = {
+      Name: Name,
+      Type: Type,
+    };
+    const endPoint = "/ngo/addAdoptList";
+    const apiLink = `${API_BASE_URL}${endPoint}?id=${id}`;
+    try {
+      const respone = await axios.post(apiLink, data);
+      return respone.data;
+    } catch (err) {
+      return err;
+    }
+  },
 };

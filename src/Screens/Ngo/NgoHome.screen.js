@@ -129,7 +129,7 @@ export const NgoHome = ({ navigation }) => {
             text={"Add animals for adoption"}
             image={Vacc3d}
             navigation={navigation}
-            location="StrayVacc"
+            location="AddAdoption"
             color="#FFF338"
           />
         </View>
