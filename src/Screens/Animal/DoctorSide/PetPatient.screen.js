@@ -48,10 +48,14 @@ export const PetPatient = ({ navigation }) => {
   //   setModalVisible(true);
   // };
 
-  // const closeModal = () => {
-  //   setModalVisible(false);
-  // };
+  const closeModal = () => {
+    setModalVisible(false);
+    setHealthModal(false);
+  };
 
+  const handleCloseModal = () => {
+    closeModal();
+  };
   const getPatientDetails = async () => {
     showLoader(true);
     try {
@@ -203,6 +207,7 @@ export const PetPatient = ({ navigation }) => {
         animationType="slide"
         transparent
         style={styles.modalBox}
+        onRequestClose={handleCloseModal}
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
@@ -252,6 +257,7 @@ export const PetPatient = ({ navigation }) => {
         animationType="slide"
         transparent
         style={styles.modalBox}
+        onRequestClose={handleCloseModal}
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>

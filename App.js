@@ -15,8 +15,7 @@ import DoctorUnAuthScreen from "./src/ScreenStack/DoctorStack/DoctorUnAuthScreen
 import DoctorAuthScreen from "./src/ScreenStack/DoctorStack/DoctorAuthScreen.stack";
 import NgoUnAuthScreen from "./src/ScreenStack/NgoStack/NgoUnAuthScreen.stack";
 import NgoAuthScreen from "./src/ScreenStack/NgoStack/NgoAuthScreen.stack";
-
-const Stack = createNativeStackNavigator();
+import OnboardingStack from "./src/ScreenStack/OnBoardingStack/OnboardingStack.stack";
 
 export default function App() {
   return (
@@ -57,8 +56,11 @@ function AppWrapper() {
     // <NavigationContainer>
     //   {doctor === null ? <DoctorUnAuthScreen /> : <DoctorAuthScreen />}
     // </NavigationContainer>
+    // <NavigationContainer>
+    //   {ngo === null ? <NgoUnAuthScreen /> : <NgoAuthScreen />}
+    // </NavigationContainer>
     <NavigationContainer>
-      {ngo === null ? <NgoUnAuthScreen /> : <NgoAuthScreen />}
+      <OnboardingStack />
     </NavigationContainer>
   );
 }
