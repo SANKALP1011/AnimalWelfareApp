@@ -81,7 +81,7 @@
 
   - Clone the docker image from the docker hub with following url
 
-    > link
+    > [https://hub.docker.com/repository/docker/sankalp1011/animalwelfareapp/general]
 
   - Run the image with the help of the followimg command
 
