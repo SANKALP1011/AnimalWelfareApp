@@ -56,11 +56,11 @@ function AppWrapper() {
     // <NavigationContainer>
     //   {doctor === null ? <DoctorUnAuthScreen /> : <DoctorAuthScreen />}
     // </NavigationContainer>
-    // <NavigationContainer>
-    //   {ngo === null ? <NgoUnAuthScreen /> : <NgoAuthScreen />}
-    // </NavigationContainer>
     <NavigationContainer>
-      <OnboardingStack />
+      {ngo === null ? <NgoUnAuthScreen /> : <NgoAuthScreen />}
     </NavigationContainer>
+    // <NavigationContainer>
+    //   <OnboardingStack />
+    // </NavigationContainer>
   );
 }
