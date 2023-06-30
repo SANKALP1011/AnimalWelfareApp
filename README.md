@@ -77,5 +77,20 @@
     expo start
     ```
 
-     
+## Docker Conatiner
 
+  - Clone the docker image from the docker hub with following url
+
+    > link
+
+  - Run the image with the help of the followimg command
+
+    ``` bash
+    docker run -it -p 19000:19000 animalwelfareapp
+    ```
+    
+
+## TO DO
+
+   - Work on onboarding screen.
+   - Add Logout Button
