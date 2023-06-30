@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  SafeAreaView,
-  ImageBackground,
-} from "react-native";
+import { View, Text, Image, StyleSheet, SafeAreaView } from "react-native";
 import Initial3d from "../../Assets/Initial3d.png";
 
 const Intial = () => {
