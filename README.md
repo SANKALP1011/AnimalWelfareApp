@@ -12,7 +12,7 @@
 
    - Screen recording of the entire app is provided below with the attached google drive link
      
-     > [https://drive.google.com/drive/folders/1E7XhKvfEH386YNy--kXZvzjGkfGqLfAl?usp=sharing](Video)
+     > [https://drive.google.com/drive/folders/1E7XhKvfEH386YNy--kXZvzjGkfGqLfAl?usp=sharing]
 
 ## Folder Structure 
 
