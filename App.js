@@ -57,7 +57,7 @@ function AppWrapper() {
     //   {doctor === null ? <DoctorUnAuthScreen /> : <DoctorAuthScreen />}
     // </NavigationContainer>
     <NavigationContainer>
-      {ngo === null ? <NgoUnAuthScreen /> : <NgoAuthScreen />}
+      {ngo === null ? <UnAuthenticatedScreen /> : <AuthenticatedScreen />}
     </NavigationContainer>
     // <NavigationContainer>
     //   <OnboardingStack />
